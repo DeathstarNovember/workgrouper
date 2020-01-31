@@ -1,4 +1,5 @@
 export * from "./workoutUtils";
+export * from "./strengthStandards";
 
 export const groupObjectsByProperty = (objectArray, property) => {
   return objectArray.reduce(function(acc, obj) {

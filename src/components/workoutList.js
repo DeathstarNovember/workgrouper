@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { WorkoutOverview, Workout } from ".";
+import { FaPlus } from "react-icons/fa";
+import { WorkoutForm } from "./formComponents";
 
 export const WorkoutList = ({ workouts }) => {
   const [selectedWorkout, setSelectedWorkout] = useState(undefined);
   const [selectedWorkoutIndex, setSelectedWorkoutIndex] = useState(undefined);
+  const [workoutFormIsVisible, setWorkoutFormIsVisible] = useState(false);
   const selectWorkout = (workout, workoutIndex) => {
     if (workout) {
       setSelectedWorkout(workout);
@@ -13,9 +16,15 @@ export const WorkoutList = ({ workouts }) => {
       setSelectedWorkoutIndex(undefined);
     }
   };
+  const showWorkoutForm = () => {
+    setWorkoutFormIsVisible(true);
+  };
+
   return (
     <div className="flex flex-1">
-      {selectedWorkout ? (
+      {workoutFormIsVisible ? (
+        <WorkoutForm setWorkoutFormIsVisible={setWorkoutFormIsVisible} />
+      ) : selectedWorkout ? (
         <Workout
           workout={selectedWorkout}
           workoutIndex={selectedWorkoutIndex}
@@ -23,6 +32,12 @@ export const WorkoutList = ({ workouts }) => {
         />
       ) : (
         <div className="flex-col w-full">
+          <button
+            onClick={() => showWorkoutForm()}
+            className="bg-green-500 hover:bg-green-700 text-white font-bold px-2 py-1 mt-3 mx-3 rounded"
+          >
+            <FaPlus />
+          </button>
           {workouts.map((workout, workoutIndex) => (
             <WorkoutOverview
               key={`workoutOverview${workoutIndex}`}

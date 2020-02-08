@@ -1,8 +1,17 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import {
+  useForm,
+  FormContext,
+  useFormContext,
+  useFieldArray
+} from "react-hook-form";
 import { RxWorkgroupLabel } from "../labelComponents";
 
-const WorkgroupResultForm = ({ workgroup, workgroupIndex, register }) => {
+const WorkgroupResultForm = ({ workgroup, workgroupIndex }) => {
+  const { register } = useFormContext();
+  const arrayMethods = useFieldArray({
+    name: "workset"
+  });
   const inputStyle =
     "bg-gray-300 shadow appearance-none border rounded p-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
   return (
@@ -34,7 +43,7 @@ const WorkgroupResultForm = ({ workgroup, workgroupIndex, register }) => {
                 <div className="flex ml-5">
                   <input
                     className={inputStyle + " w-10"}
-                    name="reps"
+                    name={`workset[${worksetIndex}]reps`}
                     defaultValue={reps}
                     type="number"
                     ref={register({ required: true, pattern: /\d+/ })}
@@ -42,7 +51,7 @@ const WorkgroupResultForm = ({ workgroup, workgroupIndex, register }) => {
                   @
                   <input
                     className={inputStyle + " w-20"}
-                    name="intensity"
+                    name={`workset[${worksetIndex}]intensity`}
                     defaultValue={intensity}
                     type="number"
                     ref={register({ required: true, pattern: /\d+/ })}
@@ -51,7 +60,7 @@ const WorkgroupResultForm = ({ workgroup, workgroupIndex, register }) => {
                   <div className="mr-2">{intervalSymbol}</div>
                   <input
                     className={inputStyle + " w-20"}
-                    name="interval"
+                    name={`workset[${worksetIndex}]interval`}
                     defaultValue={interval}
                     type="number"
                     ref={register({ required: true, pattern: /\d+/ })}
@@ -67,22 +76,24 @@ const WorkgroupResultForm = ({ workgroup, workgroupIndex, register }) => {
 };
 
 export const WorkoutResultForm = ({ workout, workoutId }) => {
-  const { register, handleSubmit } = useForm();
+  const methods = useForm();
   const onSubmit = data => {
     console.log(data);
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div key={`workoutResultForm${workoutId}`}>
-        {workout.workgroups.map((workgroup, workgroupIndex) => (
-          <WorkgroupResultForm
-            key={`workgroupResultForm${workgroupIndex}`}
-            workgroup={workgroup}
-            workgroupIndex={workgroupIndex}
-            register={register}
-          />
-        ))}
-      </div>
-    </form>
+    <FormContext {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <div key={`workoutResultForm${workoutId}`}>
+          {workout.workgroups.map((workgroup, workgroupIndex) => (
+            <WorkgroupResultForm
+              key={`workgroupResultForm${workgroupIndex}`}
+              workgroup={workgroup}
+              workgroupIndex={workgroupIndex}
+            />
+          ))}
+        </div>
+        <input type="submit" />
+      </form>
+    </FormContext>
   );
 };

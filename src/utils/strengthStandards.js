@@ -1,5 +1,9 @@
 export const ageBonus = age =>
-  0.0042 * Math.pow(age, 3) - 0.0764 * Math.pow(age, 2) + 0.1384 * age - 0.3793;
+  (0.0042 * Math.pow(age, 3) -
+    0.0764 * Math.pow(age, 2) +
+    0.1384 * age -
+    0.3793) /
+  100;
 export const strengthStandards = {
   exercises: [
     {
@@ -7,7 +11,7 @@ export const strengthStandards = {
       standardThresholds: {
         beginner: {
           male: (age, bw) =>
-            (0.00004396 * Math.pow(bw, 3) -
+            (0.00004369 * Math.pow(bw, 3) -
               0.0024 * Math.pow(bw, 2) +
               0.0447 * bw +
               0.4453) *

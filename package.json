@@ -5,6 +5,10 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "@types/jest": "^25.1.2",
+    "@types/node": "^13.7.0",
+    "@types/react": "^16.9.19",
+    "@types/react-dom": "^16.9.5",
     "deep-object-diff": "1.1.0",
     "react": "16.12.0",
     "react-dom": "16.12.0",
@@ -14,7 +18,7 @@
     "tailwindcss": "^1.1.4"
   },
   "devDependencies": {
-    "typescript": "3.3.3"
+    "typescript": "^3.7.5"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -5,26 +5,35 @@ export const WorkoutList = ({ workouts }) => {
   const [selectedWorkout, setSelectedWorkout] = useState(undefined);
   const [selectedWorkoutIndex, setSelectedWorkoutIndex] = useState(undefined);
   const selectWorkout = (workout, workoutIndex) => {
-    setSelectedWorkout(workout);
-    setSelectedWorkoutIndex(workoutIndex);
+    if (workout) {
+      setSelectedWorkout(workout);
+      setSelectedWorkoutIndex(workoutIndex);
+    } else {
+      setSelectedWorkout(undefined);
+      setSelectedWorkoutIndex(undefined);
+    }
   };
   return (
-    <div className="flex">
-      <div className="m-3 p-3 bg-gray-300 rounded w-1/3">
-        {workouts.map((workout, workoutIndex) => (
-          <WorkoutOverview
-            workout={workout}
-            workoutIndex={workoutIndex}
-            selectWorkout={selectWorkout}
-          />
-        ))}
-      </div>
+    <div className="flex flex-1">
       {selectedWorkout ? (
         <Workout
           workout={selectedWorkout}
           workoutIndex={selectedWorkoutIndex}
+          selectWorkout={selectWorkout}
         />
-      ) : null}
+      ) : (
+        <div className="flex-col w-full">
+          {workouts.map((workout, workoutIndex) => (
+            <WorkoutOverview
+              key={`workoutOverview${workoutIndex}`}
+              workout={workout}
+              workoutIndex={workoutIndex}
+              selectWorkout={selectWorkout}
+              isSelected={workoutIndex === selectedWorkoutIndex}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { getIntervalSymbol } from "../utils";
+import { getIntervalSymbol } from "../../utils";
 
 export const SingleWorksetLabelWithExercise = ({ workset }) => {
   const {

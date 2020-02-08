@@ -8,7 +8,7 @@ const App = () => {
   return (
     <div className="App">
       <div
-        className="bg-gray-200 w-full m-h-screen"
+        className="bg-gray-200 w-full m-h-screen flex"
         style={{ minHeight: "100vh" }}
       >
         <WorkoutList workouts={workouts} />

@@ -4,7 +4,7 @@ import {
   MultipleRoundsSingleModeWorkgroupLabel,
   MultipleRoundsMultiModeWorkgroupLabel
 } from ".";
-import { areTheseThingsEqual, getOrdinalSymbol } from "../utils";
+import { areTheseThingsEqual, getOrdinalSymbol } from "../../utils";
 
 export const RxWorkgroupLabel = ({
   workgroup,
@@ -34,6 +34,8 @@ export const RxWorkgroupLabel = ({
           <MultipleRoundsMultiModeWorkgroupLabel
             key={`workout${workoutIndex}workgroup${workgroupIndex}`}
             workgroup={workgroup}
+            workgroupIndex={workgroupIndex}
+            workoutIndex={workoutIndex}
           />
         )}
       </div>

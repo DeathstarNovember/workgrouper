@@ -4,7 +4,7 @@ import {
   MultipleWorksetsWithoutExerciseLabel,
   MultipleWorksetsWithExerciseLabel
 } from ".";
-import { areTheseThingsEqual, getIntervalSymbol } from "../utils";
+import { areTheseThingsEqual, getIntervalSymbol } from "../../utils";
 
 export const groupWorksets = worksets => {
   let groupedWorksets = [];
@@ -77,7 +77,11 @@ export const MultipleRoundsSingleModeWorkgroupLabel = ({ workgroup }) => {
   );
 };
 
-export const MultipleRoundsMultiModeWorkgroupLabel = ({ workgroup }) => {
+export const MultipleRoundsMultiModeWorkgroupLabel = ({
+  workgroup,
+  workgroupIndex,
+  workoutIndex
+}) => {
   const { rounds } = workgroup;
   return (
     <div>
@@ -88,23 +92,25 @@ export const MultipleRoundsMultiModeWorkgroupLabel = ({ workgroup }) => {
           round.intervalType
         );
         return (
-          <div key={`mmRoundLabel${roundIndex}`}>
+          <div
+            key={`wo${workoutIndex}wg${workgroupIndex}mmr${roundIndex}label`}
+          >
             {`Round ${roundIndex + 1}`}
             {intervalSymbol}
             {groupedWorksets.map((worksetGroup, worksetGroupIndex) =>
               worksetGroup.length === 1 ? (
-                <div className="ml-2">
-                  <SingleWorksetLabelWithExercise
-                    key={`worksetGroup${worksetGroupIndex}mmRound${roundIndex}`}
-                    workset={worksetGroup[0]}
-                  />
+                <div
+                  className="ml-2"
+                  key={`wo${workoutIndex}wg${workgroupIndex}mmr${roundIndex}wsg${worksetGroupIndex}swle`}
+                >
+                  <SingleWorksetLabelWithExercise workset={worksetGroup[0]} />
                 </div>
               ) : (
-                <div className="ml-2">
-                  <MultipleWorksetsWithExerciseLabel
-                    key={`worksetGroup${worksetGroupIndex}mmRound${roundIndex}`}
-                    worksets={worksetGroup}
-                  />
+                <div
+                  className="ml-2"
+                  key={`wo${workoutIndex}wg${workgroupIndex}mmr${roundIndex}wsg${worksetGroupIndex}mwle`}
+                >
+                  <MultipleWorksetsWithExerciseLabel worksets={worksetGroup} />
                 </div>
               )
             )}

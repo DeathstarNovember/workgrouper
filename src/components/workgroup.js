@@ -1,5 +1,5 @@
 import React from "react";
-import { RxWorkgroupLabel } from ".";
+import { RxWorkgroupLabel } from "./labelComponents";
 
 export const Workgroup = ({ workgroup, workoutIndex, workgroupIndex }) => {
   return (

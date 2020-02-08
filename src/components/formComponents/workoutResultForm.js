@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { RxWorkgroupLabel } from "./rxWorkgroupLabel";
+import { RxWorkgroupLabel } from "../labelComponents";
 
 const WorkgroupResultForm = ({ workgroup, workgroupIndex, register }) => {
   const inputStyle =

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { FaCheck, FaTimes, FaEdit } from "react-icons/fa";
-import { WorkoutLabel, WorkoutResultForm } from ".";
+import { FaCheck, FaTimes, FaEdit, FaArrowLeft } from "react-icons/fa";
+import { WorkoutLabel } from "./labelComponents";
+import { WorkoutResultForm } from "./formComponents";
 
 const ConfirmCancelButtons = ({ confirm, cancel }) => {
   return (
-    <div className="flex">
+    <div className="flex justify-between">
       <button
         onClick={() => confirm()}
         className="bg-green-500 hover:bg-green-700 text-white font-bold px-2 py-1 rounded"
@@ -23,7 +24,7 @@ const ConfirmCancelButtons = ({ confirm, cancel }) => {
 
 const ConfirmEditButtons = ({ confirm, edit }) => {
   return (
-    <div>
+    <div className="flex justify-between">
       <button
         onClick={() => edit()}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-1 rounded"
@@ -40,7 +41,7 @@ const ConfirmEditButtons = ({ confirm, edit }) => {
   );
 };
 
-export const Workout = ({ workout, workoutIndex }) => {
+export const Workout = ({ workout, workoutIndex, selectWorkout }) => {
   const { name, description } = workout;
   const [resultIsVisible, setResultIsVisible] = useState(false);
   const showResult = () => {
@@ -50,14 +51,21 @@ export const Workout = ({ workout, workoutIndex }) => {
     setResultIsVisible(false);
   };
 
+  const BackButton = () => {
+    return (
+      <button
+        onClick={() => selectWorkout(undefined)}
+        className="bg-gray-500 hover:bg-gray-700 text-white font-bold px-2 py-1 rounded"
+      >
+        <FaArrowLeft />
+      </button>
+    );
+  };
   return (
-    <div className="m-3 p-3 bg-gray-400 rounded">
+    <div className="m-3 p-3 bg-gray-400 rounded ">
       <div>
-        <div
-          className={`rounded py-1 px-2 bg-gray-900 text-lg text-orange-500 hover:text-orange-300`}
-        >
-          {name}
-        </div>
+        <BackButton />
+        <div className={`rounded py-1 text-gray-900 text-xl`}>{name}</div>
         <div className="text-sm">{description}</div>
       </div>
       {resultIsVisible ? (

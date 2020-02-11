@@ -1,3 +1,8 @@
+export interface SelectOption {
+  value: any;
+  label: string;
+}
+
 export enum IntensityUnit {
   pounds,
   meters,
@@ -26,7 +31,6 @@ export enum IntervalType {
   exclusive,
   none
 }
-
 export type Round = {
   sortOrder: number;
   interval: number;

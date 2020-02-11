@@ -3,6 +3,7 @@ import { WorkoutOverview, WorkoutPane } from ".";
 import { FaPlus } from "react-icons/fa";
 import { WorkoutForm } from "./formComponents";
 import { Workout } from "../types";
+import { newWorkout } from "../data";
 
 type WorkoutListProps = {
   workouts: Workout[];
@@ -27,11 +28,14 @@ export const WorkoutList: React.FC<WorkoutListProps> = ({ workouts }) => {
   const showWorkoutForm = () => {
     setWorkoutFormIsVisible(true);
   };
+  const hideWorkoutForm = () => {
+    setWorkoutFormIsVisible(false);
+  };
 
   return (
     <div className="flex flex-1">
       {workoutFormIsVisible ? (
-        <WorkoutForm setWorkoutFormIsVisible={setWorkoutFormIsVisible} />
+        <WorkoutForm workout={newWorkout} hideForm={hideWorkoutForm} />
       ) : selectedWorkout ? (
         <WorkoutPane
           workout={selectedWorkout}

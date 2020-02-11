@@ -1,4 +1,13 @@
-import { Workout, IntervalType, IntensityUnit, Exercise } from "./types";
+import {
+  Workout,
+  IntervalType,
+  IntensityUnit,
+  Exercise,
+  SelectOption,
+  Workset,
+  Round,
+  Workgroup
+} from "./types";
 
 export const exercises: Exercise[] = [
   {
@@ -607,6 +616,57 @@ export const workouts: Workout[] = [
     ]
   }
 ];
+
+export const newWorkgroup: Workgroup = {
+  sortOrder: 0,
+  note: "",
+  rounds: []
+};
+
+export const newRound: Round = {
+  sortOrder: 0,
+  interval: 0,
+  intervalType: IntervalType.none,
+  worksets: []
+};
+
+export const newWorkset: Workset = {
+  exercise: {
+    name: "Barbell Bench Press",
+    intensityUnit: IntensityUnit.pounds
+  },
+  reps: 0,
+  intensity: 0,
+  relativeIntensity: 0,
+  intensityUnit: IntensityUnit.pounds,
+  intervalType: IntervalType.exclusive,
+  interval: 0
+};
+
+export const newWorkout: Workout = {
+  name: "",
+  description: "",
+  workgroups: [
+    {
+      ...newWorkgroup,
+      rounds: [{ ...newRound, worksets: [{ ...newWorkset }] }]
+    }
+  ]
+};
+export const intervalTypeOptions: SelectOption[] = [
+  { value: IntervalType.inclusive, label: "Inclusive" },
+  { value: IntervalType.exclusive, label: "Exclusive" },
+  { value: IntervalType.none, label: "No Interval" }
+];
+export const intensityTypeOptions: SelectOption[] = [
+  { value: IntensityUnit.pounds, label: "Pounds" },
+  { value: IntensityUnit.meters, label: "Meters" },
+  { value: IntensityUnit.seconds, label: "Seconds" }
+];
+export const exercisesOptions: SelectOption[] = exercises.map(exercise => ({
+  value: exercise,
+  label: exercise.name
+}));
 
 export const ordinals = [
   "A",

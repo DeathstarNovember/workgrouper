@@ -15,7 +15,7 @@ export const WorkoutList: React.FC<WorkoutListProps> = ({ workouts }) => {
   const [selectedWorkoutIndex, setSelectedWorkoutIndex] = useState<
     number | undefined
   >(undefined);
-  const [workoutFormIsVisible, setWorkoutFormIsVisible] = useState(false);
+  const [workoutFormIsVisible, setWorkoutFormIsVisible] = useState(true);
   const selectWorkout = (workout: Workout, workoutIndex: number) => {
     setSelectedWorkout(workout);
     setSelectedWorkoutIndex(workoutIndex);

@@ -17,6 +17,7 @@ export const WorkoutList: React.FC<WorkoutListProps> = ({ workouts }) => {
     number | undefined
   >(undefined);
   const [workoutFormIsVisible, setWorkoutFormIsVisible] = useState(false);
+  const [newWorkoutFormIsVisible, setNewWorkoutFormIsVisible] = useState(false);
   const selectWorkout = (workout: Workout, workoutIndex: number) => {
     setSelectedWorkout(workout);
     setSelectedWorkoutIndex(workoutIndex);
@@ -31,37 +32,50 @@ export const WorkoutList: React.FC<WorkoutListProps> = ({ workouts }) => {
   const hideWorkoutForm = () => {
     setWorkoutFormIsVisible(false);
   };
+  const showNewWorkoutForm = () => {
+    setNewWorkoutFormIsVisible(true);
+  };
+  const hideNewWorkoutForm = () => {
+    setNewWorkoutFormIsVisible(false);
+  };
 
-  return (
-    <div className="flex flex-1">
-      {workoutFormIsVisible ? (
-        <WorkoutForm workout={newWorkout} hideForm={hideWorkoutForm} />
-      ) : selectedWorkout ? (
+  if (newWorkoutFormIsVisible) {
+    return <WorkoutForm workout={newWorkout} hideForm={hideNewWorkoutForm} />;
+  } else if (selectedWorkout) {
+    if (workoutFormIsVisible) {
+      return (
+        <WorkoutForm workout={selectedWorkout} hideForm={hideWorkoutForm} />
+      );
+    } else {
+      return (
         <WorkoutPane
           workout={selectedWorkout}
           workoutIndex={selectedWorkoutIndex}
           clearSelectedWorkout={clearSelectedWorkout}
+          showForm={showWorkoutForm}
         />
-      ) : (
-        <div className="flex-col w-full">
-          <button
-            onClick={() => showWorkoutForm()}
-            className="bg-green-500 hover:bg-green-700 text-white font-bold px-2 py-1 mt-3 mx-3 rounded"
-          >
-            <FaPlus />
-          </button>
-          {workouts.map((workout, workoutIndex) => (
-            <WorkoutOverview
-              key={`workoutOverview${workoutIndex}`}
-              workout={workout}
-              workoutIndex={workoutIndex}
-              clearSelectedWorkout={clearSelectedWorkout}
-              selectWorkout={selectWorkout}
-              isSelected={workoutIndex === selectedWorkoutIndex}
-            />
-          ))}
-        </div>
-      )}
-    </div>
-  );
+      );
+    }
+  } else {
+    return (
+      <div className="flex-col w-full">
+        <button
+          onClick={() => showNewWorkoutForm()}
+          className="bg-green-500 hover:bg-green-700 text-white font-bold px-2 py-1 mt-3 mx-3 rounded"
+        >
+          <FaPlus />
+        </button>
+        {workouts.map((workout, workoutIndex) => (
+          <WorkoutOverview
+            key={`workoutOverview${workoutIndex}`}
+            workout={workout}
+            workoutIndex={workoutIndex}
+            clearSelectedWorkout={clearSelectedWorkout}
+            selectWorkout={selectWorkout}
+            isSelected={workoutIndex === selectedWorkoutIndex}
+          />
+        ))}
+      </div>
+    );
+  }
 };

@@ -62,12 +62,14 @@ type WorkoutPaneProps = {
   workout: Workout;
   workoutIndex?: number;
   clearSelectedWorkout: () => void;
+  showForm: () => void;
 };
 
 export const WorkoutPane: React.FC<WorkoutPaneProps> = ({
   workout,
   workoutIndex,
-  clearSelectedWorkout
+  clearSelectedWorkout,
+  showForm
 }) => {
   const { name, description } = workout;
   const [resultIsVisible, setResultIsVisible] = useState(false);
@@ -88,10 +90,21 @@ export const WorkoutPane: React.FC<WorkoutPaneProps> = ({
       </button>
     );
   };
+  const ShowFormButton = () => {
+    return (
+      <button
+        onClick={() => showForm()}
+        className="bg-gray-500 hover:bg-gray-700 text-white font-bold px-2 py-1 rounded"
+      >
+        <FaEdit />
+      </button>
+    );
+  };
   return (
     <div className="m-3 p-3 bg-gray-400 rounded ">
       <div>
         <BackButton />
+        <ShowFormButton />
         <div className={`rounded py-1 text-gray-900 text-xl`}>{name}</div>
         <div className="text-sm">{description}</div>
       </div>

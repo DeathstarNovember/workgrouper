@@ -24,42 +24,45 @@ export const RoundsArray: React.FC<RoundsArrayProps> = ({
     name="rounds"
     render={roundsArrayHelpers => (
       <div>
-        {values.workgroups[workgroupIndex].rounds.map((_round, roundIndex) => (
-          <div
-            className={sectionStyle}
-            key={`wg${workgroupIndex}rd${roundIndex}`}
-          >
-            <div className="flex justify-between">
-              <div className={sectionTitleStyle}>
-                {`Round ${roundIndex + 1}`}
+        {values.workgroups[workgroupIndex].rounds.map((_round, roundIndex) => {
+          const roundFieldNamePrefix = `workgroups[${workgroupIndex}].rounds[${roundIndex}]`;
+          return (
+            <div
+              className={sectionStyle}
+              key={`wg${workgroupIndex}rd${roundIndex}`}
+            >
+              <div className="flex justify-between">
+                <div className={sectionTitleStyle}>
+                  {`Round ${roundIndex + 1}`}
+                </div>
+                <RemoveButton
+                  remove={roundsArrayHelpers.remove}
+                  text="remove"
+                  textColor="gray"
+                  bgColor="red"
+                  hoverColor="red"
+                  index={roundIndex}
+                />
               </div>
-              <RemoveButton
-                remove={roundsArrayHelpers.remove}
-                text="remove"
-                textColor="gray"
-                bgColor="red"
-                hoverColor="red"
-                index={roundIndex}
+              <div className="flex">
+                <Select
+                  labelText="Interval Type"
+                  options={intervalTypeOptions}
+                  fieldName={`${roundFieldNamePrefix}.intervalType`}
+                />
+                <Input
+                  labelText="Interval Time"
+                  fieldName={`${roundFieldNamePrefix}.interval`}
+                />
+              </div>
+              <WorksetsArray
+                values={values}
+                workgroupIndex={workgroupIndex}
+                roundIndex={roundIndex}
               />
             </div>
-            <div className="flex">
-              <Select
-                labelText="Interval Type"
-                options={intervalTypeOptions}
-                fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].intervalType`}
-              />
-              <Input
-                labelText="Interval Time"
-                fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].interval`}
-              />
-            </div>
-            <WorksetsArray
-              values={values}
-              workgroupIndex={workgroupIndex}
-              roundIndex={roundIndex}
-            />
-          </div>
-        ))}
+          );
+        })}
         <AddButton
           add={() =>
             roundsArrayHelpers.push({

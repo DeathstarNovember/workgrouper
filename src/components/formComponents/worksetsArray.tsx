@@ -31,63 +31,66 @@ const WorksetsArray: React.FC<WorksetsArrayProps> = ({
     render={worksetsArrayHelpers => (
       <div>
         {values.workgroups[workgroupIndex].rounds[roundIndex].worksets.map(
-          (_workset, worksetIndex) => (
-            <div
-              className={sectionStyle}
-              key={`wg${workgroupIndex}rd${roundIndex}ws${worksetIndex}`}
-            >
-              <div className="flex justify-between">
-                <div className={sectionTitleStyle}>
-                  {`Set ${worksetIndex + 1}`}
+          (_workset, worksetIndex) => {
+            const worksetFieldNamePrefix = `workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}]`;
+            return (
+              <div
+                className={sectionStyle}
+                key={`wg${workgroupIndex}rd${roundIndex}ws${worksetIndex}`}
+              >
+                <div className="flex justify-between">
+                  <div className={sectionTitleStyle}>
+                    {`Set ${worksetIndex + 1}`}
+                  </div>
+                  <RemoveButton
+                    remove={worksetsArrayHelpers.remove}
+                    text="remove"
+                    textColor="gray"
+                    bgColor="red"
+                    hoverColor="red"
+                    index={worksetIndex}
+                  />
                 </div>
-                <RemoveButton
-                  remove={worksetsArrayHelpers.remove}
-                  text="remove"
-                  textColor="gray"
-                  bgColor="red"
-                  hoverColor="red"
-                  index={worksetIndex}
-                />
-              </div>
-              <div>
-                <Select
-                  labelText="Exercise"
-                  options={exercisesOptions}
-                  fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].exercise.name`}
-                />
-                <div className="flex">
-                  <Input
-                    labelText="Reps"
-                    fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].reps`}
-                  />
-                  <Input
-                    labelText="Intensity/load"
-                    fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].intensity`}
-                  />
+                <div>
                   <Select
-                    labelText="Intensity unit"
-                    options={intensityTypeOptions}
-                    fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].intensityUnit`}
+                    labelText="Exercise"
+                    options={exercisesOptions}
+                    fieldName={`${worksetFieldNamePrefix}.exercise.name`}
                   />
-                </div>
-                <Input
-                  labelText="Relative intensity"
-                  fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].relativeIntensity`}
-                />
-                <div className="flex">
-                  <Select
-                    labelText="Interval type"
-                    options={intervalTypeOptions}
-                    fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].intervalType`}
-                  />
+                  <div className="flex">
+                    <Input
+                      labelText="Reps"
+                      fieldName={`${worksetFieldNamePrefix}.reps`}
+                    />
+                    <Input
+                      labelText="Intensity/load"
+                      fieldName={`${worksetFieldNamePrefix}.intensity`}
+                    />
+                    <Select
+                      labelText="Intensity unit"
+                      options={intensityTypeOptions}
+                      fieldName={`${worksetFieldNamePrefix}.intensityUnit`}
+                    />
+                  </div>
                   <Input
-                    labelText="Interval time"
-                    fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].interval`}
+                    labelText="Relative intensity"
+                    fieldName={`${worksetFieldNamePrefix}.relativeIntensity`}
                   />
+                  <div className="flex">
+                    <Select
+                      labelText="Interval type"
+                      options={intervalTypeOptions}
+                      fieldName={`${worksetFieldNamePrefix}.intervalType`}
+                    />
+                    <Input
+                      labelText="Interval time"
+                      fieldName={`${worksetFieldNamePrefix}.interval`}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          )
+            );
+          }
         )}
         <AddButton
           add={() =>

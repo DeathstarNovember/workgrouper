@@ -20,29 +20,32 @@ export const WorkgroupsArray: React.FC<WorkgroupsArrayProps> = ({ values }) => (
     name="workgroups"
     render={workgroupsArrayHelpers => (
       <div>
-        {values.workgroups.map((_workgroup, workgroupIndex) => (
-          <div className={sectionStyle} key={`wg${workgroupIndex}`}>
-            <div className="flex justify-between">
-              <div className={sectionTitleStyle}>
-                {`Workgroup ${ordinals[workgroupIndex]}`}
+        {values.workgroups.map((_workgroup, workgroupIndex) => {
+          const workgroupFieldNamePrefix = `workgroups[${workgroupIndex}]`;
+          return (
+            <div className={sectionStyle} key={`wg${workgroupIndex}`}>
+              <div className="flex justify-between">
+                <div className={sectionTitleStyle}>
+                  {`Workgroup ${ordinals[workgroupIndex]}`}
+                </div>
+                <RemoveButton
+                  remove={workgroupsArrayHelpers.remove}
+                  text="remove"
+                  textColor="gray"
+                  bgColor="red"
+                  hoverColor="red"
+                  index={workgroupIndex}
+                />
               </div>
-              <RemoveButton
-                remove={workgroupsArrayHelpers.remove}
-                text="remove"
-                textColor="gray"
-                bgColor="red"
-                hoverColor="red"
-                index={workgroupIndex}
+              <Input
+                labelText="Workgroup notes"
+                fieldName={`${workgroupFieldNamePrefix}].notes`}
+                placeholder="Type notes here..."
               />
+              <RoundsArray values={values} workgroupIndex={workgroupIndex} />
             </div>
-            <Input
-              labelText="Workgroup notes"
-              fieldName={`workgroups[${workgroupIndex}].notes`}
-              placeholder="Type notes here..."
-            />
-            <RoundsArray values={values} workgroupIndex={workgroupIndex} />
-          </div>
-        ))}
+          );
+        })}
         <AddButton
           add={() =>
             workgroupsArrayHelpers.push({

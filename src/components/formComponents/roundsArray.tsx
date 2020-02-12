@@ -15,17 +15,19 @@ import WorksetsArray from "./worksetsArray";
 type RoundsArrayProps = {
   values: Workout;
   workgroupIndex: number;
+  name: string;
 };
 export const RoundsArray: React.FC<RoundsArrayProps> = ({
   values,
-  workgroupIndex
+  workgroupIndex,
+  name
 }) => (
   <FieldArray
-    name="rounds"
+    name={name}
     render={roundsArrayHelpers => (
       <div>
         {values.workgroups[workgroupIndex].rounds.map((_round, roundIndex) => {
-          const roundFieldNamePrefix = `workgroups[${workgroupIndex}].rounds[${roundIndex}]`;
+          const roundFieldNamePrefix = `${name}[${roundIndex}]`;
           return (
             <div
               className={sectionStyle}

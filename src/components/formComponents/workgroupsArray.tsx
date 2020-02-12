@@ -42,7 +42,7 @@ export const WorkgroupsArray: React.FC<WorkgroupsArrayProps> = ({ values }) => (
                 fieldName={`${workgroupFieldNamePrefix}].notes`}
                 placeholder="Type notes here..."
               />
-              <RoundsArray values={values} workgroupIndex={workgroupIndex} />
+              <RoundsArray values={values} workgroupIndex={workgroupIndex} name={`${workgroupFieldNamePrefix}.rounds`} />
             </div>
           );
         })}

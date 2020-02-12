@@ -59,6 +59,7 @@ export const RoundsArray: React.FC<RoundsArrayProps> = ({
               </div>
               <WorksetsArray
                 values={values}
+                name={`${roundFieldNamePrefix}.worksets`}
                 workgroupIndex={workgroupIndex}
                 roundIndex={roundIndex}
               />

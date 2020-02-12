@@ -18,21 +18,23 @@ import {
 
 type WorksetsArrayProps = {
   values: Workout;
+  name: string;
   workgroupIndex: number;
   roundIndex: number;
 };
 const WorksetsArray: React.FC<WorksetsArrayProps> = ({
   values,
+  name,
   workgroupIndex,
   roundIndex
 }) => (
   <FieldArray
-    name="worksets"
+    name={name}
     render={worksetsArrayHelpers => (
       <div>
         {values.workgroups[workgroupIndex].rounds[roundIndex].worksets.map(
           (_workset, worksetIndex) => {
-            const worksetFieldNamePrefix = `workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}]`;
+            const worksetFieldNamePrefix = `${name}.worksets[${worksetIndex}]`;
             return (
               <div
                 className={sectionStyle}

@@ -46,11 +46,11 @@ export const RoundsArray: React.FC<RoundsArrayProps> = ({
               <Select
                 labelText="Interval Type"
                 options={intervalTypeOptions}
-                fieldName={`workgroups.${workgroupIndex}.rounds.${roundIndex}.intervalType`}
+                fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].intervalType`}
               />
               <Input
                 labelText="Interval Time"
-                fieldName={`workgroups.${workgroupIndex}.rounds.${roundIndex}.interval`}
+                fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].interval`}
               />
             </div>
             <WorksetsArray

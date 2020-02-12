@@ -53,36 +53,36 @@ const WorksetsArray: React.FC<WorksetsArrayProps> = ({
                 <Select
                   labelText="Exercise"
                   options={exercisesOptions}
-                  fieldName={`workgroups.${workgroupIndex}.rounds.${roundIndex}.worksets.${worksetIndex}.exercise.name`}
+                  fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].exercise.name`}
                 />
                 <div className="flex">
                   <Input
                     labelText="Reps"
-                    fieldName={`workgroups.${workgroupIndex}.rounds.${roundIndex}.worksets.${worksetIndex}.reps`}
+                    fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].reps`}
                   />
                   <Input
                     labelText="Intensity/load"
-                    fieldName={`workgroups.${workgroupIndex}.rounds.${roundIndex}.worksets.${worksetIndex}.intensity`}
+                    fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].intensity`}
                   />
                   <Select
                     labelText="Intensity unit"
                     options={intensityTypeOptions}
-                    fieldName={`workgroups.${workgroupIndex}.rounds.${roundIndex}.worksets.${worksetIndex}.intensityUnit`}
+                    fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].intensityUnit`}
                   />
                 </div>
                 <Input
                   labelText="Relative intensity"
-                  fieldName={`workgroups.${workgroupIndex}.rounds.${roundIndex}.worksets.${worksetIndex}.relativeIntensity`}
+                  fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].relativeIntensity`}
                 />
                 <div className="flex">
                   <Select
                     labelText="Interval type"
                     options={intervalTypeOptions}
-                    fieldName={`workgroups.${workgroupIndex}.rounds.${roundIndex}.worksets.${worksetIndex}.intervalType`}
+                    fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].intervalType`}
                   />
                   <Input
                     labelText="Interval time"
-                    fieldName={`workgroups.${workgroupIndex}.rounds.${roundIndex}.worksets.${worksetIndex}.interval`}
+                    fieldName={`workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].interval`}
                   />
                 </div>
               </div>

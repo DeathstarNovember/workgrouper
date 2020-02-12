@@ -37,7 +37,7 @@ export const WorkgroupsArray: React.FC<WorkgroupsArrayProps> = ({ values }) => (
             </div>
             <Input
               labelText="Workgroup notes"
-              fieldName={`workgroups.${workgroupIndex}.notes`}
+              fieldName={`workgroups[${workgroupIndex}].notes`}
               placeholder="Type notes here..."
             />
             <RoundsArray values={values} workgroupIndex={workgroupIndex} />

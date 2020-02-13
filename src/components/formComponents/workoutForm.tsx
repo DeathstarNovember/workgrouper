@@ -11,9 +11,27 @@ interface WorkoutFormProps {
 }
 
 const InnerForm = (props: WorkoutFormProps & FormikProps<Workout>) => {
-  const { touched, errors, isSubmitting, values, hideForm } = props;
+  const { setFieldValue, isSubmitting, values, hideForm, handleSubmit } = props;
+  const setWorkoutSortOrders = (values: Workout) => {
+    values.workgroups.forEach((workgroup, workgroupIndex) => {
+      setFieldValue(`workgroups[${workgroupIndex}].sortOrder`, workgroupIndex);
+      workgroup.rounds.forEach((round, roundIndex) => {
+        setFieldValue(
+          `workgroups[${workgroupIndex}].rounds[${roundIndex}].sortOrder`,
+          roundIndex
+        );
+        round.worksets.forEach((_workset, worksetIndex) => {
+          setFieldValue(
+            `workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].sortOrder`,
+            worksetIndex
+          );
+        });
+      });
+    });
+  };
+
   return (
-    <Form className="p-3">
+    <Form className="p-1" onSubmit={handleSubmit}>
       <button
         onClick={() => hideForm()}
         className="bg-gray-500 hover:bg-gray-700 text-white font-bold px-2 py-1 mt-3 mx-3 rounded"
@@ -22,12 +40,12 @@ const InnerForm = (props: WorkoutFormProps & FormikProps<Workout>) => {
       </button>
       <div>
         <Input labelText="WorkoutName" fieldName="name" />
-        {touched.name && errors.name && <div>{errors.name}</div>}
       </div>
       <Input labelText="Workout Description" fieldName="description" />
       <WorkgroupsArray values={values} />
       <SubmitButton
         isSubmitting={isSubmitting}
+        onClick={() => setWorkoutSortOrders(values)}
         bgColor="green"
         hoverColor="green"
         text="Save Workout"

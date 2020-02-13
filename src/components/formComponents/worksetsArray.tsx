@@ -7,7 +7,9 @@ import {
   RemoveButton,
   Select,
   Input,
-  AddButton
+  AddButton,
+  SwapUpButton,
+  SwapDownButton
 } from ".";
 import {
   exercisesOptions,
@@ -15,6 +17,7 @@ import {
   intervalTypeOptions,
   newWorkset
 } from "../../data";
+import { SingleWorksetLabelWithExercise } from "../labelComponents";
 
 type WorksetsArrayProps = {
   values: Workout;
@@ -33,7 +36,7 @@ const WorksetsArray: React.FC<WorksetsArrayProps> = ({
     render={worksetsArrayHelpers => (
       <div>
         {values.workgroups[workgroupIndex].rounds[roundIndex].worksets.map(
-          (_workset, worksetIndex) => {
+          (workset, worksetIndex) => {
             const worksetFieldNamePrefix = `${name}[${worksetIndex}]`;
             return (
               <div
@@ -42,16 +45,32 @@ const WorksetsArray: React.FC<WorksetsArrayProps> = ({
               >
                 <div className="flex justify-between">
                   <div className={sectionTitleStyle}>
+                    <div>
+                      {worksetIndex !== 0 ? (
+                        <SwapUpButton
+                          swap={worksetsArrayHelpers.swap}
+                          index={worksetIndex}
+                        />
+                      ) : null}
+                      {worksetIndex !==
+                      values.workgroups[workgroupIndex].rounds[roundIndex]
+                        .worksets.length -
+                        1 ? (
+                        <SwapDownButton
+                          swap={worksetsArrayHelpers.swap}
+                          index={worksetIndex}
+                        />
+                      ) : null}
+                    </div>
                     {`Set ${worksetIndex + 1}`}
                   </div>
                   <RemoveButton
                     remove={worksetsArrayHelpers.remove}
-                    text="remove"
-                    textColor="gray"
-                    bgColor="red"
-                    hoverColor="red"
                     index={worksetIndex}
                   />
+                </div>
+                <div>
+                  <SingleWorksetLabelWithExercise workset={workset} />
                 </div>
                 <div>
                   <Select
@@ -97,7 +116,10 @@ const WorksetsArray: React.FC<WorksetsArrayProps> = ({
         <AddButton
           add={() =>
             worksetsArrayHelpers.push({
-              ...newWorkset,
+              ...values.workgroups[workgroupIndex].rounds[roundIndex].worksets[
+                values.workgroups[workgroupIndex].rounds[roundIndex].worksets
+                  .length - 1
+              ],
               sortOrder:
                 values.workgroups[workgroupIndex].rounds[roundIndex].worksets
                   .length

@@ -1,8 +1,59 @@
 import React from "react";
-import { FaPlus, FaTimes } from "react-icons/fa";
+import { FaPlus, FaTimes, FaArrowUp, FaArrowDown } from "react-icons/fa";
+
+type FormButtonProps = {
+  onClick?: (arg0: any | undefined) => any | void;
+  isSubmitting?: boolean;
+  hoverColor?: string;
+  bgColor?: string;
+  textColor?: string;
+  text?: string;
+  type?: "button" | "submit";
+};
+
+export const FormButton: React.FC<FormButtonProps> = ({
+  isSubmitting,
+  hoverColor,
+  bgColor,
+  textColor,
+  text,
+  type = "button",
+  onClick,
+  children
+}) => {
+  const defaultColor = "blue";
+  const submitColor = "green";
+  const buttonBackgroundColor = bgColor
+    ? bgColor
+    : type === "submit"
+    ? submitColor
+    : defaultColor;
+  const buttonHoverColor = hoverColor
+    ? hoverColor
+    : type === "submit"
+    ? submitColor
+    : defaultColor;
+  const buttonTextColor = textColor ? textColor : "gray";
+  const conditionalButtonProps: { [key: string]: any } = {};
+  if (isSubmitting) {
+    conditionalButtonProps["disabled"] = isSubmitting;
+  }
+  return (
+    <button
+      type={type}
+      {...conditionalButtonProps}
+      className={`flex align-center bg-${buttonBackgroundColor}-300 hover:bg-${buttonHoverColor}-400 text-${buttonTextColor}-800 py-1 px-2 rounded inline-flex items-center`}
+      onClick={onClick}
+    >
+      {children}
+      {text ? text : null}
+    </button>
+  );
+};
 
 type SubmitButtonProps = {
   isSubmitting: boolean;
+  onClick?: (arg0: any | undefined) => any | void;
   hoverColor?: string;
   bgColor?: string;
   textColor?: string;
@@ -11,23 +62,28 @@ type SubmitButtonProps = {
 
 export const SubmitButton: React.FC<SubmitButtonProps> = ({
   isSubmitting,
+  onClick,
   hoverColor,
   bgColor,
   textColor,
   text
-}) => (
-  <button
-    type="submit"
-    disabled={isSubmitting}
-    className={`bg-${bgColor ? bgColor : "blue"}-300 hover:bg-${
-      hoverColor ? hoverColor : bgColor || "blue"
-    }-400 text-${
-      textColor ? textColor : "gray"
-    }-800 py-1 px-2 rounded inline-flex items-center`}
-  >
-    {text ? text : "Submit"}
-  </button>
-);
+}) => {
+  const submitButtonProps = {
+    hoverColor,
+    bgColor,
+    textColor,
+    text,
+    onClick
+  };
+
+  return (
+    <FormButton
+      type="submit"
+      isSubmitting={isSubmitting}
+      {...submitButtonProps}
+    />
+  );
+};
 
 type AddButtonProps = {
   add: () => void;
@@ -42,21 +98,20 @@ export const AddButton: React.FC<AddButtonProps> = ({
   hoverColor,
   bgColor,
   textColor,
-  text
-}) => (
-  <button
-    className={`bg-${bgColor ? bgColor : "blue"}-300 hover:bg-${
-      hoverColor ? hoverColor : bgColor || "blue"
-    }-400 text-${
-      textColor ? textColor : "gray"
-    }-800 py-1 px-2 rounded inline-flex items-center`}
-    type="button"
-    onClick={add}
-  >
-    <FaPlus />
-    {text ? text : null}
-  </button>
-);
+  text = "add"
+}) => {
+  const customProps = {
+    hoverColor,
+    bgColor,
+    textColor,
+    text
+  };
+  return (
+    <FormButton onClick={add} {...customProps}>
+      <FaPlus className={`mr-2`} />
+    </FormButton>
+  );
+};
 
 type RemoveButtonProps = {
   remove: (arg0: number) => void;
@@ -69,22 +124,71 @@ type RemoveButtonProps = {
 
 export const RemoveButton: React.FC<RemoveButtonProps> = ({
   remove,
-  hoverColor,
-  bgColor,
-  textColor,
+  hoverColor = "red",
+  bgColor = "red",
+  textColor = "gray",
+  index = 0,
+  text = "remove"
+}) => {
+  const customProps = {
+    hoverColor,
+    bgColor,
+    textColor,
+    text
+  };
+  return (
+    <FormButton onClick={() => remove(index)} {...customProps}>
+      <FaTimes className={`mr-2`} />
+    </FormButton>
+  );
+};
+
+type SwapButtonProps = {
+  swap: (arg0: number, arg1: number) => void;
+  hoverColor?: string;
+  bgColor?: string;
+  textColor?: string;
+  index: number;
+  text?: string;
+};
+
+export const SwapUpButton: React.FC<SwapButtonProps> = ({
+  swap,
+  hoverColor = "gray",
+  bgColor = "gray",
+  textColor = "gray",
   index,
-  text
-}) => (
-  <button
-    className={`bg-${bgColor ? bgColor : "blue"}-300 hover:bg-${
-      hoverColor ? hoverColor : bgColor || "blue"
-    }-400 text-${
-      textColor ? textColor : "gray"
-    }-800 py-1 px-2 rounded inline-flex items-center`}
-    type="button"
-    onClick={() => remove(index)}
-  >
-    <FaTimes />
-    {text ? text : null}
-  </button>
-);
+  text = ""
+}) => {
+  const customProps = {
+    hoverColor,
+    bgColor,
+    textColor,
+    text
+  };
+  return (
+    <FormButton onClick={() => swap(index, index - 1)} {...customProps}>
+      <FaArrowUp />
+    </FormButton>
+  );
+};
+export const SwapDownButton: React.FC<SwapButtonProps> = ({
+  swap,
+  hoverColor = "gray",
+  bgColor = "gray",
+  textColor = "gray",
+  index,
+  text = ""
+}) => {
+  const customProps = {
+    hoverColor,
+    bgColor,
+    textColor,
+    text
+  };
+  return (
+    <FormButton onClick={() => swap(index, index + 1)} {...customProps}>
+      <FaArrowDown />
+    </FormButton>
+  );
+};

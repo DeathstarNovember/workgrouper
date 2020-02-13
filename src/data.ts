@@ -663,10 +663,12 @@ export const intensityTypeOptions: SelectOption[] = [
   { value: IntensityUnit.meters, label: "Meters" },
   { value: IntensityUnit.seconds, label: "Seconds" }
 ];
-export const exercisesOptions: SelectOption[] = exercises.map(exercise => ({
-  value: exercise,
-  label: exercise.name
-}));
+export const exercisesOptions: SelectOption[] = exercises.map(
+  (exercise, _index) => ({
+    value: exercise.name,
+    label: exercise.name
+  })
+);
 
 export const ordinals = [
   "A",

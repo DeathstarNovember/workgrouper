@@ -1,5 +1,5 @@
 import React from "react";
-import { getIntervalSymbol } from "../../utils";
+import { getIntervalSymbol, getIntensitySymbol } from "../../utils";
 import { Workset } from "../../types";
 
 type SingleWorksetLabelWithExerciseProps = {
@@ -19,7 +19,8 @@ export const SingleWorksetLabelWithExercise: React.FC<SingleWorksetLabelWithExer
   } = workset;
   return (
     <div>
-      {exercise.name}, 1x{reps} @ {intensity + intensityUnit}{" "}
+      {exercise.name}, 1x{reps} @{" "}
+      {intensity + getIntensitySymbol(intensityUnit)}{" "}
       {getIntervalSymbol(interval, intervalType)}
     </div>
   );
@@ -42,7 +43,7 @@ export const MultipleWorksetsWithoutExerciseLabel: React.FC<MultipleWorksetsWith
   } = worksets[0];
   return (
     <div>
-      {worksetCount}x{reps} @ {intensity + intensityUnit}{" "}
+      {worksetCount}x{reps} @ {intensity + getIntensitySymbol(intensityUnit)}{" "}
       {getIntervalSymbol(interval, intervalType)}
     </div>
   );
@@ -66,7 +67,8 @@ export const MultipleWorksetsWithExerciseLabel: React.FC<MultipleWorksetsWithExe
   } = worksets[0];
   return (
     <div>
-      {exercise.name}, {worksetCount}x{reps} @ {intensity + intensityUnit}{" "}
+      {exercise.name}, {worksetCount}x{reps} @{" "}
+      {intensity + getIntensitySymbol(intensityUnit)}{" "}
       {getIntervalSymbol(interval, intervalType)}
     </div>
   );

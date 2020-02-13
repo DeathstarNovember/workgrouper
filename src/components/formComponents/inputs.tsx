@@ -1,12 +1,15 @@
 import React from "react";
-import { Field } from "formik";
+import { Field, ErrorMessage } from "formik";
 import { SelectOption } from "../../types";
+import { labelStyle, fieldStyle, selectStyle } from ".";
 
-const selectStyle =
-  "block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-2 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline my-2";
-const fieldStyle =
-  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline my-2";
-const labelStyle = "block text-gray-700 text-sm font-bold";
+type WorkoutFormErrorProps = {
+  name: string;
+};
+
+export const WorkoutFormError: React.FC<WorkoutFormErrorProps> = ({ name }) => {
+  return <ErrorMessage name={name} />;
+};
 
 type LabelProps = {
   label: string;
@@ -17,7 +20,7 @@ export const Label: React.FC<LabelProps> = ({ label }) => (
 );
 
 type InputProps = {
-  labelText: string;
+  labelText?: string;
   fieldName: string;
   placeholder?: string;
 };
@@ -28,8 +31,9 @@ export const Input: React.FC<InputProps> = ({
   ...props
 }) => (
   <div>
-    <Label label={labelText} />
+    {labelText ? <Label label={labelText} /> : null}
     <Field className={fieldStyle} name={fieldName} {...props} />
+    <WorkoutFormError name={fieldName} />
   </div>
 );
 
@@ -52,5 +56,6 @@ export const Select: React.FC<SelectProps> = ({
         </option>
       ))}
     </Field>
+    <WorkoutFormError name={fieldName} />
   </div>
 );

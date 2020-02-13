@@ -14,10 +14,10 @@ import {
 import {
   exercisesOptions,
   intensityTypeOptions,
-  intervalTypeOptions,
-  newWorkset
+  intervalTypeOptions
 } from "../../data";
 import { SingleWorksetLabelWithExercise } from "../labelComponents";
+import Collapsible from "react-collapsible";
 
 type WorksetsArrayProps = {
   values: Workout;
@@ -43,72 +43,74 @@ const WorksetsArray: React.FC<WorksetsArrayProps> = ({
                 className={sectionStyle}
                 key={`wg${workgroupIndex}rd${roundIndex}ws${worksetIndex}`}
               >
-                <div className="flex justify-between">
-                  <div className={sectionTitleStyle}>
-                    <div>
-                      {worksetIndex !== 0 ? (
-                        <SwapUpButton
-                          swap={worksetsArrayHelpers.swap}
-                          index={worksetIndex}
-                        />
-                      ) : null}
-                      {worksetIndex !==
-                      values.workgroups[workgroupIndex].rounds[roundIndex]
-                        .worksets.length -
-                        1 ? (
-                        <SwapDownButton
-                          swap={worksetsArrayHelpers.swap}
-                          index={worksetIndex}
-                        />
-                      ) : null}
+                <Collapsible
+                  trigger={<SingleWorksetLabelWithExercise workset={workset} />}
+                >
+                  <div className="flex justify-between">
+                    <div className={sectionTitleStyle}>
+                      <div>
+                        {worksetIndex !== 0 ? (
+                          <SwapUpButton
+                            swap={worksetsArrayHelpers.swap}
+                            index={worksetIndex}
+                          />
+                        ) : null}
+                        {worksetIndex !==
+                        values.workgroups[workgroupIndex].rounds[roundIndex]
+                          .worksets.length -
+                          1 ? (
+                          <SwapDownButton
+                            swap={worksetsArrayHelpers.swap}
+                            index={worksetIndex}
+                          />
+                        ) : null}
+                      </div>
+                      {`Set ${worksetIndex + 1}`}
                     </div>
-                    {`Set ${worksetIndex + 1}`}
+                    <RemoveButton
+                      remove={worksetsArrayHelpers.remove}
+                      index={worksetIndex}
+                      text=""
+                    />
                   </div>
-                  <RemoveButton
-                    remove={worksetsArrayHelpers.remove}
-                    index={worksetIndex}
-                  />
-                </div>
-                <div>
-                  <SingleWorksetLabelWithExercise workset={workset} />
-                </div>
-                <div>
-                  <Select
-                    labelText="Exercise"
-                    options={exercisesOptions}
-                    fieldName={`${worksetFieldNamePrefix}.exercise.name`}
-                  />
-                  <div className="flex">
-                    <Input
-                      labelText="Reps"
-                      fieldName={`${worksetFieldNamePrefix}.reps`}
-                    />
-                    <Input
-                      labelText="Intensity/load"
-                      fieldName={`${worksetFieldNamePrefix}.intensity`}
-                    />
+                  <div>
                     <Select
-                      labelText="Intensity unit"
-                      options={intensityTypeOptions}
-                      fieldName={`${worksetFieldNamePrefix}.intensityUnit`}
+                      labelText="Exercise"
+                      options={exercisesOptions}
+                      fieldName={`${worksetFieldNamePrefix}.exercise.name`}
                     />
-                  </div>
-                  <Input
-                    labelText="Relative intensity"
-                    fieldName={`${worksetFieldNamePrefix}.relativeIntensity`}
-                  />
-                  <div className="flex">
-                    <Select
-                      labelText="Interval type"
-                      options={intervalTypeOptions}
-                      fieldName={`${worksetFieldNamePrefix}.intervalType`}
-                    />
+                    <div className="flex">
+                      <Input
+                        labelText="Reps"
+                        fieldName={`${worksetFieldNamePrefix}.reps`}
+                      />
+                      <Input
+                        labelText="Intensity/load"
+                        fieldName={`${worksetFieldNamePrefix}.intensity`}
+                      />
+                      <Select
+                        labelText="Intensity unit"
+                        options={intensityTypeOptions}
+                        fieldName={`${worksetFieldNamePrefix}.intensityUnit`}
+                      />
+                    </div>
                     <Input
-                      labelText="Interval time"
-                      fieldName={`${worksetFieldNamePrefix}.interval`}
+                      labelText="Relative intensity"
+                      fieldName={`${worksetFieldNamePrefix}.relativeIntensity`}
                     />
+                    <div className="flex">
+                      <Select
+                        labelText="Interval type"
+                        options={intervalTypeOptions}
+                        fieldName={`${worksetFieldNamePrefix}.intervalType`}
+                      />
+                      <Input
+                        labelText="Interval time"
+                        fieldName={`${worksetFieldNamePrefix}.interval`}
+                      />
+                    </div>
                   </div>
-                </div>
+                </Collapsible>
               </div>
             );
           }

@@ -42,7 +42,7 @@ export const FormButton: React.FC<FormButtonProps> = ({
     <button
       type={type}
       {...conditionalButtonProps}
-      className={`flex align-center bg-${buttonBackgroundColor}-300 hover:bg-${buttonHoverColor}-400 text-${buttonTextColor}-800 py-1 px-2 rounded inline-flex items-center`}
+      className={`flex align-center bg-${buttonBackgroundColor}-300 hover:bg-${buttonHoverColor}-400 text-${buttonTextColor}-800 py-1 px-2 m-1 rounded inline-flex items-center`}
       onClick={onClick}
     >
       {children}
@@ -138,7 +138,7 @@ export const RemoveButton: React.FC<RemoveButtonProps> = ({
   };
   return (
     <FormButton onClick={() => remove(index)} {...customProps}>
-      <FaTimes className={`mr-2`} />
+      <FaTimes />
     </FormButton>
   );
 };

@@ -103,10 +103,14 @@ export const WorkoutPane: React.FC<WorkoutPaneProps> = ({
   return (
     <div className="m-3 p-3 bg-gray-400 rounded ">
       <div>
-        <BackButton />
-        <ShowFormButton />
-        <div className={`rounded py-1 text-gray-900 text-xl`}>{name}</div>
-        <div className="text-sm">{description}</div>
+        <div className="flex justify-between">
+          <BackButton />
+          <ShowFormButton />
+        </div>
+        <div>
+          <div className={`rounded py-1 text-gray-900 text-xl`}>{name}</div>
+          <div className="text-sm">{description}</div>
+        </div>
       </div>
       {/* {Number.isNaN(Number(workoutIndex)) ? ( */}
       {workoutIndex !== undefined ? (

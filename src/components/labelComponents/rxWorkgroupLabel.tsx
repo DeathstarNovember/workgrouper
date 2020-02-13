@@ -21,7 +21,7 @@ export const RxWorkgroupLabel: React.FC<RxWorkgroupLabelProps> = ({
   const { rounds, note } = workgroup;
   const roundsCount = rounds.length;
   const roundsAreEqual = areTheseThingsEqual(rounds);
-  const ordinalSymbol = getOrdinalSymbol(workgroup.sortOrder);
+  const ordinalSymbol = getOrdinalSymbol(workgroupIndex);
   return (
     <div className="mb-2">
       {note ? <div className="text-sm mt-1">{note}</div> : null}

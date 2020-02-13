@@ -12,6 +12,7 @@ import {
 import { RoundsArray } from "./roundsArray";
 import { SwapUpButton, SwapDownButton } from "./buttons";
 import { RxWorkgroupLabel } from "../labelComponents";
+import Collapsible from "react-collapsible";
 
 type WorkgroupsArrayProps = {
   values: Workout;
@@ -26,44 +27,50 @@ export const WorkgroupsArray: React.FC<WorkgroupsArrayProps> = ({ values }) => (
           const workgroupFieldNamePrefix = `workgroups[${workgroupIndex}]`;
           return (
             <div className={sectionStyle} key={`wg${workgroupIndex}`}>
-              <div className="flex justify-between">
-                <div className={sectionTitleStyle}>
-                  <div>
-                    {workgroupIndex !== 0 ? (
-                      <SwapUpButton
-                        swap={workgroupsArrayHelpers.swap}
-                        index={workgroupIndex}
-                      />
-                    ) : null}
-                    {workgroupIndex !== values.workgroups.length - 1 ? (
-                      <SwapDownButton
-                        swap={workgroupsArrayHelpers.swap}
-                        index={workgroupIndex}
-                      />
-                    ) : null}
+              <Collapsible
+                trigger={
+                  <RxWorkgroupLabel
+                    workgroup={workgroup}
+                    workoutIndex={0}
+                    workgroupIndex={workgroupIndex}
+                  />
+                }
+              >
+                <div className="flex justify-between">
+                  <div className={sectionTitleStyle}>
+                    <div>
+                      {workgroupIndex !== 0 ? (
+                        <SwapUpButton
+                          swap={workgroupsArrayHelpers.swap}
+                          index={workgroupIndex}
+                        />
+                      ) : null}
+                      {workgroupIndex !== values.workgroups.length - 1 ? (
+                        <SwapDownButton
+                          swap={workgroupsArrayHelpers.swap}
+                          index={workgroupIndex}
+                        />
+                      ) : null}
+                    </div>
+                    {`Workgroup ${ordinals[workgroupIndex]}`}
                   </div>
-                  {`Workgroup ${ordinals[workgroupIndex]}`}
+                  <RemoveButton
+                    remove={workgroupsArrayHelpers.remove}
+                    index={workgroupIndex}
+                    text=""
+                  />
                 </div>
-                <RemoveButton
-                  remove={workgroupsArrayHelpers.remove}
-                  index={workgroupIndex}
+                <Input
+                  labelText="Workgroup notes"
+                  fieldName={`${workgroupFieldNamePrefix}].note`}
+                  placeholder="Type notes here..."
                 />
-              </div>
-              <RxWorkgroupLabel
-                workgroup={workgroup}
-                workoutIndex={0}
-                workgroupIndex={workgroupIndex}
-              />
-              <Input
-                labelText="Workgroup notes"
-                fieldName={`${workgroupFieldNamePrefix}].note`}
-                placeholder="Type notes here..."
-              />
-              <RoundsArray
-                values={values}
-                workgroupIndex={workgroupIndex}
-                name={`${workgroupFieldNamePrefix}.rounds`}
-              />
+                <RoundsArray
+                  values={values}
+                  workgroupIndex={workgroupIndex}
+                  name={`${workgroupFieldNamePrefix}.rounds`}
+                />
+              </Collapsible>
             </div>
           );
         })}

@@ -58,7 +58,7 @@ export const WorkoutList: React.FC<WorkoutListProps> = ({ workouts }) => {
     }
   } else {
     return (
-      <div className="flex-col w-full">
+      <div className="flex-col w-full max-w-lg">
         <button
           onClick={() => showNewWorkoutForm()}
           className="bg-green-500 hover:bg-green-700 text-white font-bold px-2 py-1 mt-3 mx-3 rounded"

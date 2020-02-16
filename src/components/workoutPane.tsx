@@ -101,7 +101,7 @@ export const WorkoutPane: React.FC<WorkoutPaneProps> = ({
     );
   };
   return (
-    <div className="m-3 p-3 bg-gray-400 rounded ">
+    <div className="m-3 p-3 bg-gray-400 rounded max-w-lg w-full">
       <div>
         <div className="flex justify-between">
           <BackButton />

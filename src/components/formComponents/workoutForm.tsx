@@ -31,7 +31,7 @@ const InnerForm = (props: WorkoutFormProps & FormikProps<Workout>) => {
   };
 
   return (
-    <Form className="p-1" onSubmit={handleSubmit}>
+    <Form className="p-3 w-full max-w-lg" onSubmit={handleSubmit}>
       <button
         onClick={() => hideForm()}
         className="bg-gray-500 hover:bg-gray-700 text-white font-bold px-2 py-1 rounded"

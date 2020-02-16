@@ -4,6 +4,7 @@ export interface SelectOption {
 }
 
 export enum IntensityUnit {
+  none,
   pounds,
   meters,
   seconds
@@ -27,9 +28,9 @@ export type Workgroup = {
 };
 
 export enum IntervalType {
+  none,
   inclusive,
-  exclusive,
-  none
+  exclusive
 }
 export type Round = {
   sortOrder: number;

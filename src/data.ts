@@ -617,40 +617,40 @@ export const workouts: Workout[] = [
   }
 ];
 
-export const newWorkgroup: Workgroup = {
-  sortOrder: 0,
-  note: "",
-  rounds: []
+export const newWorkset: Workset = {
+  exercise: {
+    name: "",
+    intensityUnit: IntensityUnit.none
+  },
+  reps: 0,
+  intensity: 0,
+  relativeIntensity: 0,
+  intensityUnit: IntensityUnit.none,
+  intervalType: IntervalType.none,
+  interval: 0
 };
 
 export const newRound: Round = {
   sortOrder: 0,
   interval: 0,
   intervalType: IntervalType.none,
-  worksets: []
+  worksets: [{ ...newWorkset }]
 };
 
-export const newWorkset: Workset = {
-  exercise: {
-    name: "Barbell Bench Press",
-    intensityUnit: IntensityUnit.pounds
-  },
-  reps: 0,
-  intensity: 0,
-  relativeIntensity: 0,
-  intensityUnit: IntensityUnit.pounds,
-  intervalType: IntervalType.exclusive,
-  interval: 0
+export const newWorkgroup: Workgroup = {
+  sortOrder: 0,
+  note: "",
+  rounds: [{ ...newRound }]
 };
 
 export const newWorkout: Workout = {
   name: "",
   description: "",
   workgroups: [
-    {
-      ...newWorkgroup,
-      rounds: [{ ...newRound, worksets: [{ ...newWorkset }] }]
-    }
+    // {
+    //   ...newWorkgroup,
+    //   rounds: [{ ...newRound, worksets: [{ ...newWorkset }] }]
+    // }
   ]
 };
 export const intervalTypeOptions: SelectOption[] = [

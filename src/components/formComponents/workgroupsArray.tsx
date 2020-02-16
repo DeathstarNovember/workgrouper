@@ -13,6 +13,7 @@ import { RoundsArray } from "./roundsArray";
 import { SwapUpButton, SwapDownButton } from "./buttons";
 import { RxWorkgroupLabel } from "../labelComponents";
 import Collapsible from "react-collapsible";
+import { workoutFormTriggerStyle } from "./formStyles";
 
 type WorkgroupsArrayProps = {
   values: Workout;
@@ -29,11 +30,13 @@ export const WorkgroupsArray: React.FC<WorkgroupsArrayProps> = ({ values }) => (
             <div className={sectionStyle} key={`wg${workgroupIndex}`}>
               <Collapsible
                 trigger={
-                  <RxWorkgroupLabel
-                    workgroup={workgroup}
-                    workoutIndex={0}
-                    workgroupIndex={workgroupIndex}
-                  />
+                  <div className={workoutFormTriggerStyle}>
+                    <RxWorkgroupLabel
+                      workgroup={workgroup}
+                      workoutIndex={0}
+                      workgroupIndex={workgroupIndex}
+                    />
+                  </div>
                 }
               >
                 <div className="flex justify-between">

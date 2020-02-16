@@ -18,6 +18,7 @@ import {
 } from "../../data";
 import { SingleWorksetLabelWithExercise } from "../labelComponents";
 import Collapsible from "react-collapsible";
+import { workoutFormTriggerStyle } from "./formStyles";
 
 type WorksetsArrayProps = {
   values: Workout;
@@ -44,7 +45,11 @@ const WorksetsArray: React.FC<WorksetsArrayProps> = ({
                 key={`wg${workgroupIndex}rd${roundIndex}ws${worksetIndex}`}
               >
                 <Collapsible
-                  trigger={<SingleWorksetLabelWithExercise workset={workset} />}
+                  trigger={
+                    <div className={workoutFormTriggerStyle}>
+                      <SingleWorksetLabelWithExercise workset={workset} />
+                    </div>
+                  }
                 >
                   <div className="flex justify-between">
                     <div className={sectionTitleStyle}>
@@ -67,11 +72,14 @@ const WorksetsArray: React.FC<WorksetsArrayProps> = ({
                       </div>
                       {`Set ${worksetIndex + 1}`}
                     </div>
-                    <RemoveButton
-                      remove={worksetsArrayHelpers.remove}
-                      index={worksetIndex}
-                      text=""
-                    />
+                    {values.workgroups[workgroupIndex].rounds[roundIndex]
+                      .worksets.length !== 1 ? (
+                      <RemoveButton
+                        remove={worksetsArrayHelpers.remove}
+                        index={worksetIndex}
+                        text=""
+                      />
+                    ) : null}
                   </div>
                   <div>
                     <Select

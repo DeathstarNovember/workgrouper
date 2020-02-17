@@ -10,13 +10,17 @@ export const SingleWorksetLabelWithExercise: React.FC<SingleWorksetLabelWithExer
   workset
 }) => {
   const { exercise, reps, intensity, interval, intervalType } = workset;
-  return (
-    <div>
-      {exercise.name}, 1x{reps} @{" "}
-      {intensity + getIntensitySymbol(exercise.intensityUnit)}{" "}
-      {getIntervalSymbol(interval, intervalType)}
-    </div>
-  );
+  if (exercise.name === "") {
+    return <div className="p-1">Select Exercise</div>;
+  } else {
+    return (
+      <div>
+        {exercise.name}, 1x{reps} @{" "}
+        {intensity + getIntensitySymbol(exercise.intensityUnit)}{" "}
+        {getIntervalSymbol(interval, intervalType)}
+      </div>
+    );
+  }
 };
 
 type MultipleWorksetsWithoutExerciseLabelProps = {

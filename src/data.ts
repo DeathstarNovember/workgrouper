@@ -11,16 +11,24 @@ import {
 
 export const exercises: Exercise[] = [
   {
+    name: "",
+    intensityUnit: IntensityUnit.none
+  },
+  {
     name: "Barbell Back Squat",
-    intensityUnit: IntensityUnit.pounds
+    intensityUnit: IntensityUnit.weight
   },
   {
     name: "Barbell Overhead Press",
-    intensityUnit: IntensityUnit.pounds
+    intensityUnit: IntensityUnit.weight
   },
   {
     name: "Barbell Bench Press",
-    intensityUnit: IntensityUnit.pounds
+    intensityUnit: IntensityUnit.weight
+  },
+  {
+    name: "Rower Erg",
+    intensityUnit: IntensityUnit.speed
   }
 ];
 
@@ -41,7 +49,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Back Squat",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 9,
                 intensity: 185,
@@ -64,7 +72,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Back Squat",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 9,
                 intensity: 185,
@@ -74,7 +82,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Back Squat",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 9,
                 intensity: 185,
@@ -84,7 +92,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Back Squat",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 9,
                 intensity: 185,
@@ -107,7 +115,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Bench Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 185,
@@ -117,7 +125,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Bench Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 185,
@@ -127,7 +135,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Bench Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 195,
@@ -137,7 +145,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Bench Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 195,
@@ -161,7 +169,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -171,7 +179,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -181,7 +189,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -198,7 +206,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -208,7 +216,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -218,7 +226,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -248,7 +256,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -258,7 +266,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -268,7 +276,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 160,
@@ -278,7 +286,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 165,
@@ -295,7 +303,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -305,7 +313,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -315,7 +323,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 160,
@@ -325,7 +333,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 165,
@@ -349,7 +357,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Back Squat",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -359,7 +367,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Back Squat",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -369,7 +377,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Bench Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 165,
@@ -379,7 +387,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -396,7 +404,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Back Squat",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -406,7 +414,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Back Squat",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -416,7 +424,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Bench Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 165,
@@ -426,7 +434,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -449,7 +457,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Back Squat",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -459,7 +467,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Back Squat",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 155,
@@ -469,7 +477,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Bench Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 160,
@@ -479,7 +487,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 135,
@@ -496,7 +504,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Back Squat",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 160,
@@ -506,7 +514,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Back Squat",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 160,
@@ -516,7 +524,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Bench Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 165,
@@ -526,7 +534,7 @@ export const workouts: Workout[] = [
               {
                 exercise: {
                   name: "Barbell Overhead Press",
-                  intensityUnit: IntensityUnit.pounds
+                  intensityUnit: IntensityUnit.weight
                 },
                 reps: 5,
                 intensity: 125,
@@ -581,9 +589,8 @@ export const intervalTypeOptions: SelectOption[] = [
   { value: IntervalType.none, label: "No Interval" }
 ];
 export const intensityTypeOptions: SelectOption[] = [
-  { value: IntensityUnit.pounds, label: "Pounds" },
-  { value: IntensityUnit.meters, label: "Meters" },
-  { value: IntensityUnit.seconds, label: "Seconds" }
+  { value: IntensityUnit.weight, label: "Pounds" },
+  { value: IntensityUnit.speed, label: "Meters/Sec" }
 ];
 export const exercisesOptions: SelectOption[] = exercises.map(
   (exercise, _index) => ({

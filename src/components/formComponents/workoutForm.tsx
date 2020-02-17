@@ -12,6 +12,7 @@ interface WorkoutFormProps {
 
 const InnerForm = (props: WorkoutFormProps & FormikProps<Workout>) => {
   const { setFieldValue, isSubmitting, values, hideForm, handleSubmit } = props;
+
   const setWorkoutSortOrders = (values: Workout) => {
     values.workgroups.forEach((workgroup, workgroupIndex) => {
       setFieldValue(`workgroups[${workgroupIndex}].sortOrder`, workgroupIndex);
@@ -33,7 +34,7 @@ const InnerForm = (props: WorkoutFormProps & FormikProps<Workout>) => {
   return (
     <Form className="p-3 w-full max-w-lg" onSubmit={handleSubmit}>
       <button
-        onClick={() => hideForm()}
+        onClick={hideForm}
         className="bg-gray-500 hover:bg-gray-700 text-white font-bold px-2 py-1 rounded"
       >
         <FaArrowLeft />

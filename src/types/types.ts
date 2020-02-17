@@ -5,9 +5,8 @@ export interface SelectOption {
 
 export enum IntensityUnit {
   none,
-  pounds,
-  meters,
-  seconds
+  weight,
+  speed
 }
 
 export type Exercise = {

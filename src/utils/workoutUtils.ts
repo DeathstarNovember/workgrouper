@@ -18,12 +18,10 @@ export const getIntervalSymbol = (
 };
 export const getIntensitySymbol = (intensityUnit: IntensityUnit) => {
   switch (Number(intensityUnit)) {
-    case IntensityUnit.pounds:
+    case IntensityUnit.weight:
       return `lbs`;
-    case IntensityUnit.meters:
-      return `m`;
-    case IntensityUnit.seconds:
-      return "seconds";
+    case IntensityUnit.speed:
+      return `m/s`;
     default:
       return `${intensityUnit}`;
   }

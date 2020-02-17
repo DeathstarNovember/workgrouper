@@ -89,7 +89,7 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
               className="text-sm"
             >
               {camelCaseToTitle(ev.exerciseName)}: {ev.volume}
-              {worksetsByExercise[ev.exerciseName][0].intensityUnit}/
+              {worksetsByExercise[ev.exerciseName][0].exercise.intensityUnit}/
               {worksetsByExercise[ev.exerciseName].length} worksets
             </div>
           ))}

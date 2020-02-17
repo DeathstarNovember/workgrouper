@@ -9,18 +9,11 @@ type SingleWorksetLabelWithExerciseProps = {
 export const SingleWorksetLabelWithExercise: React.FC<SingleWorksetLabelWithExerciseProps> = ({
   workset
 }) => {
-  const {
-    exercise,
-    reps,
-    intensity,
-    intensityUnit,
-    interval,
-    intervalType
-  } = workset;
+  const { exercise, reps, intensity, interval, intervalType } = workset;
   return (
     <div>
       {exercise.name}, 1x{reps} @{" "}
-      {intensity + getIntensitySymbol(intensityUnit)}{" "}
+      {intensity + getIntensitySymbol(exercise.intensityUnit)}{" "}
       {getIntervalSymbol(interval, intervalType)}
     </div>
   );
@@ -34,16 +27,11 @@ export const MultipleWorksetsWithoutExerciseLabel: React.FC<MultipleWorksetsWith
   worksets
 }) => {
   const worksetCount = worksets.length;
-  const {
-    reps,
-    intensity,
-    intensityUnit,
-    interval,
-    intervalType
-  } = worksets[0];
+  const { exercise, reps, intensity, interval, intervalType } = worksets[0];
   return (
     <div>
-      {worksetCount}x{reps} @ {intensity + getIntensitySymbol(intensityUnit)}{" "}
+      {worksetCount}x{reps} @{" "}
+      {intensity + getIntensitySymbol(exercise.intensityUnit)}{" "}
       {getIntervalSymbol(interval, intervalType)}
     </div>
   );
@@ -57,18 +45,11 @@ export const MultipleWorksetsWithExerciseLabel: React.FC<MultipleWorksetsWithExe
   worksets
 }) => {
   const worksetCount = worksets.length;
-  const {
-    exercise,
-    reps,
-    intensity,
-    intensityUnit,
-    interval,
-    intervalType
-  } = worksets[0];
+  const { exercise, reps, intensity, interval, intervalType } = worksets[0];
   return (
     <div>
       {exercise.name}, {worksetCount}x{reps} @{" "}
-      {intensity + getIntensitySymbol(intensityUnit)}{" "}
+      {intensity + getIntensitySymbol(exercise.intensityUnit)}{" "}
       {getIntervalSymbol(interval, intervalType)}
     </div>
   );

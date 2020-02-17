@@ -44,8 +44,6 @@ export type Workset = {
   exerciseName?: string;
   reps: number;
   intensity: number;
-  relativeIntensity: number;
-  intensityUnit: IntensityUnit;
   intervalType: IntervalType;
   interval: number;
 };

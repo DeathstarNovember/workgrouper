@@ -13,26 +13,37 @@ export const WorkoutFormError: React.FC<WorkoutFormErrorProps> = ({ name }) => {
 
 type LabelProps = {
   label: string;
+  labelClassName?: string;
 };
 
-export const Label: React.FC<LabelProps> = ({ label }) => (
-  <div className={labelStyle}>{label}</div>
+export const Label: React.FC<LabelProps> = ({ label, labelClassName }) => (
+  <div className={labelStyle + " " + labelClassName}>{label}</div>
 );
 
 type InputProps = {
   labelText?: string;
   fieldName: string;
   placeholder?: string;
+  labelClassName?: string;
+  fieldClassName?: string;
 };
 
 export const Input: React.FC<InputProps> = ({
+  labelClassName,
+  fieldClassName,
   labelText,
   fieldName,
   ...props
 }) => (
   <div>
-    {labelText ? <Label label={labelText} /> : null}
-    <Field className={fieldStyle} name={fieldName} {...props} />
+    {labelText ? (
+      <Label label={labelText} labelClassName={labelClassName} />
+    ) : null}
+    <Field
+      className={fieldStyle + " " + fieldClassName}
+      name={fieldName}
+      {...props}
+    />
     <WorkoutFormError name={fieldName} />
   </div>
 );
@@ -40,16 +51,24 @@ export const Input: React.FC<InputProps> = ({
 type SelectProps = {
   options: SelectOption[];
   fieldName: string;
+  fieldClassName?: string;
   labelText: string;
+  labelClassName?: string;
 };
 export const Select: React.FC<SelectProps> = ({
   options,
   fieldName,
-  labelText
+  fieldClassName,
+  labelText,
+  labelClassName
 }) => (
   <div>
-    <Label label={labelText} />
-    <Field as="select" className={selectStyle} name={fieldName}>
+    <Label label={labelText} labelClassName={labelClassName} />
+    <Field
+      as="select"
+      className={selectStyle + " " + fieldClassName}
+      name={fieldName}
+    >
       {options.map((option, optionIndex) => (
         <option key={optionIndex} value={option.value}>
           {option.label}

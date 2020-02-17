@@ -39,7 +39,6 @@ const WorkgroupResultForm: React.FC<WorkgroupResultFormProps> = ({
               exercise,
               reps,
               intensity,
-              intensityUnit,
               intervalType,
               interval
             } = workset;
@@ -72,7 +71,7 @@ const WorkgroupResultForm: React.FC<WorkgroupResultFormProps> = ({
                     type="number"
                     ref={register({ required: true, pattern: /\d+/ })}
                   />
-                  <div className="mr-2">{intensityUnit}</div>
+                  <div className="mr-2">{exercise.intensityUnit}</div>
                   <div className="mr-2">{intervalSymbol}</div>
                   <input
                     className={inputStyle + " w-20"}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaCheck, FaTimes, FaEdit, FaArrowLeft } from "react-icons/fa";
 import { WorkoutLabel } from "./labelComponents";
-import { WorkoutResultForm } from "./formComponents";
+import { WorkoutResultForm, WorkoutForm } from "./formComponents";
 import { Workout } from "../types";
 
 type ConfirmCancelButtonsProps = {
@@ -116,9 +116,10 @@ export const WorkoutPane: React.FC<WorkoutPaneProps> = ({
       {workoutIndex !== undefined ? (
         resultIsVisible ? (
           <div>
-            <ConfirmCancelButtons confirm={hideResult} cancel={hideResult} />
-            <WorkoutResultForm workout={workout} workoutIndex={workoutIndex} />
-            <ConfirmCancelButtons confirm={hideResult} cancel={hideResult} />
+            {/* <ConfirmCancelButtons confirm={hideResult} cancel={hideResult} /> */}
+            <WorkoutForm workout={workout} hideForm={hideResult} />
+            {/* <WorkoutResultForm workout={workout} workoutIndex={workoutIndex} /> */}
+            {/* <ConfirmCancelButtons confirm={hideResult} cancel={hideResult} /> */}
           </div>
         ) : (
           <div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Workout } from "../../types";
+import { Workout, IntensityUnit } from "../../types";
 import { FieldArray } from "formik";
 import {
   sectionStyle,
@@ -39,6 +39,16 @@ const WorksetsArray: React.FC<WorksetsArrayProps> = ({
         {values.workgroups[workgroupIndex].rounds[roundIndex].worksets.map(
           (workset, worksetIndex) => {
             const worksetFieldNamePrefix = `${name}[${worksetIndex}]`;
+            const intensityLabelText =
+              workset.exercise.intensityUnit === IntensityUnit.pounds
+                ? "load"
+                : workset.exercise.intensityUnit === IntensityUnit.meters
+                ? "distance"
+                : workset.exercise.intensityUnit === IntensityUnit.seconds
+                ? "duration"
+                : workset.exercise.intensityUnit === IntensityUnit.none
+                ? ""
+                : "";
             return (
               <div
                 className={sectionStyle}
@@ -82,35 +92,26 @@ const WorksetsArray: React.FC<WorksetsArrayProps> = ({
                     ) : null}
                   </div>
                   <div>
-                    <Select
-                      labelText="Exercise"
-                      options={exercisesOptions}
-                      fieldName={`${worksetFieldNamePrefix}.exercise.name`}
-                    />
                     <div className="flex">
-                      <Input
-                        labelText="Reps"
-                        fieldName={`${worksetFieldNamePrefix}.reps`}
-                      />
-                      <Input
-                        labelText="Intensity/load"
-                        fieldName={`${worksetFieldNamePrefix}.intensity`}
-                      />
                       <Select
-                        labelText="Intensity unit"
-                        options={intensityTypeOptions}
-                        fieldName={`${worksetFieldNamePrefix}.intensityUnit`}
+                        labelText="Exercise"
+                        options={exercisesOptions}
+                        fieldName={`${worksetFieldNamePrefix}.exercise.name`}
                       />
-                    </div>
-                    <Input
-                      labelText="Relative intensity"
-                      fieldName={`${worksetFieldNamePrefix}.relativeIntensity`}
-                    />
-                    <div className="flex">
                       <Select
                         labelText="Interval type"
                         options={intervalTypeOptions}
                         fieldName={`${worksetFieldNamePrefix}.intervalType`}
+                      />
+                    </div>
+                    <div className="flex">
+                      <Input
+                        labelText="Reps"
+                        fieldName={`${worksetFieldNamePrefix}.reps`}
+                      />{" "}
+                      <Input
+                        labelText={intensityLabelText}
+                        fieldName={`${worksetFieldNamePrefix}.intensity`}
                       />
                       <Input
                         labelText="Interval time"

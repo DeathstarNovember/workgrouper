@@ -53,7 +53,6 @@ export const FormButton: React.FC<FormButtonProps> = ({
 
 type SubmitButtonProps = {
   isSubmitting: boolean;
-  onClick?: (arg0: any | undefined) => any | void;
   hoverColor?: string;
   bgColor?: string;
   textColor?: string;
@@ -62,7 +61,6 @@ type SubmitButtonProps = {
 
 export const SubmitButton: React.FC<SubmitButtonProps> = ({
   isSubmitting,
-  onClick,
   hoverColor,
   bgColor,
   textColor,
@@ -72,8 +70,7 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({
     hoverColor,
     bgColor,
     textColor,
-    text,
-    onClick
+    text
   };
 
   return (

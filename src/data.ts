@@ -6,7 +6,8 @@ import {
   SelectOption,
   Workset,
   Round,
-  Workgroup
+  Workgroup,
+  IntensityType
 } from "./types";
 
 export const exercises: Exercise[] = [
@@ -53,6 +54,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 9,
                 intensity: 185,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 140
               }
@@ -76,6 +78,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 9,
                 intensity: 185,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 140
               },
@@ -86,6 +89,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 9,
                 intensity: 185,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 140
               },
@@ -96,6 +100,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 9,
                 intensity: 185,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 140
               }
@@ -119,6 +124,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 185,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -129,6 +135,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 185,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -139,6 +146,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 195,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -149,6 +157,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 195,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               }
@@ -173,6 +182,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -183,6 +193,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -193,6 +204,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               }
@@ -210,6 +222,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -220,6 +233,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -230,6 +244,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               }
@@ -260,6 +275,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -270,6 +286,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -280,6 +297,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 160,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -290,6 +308,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 165,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               }
@@ -307,6 +326,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -317,6 +337,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -327,6 +348,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 160,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -337,6 +359,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 165,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               }
@@ -361,6 +384,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -371,6 +395,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -381,6 +406,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 165,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -391,6 +417,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               }
@@ -408,6 +435,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -418,6 +446,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -428,6 +457,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 165,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -438,6 +468,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               }
@@ -461,6 +492,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -471,6 +503,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 155,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -481,6 +514,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 160,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -491,6 +525,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 135,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               }
@@ -508,6 +543,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 160,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -518,6 +554,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 160,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -528,6 +565,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 165,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               },
@@ -538,6 +576,7 @@ export const workouts: Workout[] = [
                 },
                 reps: 5,
                 intensity: 125,
+                intensityType: IntensityType.absolute,
                 intervalType: IntervalType.inclusive,
                 interval: 150
               }
@@ -554,8 +593,9 @@ export const newWorkset: Workset = {
     name: "",
     intensityUnit: IntensityUnit.none
   },
-  reps: 0,
+  reps: 1,
   intensity: 0,
+  intensityType: IntensityType.absolute,
   intervalType: IntervalType.none,
   interval: 0
 };

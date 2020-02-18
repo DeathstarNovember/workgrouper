@@ -1,0 +1,8 @@
+{
+  "name": "Workgrouper",
+  "start_url": "/",
+  "background_color": "#bbbbbb",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#bbbbbb"
+}

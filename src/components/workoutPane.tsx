@@ -1,35 +1,8 @@
 import React, { useState } from "react";
-import { FaCheck, FaTimes, FaEdit, FaArrowLeft } from "react-icons/fa";
+import { FaCheck, FaEdit, FaArrowLeft } from "react-icons/fa";
 import { WorkoutLabel } from "./labelComponents";
-import { WorkoutResultForm, WorkoutForm } from "./formComponents";
+import { WorkoutForm } from "./formComponents";
 import { Workout } from "../types";
-
-type ConfirmCancelButtonsProps = {
-  confirm: () => void;
-  cancel: () => void;
-};
-
-const ConfirmCancelButtons: React.FC<ConfirmCancelButtonsProps> = ({
-  confirm,
-  cancel
-}) => {
-  return (
-    <div className="flex justify-between">
-      <button
-        onClick={() => confirm()}
-        className="bg-green-500 hover:bg-green-700 text-white font-bold px-2 py-1 rounded"
-      >
-        <FaCheck />
-      </button>
-      <button
-        onClick={() => cancel()}
-        className="bg-red-500 hover:bg-red-700 text-white font-bold px-2 py-1 rounded"
-      >
-        <FaTimes />
-      </button>
-    </div>
-  );
-};
 
 type ConfirmEditButtonsProps = {
   confirm: () => void;
@@ -41,10 +14,10 @@ const ConfirmEditButtons: React.FC<ConfirmEditButtonsProps> = ({
   edit
 }) => {
   return (
-    <div className="flex justify-between">
+    <div className="flex">
       <button
         onClick={() => edit()}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-1 rounded"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-1 mr-2 rounded"
       >
         <FaEdit />
       </button>
@@ -84,7 +57,7 @@ export const WorkoutPane: React.FC<WorkoutPaneProps> = ({
     return (
       <button
         onClick={() => clearSelectedWorkout()}
-        className="bg-gray-500 hover:bg-gray-700 text-white font-bold px-2 py-1 rounded"
+        className="bg-gray-500 hover:bg-gray-700 text-white font-bold px-2 py-1 mr-2 rounded"
       >
         <FaArrowLeft />
       </button>
@@ -101,9 +74,9 @@ export const WorkoutPane: React.FC<WorkoutPaneProps> = ({
     );
   };
   return (
-    <div className="m-3 p-3 bg-gray-400 rounded max-w-lg w-full">
+    <div className="p-3 rounded max-w-lg w-full">
       <div>
-        <div className="flex justify-between">
+        <div className="flex">
           <BackButton />
           <ShowFormButton />
         </div>
@@ -112,14 +85,10 @@ export const WorkoutPane: React.FC<WorkoutPaneProps> = ({
           <div className="text-sm">{description}</div>
         </div>
       </div>
-      {/* {Number.isNaN(Number(workoutIndex)) ? ( */}
       {workoutIndex !== undefined ? (
         resultIsVisible ? (
           <div>
-            {/* <ConfirmCancelButtons confirm={hideResult} cancel={hideResult} /> */}
             <WorkoutForm workout={workout} hideForm={hideResult} />
-            {/* <WorkoutResultForm workout={workout} workoutIndex={workoutIndex} /> */}
-            {/* <ConfirmCancelButtons confirm={hideResult} cancel={hideResult} /> */}
           </div>
         ) : (
           <div>

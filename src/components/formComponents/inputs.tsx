@@ -1,7 +1,8 @@
 import React from "react";
-import { Field, ErrorMessage } from "formik";
+import { Field, ErrorMessage, FieldProps } from "formik";
 import { SelectOption } from "../../types";
 import { labelStyle, fieldStyle, selectStyle } from ".";
+import { errorFieldStyle } from "./formStyles";
 
 type WorkoutFormErrorProps = {
   name: string;
@@ -39,12 +40,25 @@ export const Input: React.FC<InputProps> = ({
     {labelText ? (
       <Label label={labelText} labelClassName={labelClassName} />
     ) : null}
-    <Field
-      className={fieldStyle + " " + fieldClassName}
-      name={fieldName}
-      {...props}
-    />
-    {/* <WorkoutFormError name={fieldName} /> */}
+    <Field name={fieldName}>
+      {({ field, meta }: FieldProps) => {
+        const style = fieldStyle + " " + fieldClassName;
+        const errorStyle = style + " " + errorFieldStyle;
+        return (
+          <div>
+            <input
+              type="text"
+              className={meta.touched && meta.error ? errorStyle : style}
+              placeholder={props.placeholder}
+              {...field}
+            />
+            {/* {meta.touched && meta.error ? (
+              <div className="text">{meta.error}</div>
+            ) : null} */}
+          </div>
+        );
+      }}
+    </Field>
   </div>
 );
 

@@ -1,6 +1,6 @@
 import { ordinals } from "../data";
 import { diff } from "deep-object-diff";
-import { IntervalType, IntensityUnit } from "../types";
+import { IntervalType, IntensityUnit, IntensityType } from "../types";
 export const getIntervalSymbol = (
   interval: number,
   intervalType: IntervalType
@@ -16,14 +16,21 @@ export const getIntervalSymbol = (
       return `${interval}`;
   }
 };
-export const getIntensitySymbol = (intensityUnit: IntensityUnit) => {
-  switch (Number(intensityUnit)) {
-    case IntensityUnit.weight:
-      return `lbs`;
-    case IntensityUnit.speed:
-      return `m/s`;
-    default:
-      return `${intensityUnit}`;
+export const getIntensitySymbol = (
+  intensityUnit: IntensityUnit,
+  intensityType: IntensityType
+) => {
+  if (intensityType === IntensityType.relative) {
+    return "%1rm";
+  } else {
+    switch (Number(intensityUnit)) {
+      case IntensityUnit.weight:
+        return "lbs";
+      case IntensityUnit.speed:
+        return "m/s";
+      default:
+        return `${intensityUnit}`;
+    }
   }
 };
 

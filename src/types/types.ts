@@ -9,14 +9,19 @@ export enum IntensityUnit {
   speed
 }
 
+export enum IntensityType {
+  absolute,
+  relative
+}
+
 export type Exercise = {
   name: string;
   intensityUnit: IntensityUnit;
 };
 
 export type Workout = {
-  name: string;
-  description: string;
+  name?: string;
+  description?: string;
   workgroups: Workgroup[];
 };
 
@@ -42,6 +47,7 @@ export type Workset = {
   exercise: Exercise;
   exerciseName?: string;
   reps: number;
+  intensityType: IntensityType;
   intensity: number;
   intervalType: IntervalType;
   interval: number;

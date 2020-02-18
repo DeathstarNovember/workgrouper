@@ -1,6 +1,17 @@
 import React, { useEffect } from "react";
-import { Workout, IntensityUnit, IntervalType, Workset } from "../../types";
-import { FieldArray, FieldArrayRenderProps, useFormikContext } from "formik";
+import {
+  Workout,
+  IntensityUnit,
+  IntervalType,
+  Workset,
+  IntensityType
+} from "../../types";
+import {
+  FieldArray,
+  FieldArrayRenderProps,
+  useFormikContext,
+  FormikProps
+} from "formik";
 import {
   sectionStyle,
   sectionTitleStyle,
@@ -15,6 +26,8 @@ import { exercisesOptions, exercises, intervalTypeOptions } from "../../data";
 import { SingleWorksetLabelWithExercise } from "../labelComponents";
 import Collapsible from "react-collapsible";
 import { workoutFormTriggerStyle } from "./formStyles";
+import { FormButton } from "./buttons";
+import { FaPercentage, FaHashtag } from "react-icons/fa";
 
 type WorksetFieldsProps = {
   workset: Workset;
@@ -22,7 +35,6 @@ type WorksetFieldsProps = {
   roundIndex: number;
   worksetIndex: number;
   worksetsArrayHelpers: FieldArrayRenderProps;
-  values: Workout;
   name: string;
 };
 
@@ -32,10 +44,17 @@ const WorksetFields: React.FC<WorksetFieldsProps> = ({
   roundIndex,
   worksetIndex,
   worksetsArrayHelpers,
-  values,
   name
 }) => {
-  const { setFieldValue } = useFormikContext();
+  const { setFieldValue, values }: FormikProps<Workout> = useFormikContext();
+  const toggleIntensityType = (worksetIndex: number) => {
+    setFieldValue(
+      `${name}[${worksetIndex}].intensityType`,
+      workset.intensityType === IntensityType.absolute
+        ? IntensityType.relative
+        : IntensityType.absolute
+    );
+  };
   const exercise = exercises.find(
     exercise =>
       exercise.name ===
@@ -49,9 +68,11 @@ const WorksetFields: React.FC<WorksetFieldsProps> = ({
       `${worksetFieldNamePrefix}.exercise.intensityUnit`,
       exercise?.intensityUnit
     );
-  }, [exercise]);
+  }, [exercise, setFieldValue, worksetFieldNamePrefix]);
   const intensityLabelText =
-    exercise?.intensityUnit === IntensityUnit.weight
+    workset.intensityType === IntensityType.relative
+      ? "%1rm"
+      : exercise?.intensityUnit === IntensityUnit.weight
       ? "load (lbs)"
       : exercise?.intensityUnit === IntensityUnit.speed
       ? "speed (m/s)"
@@ -89,7 +110,29 @@ const WorksetFields: React.FC<WorksetFieldsProps> = ({
                 />
               ) : null}
             </div>
-            {`Set ${worksetIndex + 1}`}
+            <div>
+              {`Set ${worksetIndex + 1}`}
+              <FormButton
+                type="button"
+                bgColor={
+                  workset.intensityType === IntensityType.absolute
+                    ? "yellow"
+                    : "purple"
+                }
+                hoverColor={
+                  workset.intensityType === IntensityType.absolute
+                    ? "yellow"
+                    : "purple"
+                }
+                onClick={() => toggleIntensityType(worksetIndex)}
+              >
+                {workset.intensityType === IntensityType.absolute ? (
+                  <FaHashtag />
+                ) : (
+                  <FaPercentage />
+                )}
+              </FormButton>
+            </div>
           </div>
           {values.workgroups[workgroupIndex].rounds[roundIndex].worksets
             .length !== 1 ? (
@@ -117,7 +160,7 @@ const WorksetFields: React.FC<WorksetFieldsProps> = ({
             <Input
               labelText={repsDistanceLabelText}
               fieldName={`${worksetFieldNamePrefix}.reps`}
-            />{" "}
+            />
             <Input
               labelText={intensityLabelText}
               fieldName={`${worksetFieldNamePrefix}.intensity`}
@@ -136,49 +179,49 @@ const WorksetFields: React.FC<WorksetFieldsProps> = ({
 };
 
 type WorksetsArrayProps = {
-  values: Workout;
   name: string;
   workgroupIndex: number;
   roundIndex: number;
 };
 const WorksetsArray: React.FC<WorksetsArrayProps> = ({
-  values,
   name,
   workgroupIndex,
   roundIndex
-}) => (
-  <FieldArray
-    name={name}
-    render={worksetsArrayHelpers => {
-      const worksets =
-        values.workgroups[workgroupIndex].rounds[roundIndex].worksets;
-      return (
-        <div>
-          {worksets.map((workset, worksetIndex) => (
-            <WorksetFields
-              key={`${name}workset${worksetIndex}`}
-              workset={workset}
-              workgroupIndex={workgroupIndex}
-              roundIndex={roundIndex}
-              worksetIndex={worksetIndex}
-              values={values}
-              name={name}
-              worksetsArrayHelpers={worksetsArrayHelpers}
+}) => {
+  const { values }: FormikProps<Workout> = useFormikContext();
+  return (
+    <FieldArray
+      name={name}
+      render={worksetsArrayHelpers => {
+        const worksets =
+          values.workgroups[workgroupIndex].rounds[roundIndex].worksets;
+        return (
+          <div>
+            {worksets.map((workset, worksetIndex) => (
+              <WorksetFields
+                key={`${name}workset${worksetIndex}`}
+                workset={workset}
+                workgroupIndex={workgroupIndex}
+                roundIndex={roundIndex}
+                worksetIndex={worksetIndex}
+                name={name}
+                worksetsArrayHelpers={worksetsArrayHelpers}
+              />
+            ))}
+            <AddButton
+              add={() =>
+                worksetsArrayHelpers.push({
+                  ...worksets[worksets.length - 1],
+                  sortOrder: worksets.length
+                })
+              }
+              text="add a set"
             />
-          ))}
-          <AddButton
-            add={() =>
-              worksetsArrayHelpers.push({
-                ...worksets[worksets.length - 1],
-                sortOrder: worksets.length
-              })
-            }
-            text="add a set"
-          />
-        </div>
-      );
-    }}
-  />
-);
+          </div>
+        );
+      }}
+    />
+  );
+};
 
 export default WorksetsArray;

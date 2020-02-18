@@ -7,10 +7,7 @@ import "./styles.css";
 const App = () => {
   return (
     <div className="App">
-      <div
-        className="bg-gray-200 w-full m-h-screen flex"
-        style={{ minHeight: "100vh" }}
-      >
+      <div className="bg-gray-200 w-full flex" style={{ minHeight: "100vh" }}>
         <WorkoutList workouts={workouts} />
       </div>
     </div>

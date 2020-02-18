@@ -1,5 +1,5 @@
 import React from "react";
-import { getIntervalSymbol } from "../../utils";
+import { getIntervalSymbol, getIntensitySymbol } from "../../utils";
 import { Workset } from "../../types";
 
 type SingleWorksetLabelWithExerciseProps = {
@@ -9,20 +9,22 @@ type SingleWorksetLabelWithExerciseProps = {
 export const SingleWorksetLabelWithExercise: React.FC<SingleWorksetLabelWithExerciseProps> = ({
   workset
 }) => {
-  const {
-    exercise,
-    reps,
-    intensity,
-    intensityUnit,
-    interval,
-    intervalType
-  } = workset;
-  return (
-    <div>
-      {exercise.name}, 1x{reps} @ {intensity + intensityUnit}{" "}
-      {getIntervalSymbol(interval, intervalType)}
-    </div>
-  );
+  const { exercise, reps, intensity, interval, intervalType } = workset;
+  if (exercise.name === "") {
+    return <div className="p-1">Select Exercise</div>;
+  } else {
+    return (
+      <div>
+        {exercise.name}, {reps} @{" "}
+        {intensity +
+          getIntensitySymbol(
+            exercise.intensityUnit,
+            workset.intensityType
+          )}{" "}
+        {getIntervalSymbol(interval, intervalType)}
+      </div>
+    );
+  }
 };
 
 type MultipleWorksetsWithoutExerciseLabelProps = {
@@ -34,15 +36,17 @@ export const MultipleWorksetsWithoutExerciseLabel: React.FC<MultipleWorksetsWith
 }) => {
   const worksetCount = worksets.length;
   const {
+    exercise,
     reps,
     intensity,
-    intensityUnit,
     interval,
-    intervalType
+    intervalType,
+    intensityType
   } = worksets[0];
   return (
     <div>
-      {worksetCount}x{reps} @ {intensity + intensityUnit}{" "}
+      {worksetCount}x{reps} @{" "}
+      {intensity + getIntensitySymbol(exercise.intensityUnit, intensityType)}{" "}
       {getIntervalSymbol(interval, intervalType)}
     </div>
   );
@@ -60,13 +64,14 @@ export const MultipleWorksetsWithExerciseLabel: React.FC<MultipleWorksetsWithExe
     exercise,
     reps,
     intensity,
-    intensityUnit,
     interval,
-    intervalType
+    intervalType,
+    intensityType
   } = worksets[0];
   return (
     <div>
-      {exercise.name}, {worksetCount}x{reps} @ {intensity + intensityUnit}{" "}
+      {exercise.name}, {worksetCount}x{reps} @{" "}
+      {intensity + getIntensitySymbol(exercise.intensityUnit, intensityType)}{" "}
       {getIntervalSymbol(interval, intervalType)}
     </div>
   );

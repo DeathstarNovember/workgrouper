@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  useForm,
-  FormContext,
-  useFormContext,
-  useFieldArray
-} from "react-hook-form";
+import { useForm, FormContext, useFormContext } from "react-hook-form";
 import { RxWorkgroupLabel } from "../labelComponents";
 import { Workgroup, IntervalType, Workout } from "../../types";
 
@@ -20,9 +15,6 @@ const WorkgroupResultForm: React.FC<WorkgroupResultFormProps> = ({
   workoutIndex
 }) => {
   const { register } = useFormContext();
-  const arrayMethods = useFieldArray({
-    name: "workset"
-  });
   const inputStyle =
     "bg-gray-300 shadow appearance-none border rounded p-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
   return (
@@ -39,7 +31,6 @@ const WorkgroupResultForm: React.FC<WorkgroupResultFormProps> = ({
               exercise,
               reps,
               intensity,
-              intensityUnit,
               intervalType,
               interval
             } = workset;
@@ -72,7 +63,7 @@ const WorkgroupResultForm: React.FC<WorkgroupResultFormProps> = ({
                     type="number"
                     ref={register({ required: true, pattern: /\d+/ })}
                   />
-                  <div className="mr-2">{intensityUnit}</div>
+                  <div className="mr-2">{exercise.intensityUnit}</div>
                   <div className="mr-2">{intervalSymbol}</div>
                   <input
                     className={inputStyle + " w-20"}

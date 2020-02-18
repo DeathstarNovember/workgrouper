@@ -1,7 +1,17 @@
+export interface SelectOption {
+  value: any;
+  label: string;
+}
+
 export enum IntensityUnit {
-  pounds,
-  meters,
-  seconds
+  none,
+  weight,
+  speed
+}
+
+export enum IntensityType {
+  absolute,
+  relative
 }
 
 export type Exercise = {
@@ -10,8 +20,8 @@ export type Exercise = {
 };
 
 export type Workout = {
-  name: string;
-  description: string;
+  name?: string;
+  description?: string;
   workgroups: Workgroup[];
 };
 
@@ -22,11 +32,10 @@ export type Workgroup = {
 };
 
 export enum IntervalType {
+  none,
   inclusive,
-  exclusive,
-  none
+  exclusive
 }
-
 export type Round = {
   sortOrder: number;
   interval: number;
@@ -38,9 +47,8 @@ export type Workset = {
   exercise: Exercise;
   exerciseName?: string;
   reps: number;
+  intensityType: IntensityType;
   intensity: number;
-  relativeIntensity: number;
-  intensityUnit: IntensityUnit;
   intervalType: IntervalType;
   interval: number;
 };

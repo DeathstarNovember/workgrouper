@@ -1,46 +1,100 @@
 import React from "react";
-import { useForm, FormContext, useFormContext } from "react-hook-form";
+import * as Yup from "yup";
+import { withFormik, FormikProps, Form } from "formik";
+import { Workout } from "../../types";
 import { FaTimes } from "react-icons/fa";
+import { SubmitButton, Input, WorkgroupsArray } from ".";
 
-type WorkoutFormProps = {
-  setWorkoutFormIsVisible: (arg0: boolean) => void;
-};
+interface WorkoutFormProps {
+  workout: Workout;
+  hideForm: () => void;
+}
 
-export const WorkoutForm: React.FC<WorkoutFormProps> = ({
-  setWorkoutFormIsVisible
-}) => {
-  const { register, handleSubmit } = useForm();
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
-  const hideForm = () => {
-    setWorkoutFormIsVisible(false);
-  };
+const InnerForm = (props: WorkoutFormProps & FormikProps<Workout>) => {
+  const { isSubmitting, hideForm, handleSubmit } = props;
 
   return (
-    <form className="flex-col m-3" onSubmit={handleSubmit(onSubmit)}>
+    <Form className="p-3 w-full max-w-lg" onSubmit={handleSubmit}>
       <button
-        onClick={() => hideForm()}
-        className="bg-red-500 hover:bg-red-700 text-white font-bold px-2 py-1 mb-3 rounded"
+        onClick={hideForm}
+        className="bg-red-500 hover:bg-red-700 text-white font-bold px-2 py-1 rounded"
       >
         <FaTimes />
       </button>
-      <div className="flex-col flex-1">
-        <div>
-          <input
-            name="name"
-            ref={register({ required: true })}
-            placeholder="Workout name"
-          />
-        </div>
-        <div>
-          <input
-            name="description"
-            ref={register({ required: true })}
-            placeholder="Workout description"
-          />
-        </div>
+      <div>
+        <Input labelText="WorkoutName" fieldName="name" />
       </div>
-    </form>
+      <Input labelText="Workout Description" fieldName="description" />
+      <WorkgroupsArray />
+      <SubmitButton
+        isSubmitting={isSubmitting}
+        bgColor="green"
+        hoverColor="green"
+        text="Save Workout"
+        textColor="gray"
+      />
+    </Form>
   );
 };
+
+// The type of props WorkoutForm receives
+
+export const WorkoutForm = withFormik<WorkoutFormProps, Workout>({
+  mapPropsToValues: ({ workout }) => ({ ...workout }),
+  validationSchema: Yup.object().shape({
+    name: Yup.string(),
+    description: Yup.string(),
+    workgroups: Yup.array().of(
+      Yup.object().shape({
+        sortOrder: Yup.number().required(),
+        note: Yup.string(),
+        rounds: Yup.array().of(
+          Yup.object().shape({
+            sortOrder: Yup.number().required(),
+            interval: Yup.number().required(),
+            intervalType: Yup.number().required(),
+            worksets: Yup.array().of(
+              Yup.object().shape({
+                reps: Yup.number()
+                  .integer("must be a number")
+                  .min(1, "must be positive")
+                  .required("volume is required"),
+                intensityType: Yup.number().required(),
+                intensity: Yup.number()
+                  .integer("must be a number")
+                  .min(1, "must be positive")
+                  .required("intensity is required"),
+                intervalType: Yup.number().required(
+                  "The type of time interval is not specified for this set."
+                ),
+                interval: Yup.number().required(
+                  "The time interval is not specified for this set."
+                )
+              })
+            )
+          })
+        )
+      })
+    )
+  }),
+  handleSubmit: (values, { setFieldValue }) => {
+    values.workgroups.forEach((workgroup, workgroupIndex) => {
+      setFieldValue(`workgroups[${workgroupIndex}].sortOrder`, workgroupIndex);
+      workgroup.rounds.forEach((round, roundIndex) => {
+        setFieldValue(
+          `workgroups[${workgroupIndex}].rounds[${roundIndex}].sortOrder`,
+          roundIndex
+        );
+        round.worksets.forEach((_workset, worksetIndex) => {
+          setFieldValue(
+            `workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].sortOrder`,
+            worksetIndex
+          );
+          // setFieldValue(`workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].exercise`,)
+        });
+      });
+    });
+
+    console.warn({ values });
+  }
+})(InnerForm);

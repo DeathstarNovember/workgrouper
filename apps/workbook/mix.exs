@@ -23,7 +23,7 @@ defmodule Workbook.MixProject do
   def application do
     [
       mod: {Workbook.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :absinthe_plug]
     ]
   end
 
@@ -38,7 +38,11 @@ defmodule Workbook.MixProject do
     [
       {:ecto_sql, "~> 3.1"},
       {:postgrex, ">= 0.0.0"},
-      {:jason, "~> 1.0"}
+      {:jason, "~> 1.0"},
+      {:bcrypt_elixir, "~> 2.0"},
+      {:absinthe, "~> 1.4"},
+      {:absinthe_ecto, "~> 0.1.3"},
+      {:absinthe_plug, "~> 1.4"}
     ]
   end
 

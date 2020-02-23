@@ -43,4 +43,5 @@ defmodule WorkbookWeb.Endpoint do
     signing_salt: "mVRMTsYM"
 
   plug WorkbookWeb.Router
+
 end

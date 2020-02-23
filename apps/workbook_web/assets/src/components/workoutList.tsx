@@ -4,12 +4,49 @@ import { FaPlus } from "react-icons/fa";
 import { WorkoutForm } from "./formComponents";
 import { Workout } from "../types";
 import { newWorkout } from "../data";
+import { useQuery } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
 
 type WorkoutListProps = {
   workouts: Workout[];
 };
 
+const workoutsQuery = gql`
+  query ListWorkouts {
+    workouts {
+      id
+      name
+      description
+      workgroups {
+        sortOrder
+        id
+        note
+        rounds {
+          sortOrder
+          id
+          interval
+          intervalType
+          worksets {
+            sortOrder
+            id
+            reps
+            intensity
+            intensityType
+            interval
+            intervalType
+            exercise {
+              name
+              intensityUnit
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const WorkoutList: React.FC<WorkoutListProps> = ({ workouts }) => {
+  const { data, ...rest } = useQuery(workoutsQuery);
   const [selectedWorkout, setSelectedWorkout] = useState<Workout | undefined>(
     undefined
   );
@@ -65,7 +102,7 @@ export const WorkoutList: React.FC<WorkoutListProps> = ({ workouts }) => {
         >
           <FaPlus />
         </button>
-        {workouts.map((workout, workoutIndex) => (
+        {data?.workouts.map((workout: Workout, workoutIndex: number) => (
           <WorkoutOverview
             key={`workoutOverview${workoutIndex}`}
             workout={workout}

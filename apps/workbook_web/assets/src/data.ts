@@ -9,6 +9,7 @@ import {
   Workgroup,
   IntensityType
 } from "./types";
+import { JSXElementConstructor } from "react";
 
 export const exercises: Exercise[] = [
   {
@@ -667,3 +668,197 @@ export const ordinals = [
   "Y",
   "Z"
 ];
+export const jsonWorkout = {
+  workout: {
+    name: "Workout Title",
+    description: "This is the description for this workout",
+    workgroups: [
+      {
+        sortOrder: 0,
+        note: "single set of a single exercise",
+        rounds: [
+          {
+            intervalType: 1,
+            interval: 150,
+            sortOrder: 0,
+            worksets: [
+              {
+                sortOrder: 0,
+                exerciseId: 1,
+                reps: 9,
+                intensity: 185,
+                intensityType: 0,
+                intervalType: 1,
+                interval: 140
+              }
+            ]
+          }
+        ]
+      },
+      {
+        sortOrder: 1,
+        note: "multiple identical sets of a single exercise",
+        rounds: [
+          {
+            intervalType: 1,
+            interval: 150,
+            sortOrder: 0,
+            worksets: [
+              {
+                sortOrder: 0,
+                exerciseId: 1,
+                reps: 9,
+                intensity: 185,
+                intensityType: 0,
+                intervalType: 1,
+                interval: 140
+              },
+              {
+                sortOrder: 1,
+                exerciseId: 1,
+                reps: 9,
+                intensity: 185,
+                intensityType: 0,
+                intervalType: 1,
+                interval: 140
+              },
+              {
+                sortOrder: 2,
+                exerciseId: 1,
+                reps: 9,
+                intensity: 185,
+                intensityType: 0,
+                intervalType: 1,
+                interval: 140
+              }
+            ]
+          }
+        ]
+      },
+      {
+        sortOrder: 2,
+        note: "multiple and different sets of a single exercise",
+        rounds: [
+          {
+            intervalType: 1,
+            interval: 150,
+            sortOrder: 0,
+            worksets: [
+              {
+                sortOrder: 0,
+                exerciseId: 1,
+                reps: 5,
+                intensity: 185,
+                intensityType: 0,
+                intervalType: 1,
+                interval: 150
+              },
+              {
+                sortOrder: 1,
+                exerciseId: 1,
+                reps: 5,
+                intensity: 185,
+                intensityType: 0,
+                intervalType: 1,
+                interval: 150
+              },
+              {
+                sortOrder: 2,
+                exerciseId: 1,
+                reps: 5,
+                intensity: 195,
+                intensityType: 0,
+                intervalType: 1,
+                interval: 150
+              },
+              {
+                sortOrder: 3,
+                exerciseId: 1,
+                reps: 5,
+                intensity: 195,
+                intensityType: 0,
+                intervalType: 1,
+                interval: 150
+              }
+            ]
+          }
+        ]
+      },
+      {
+        sortOrder: 3,
+        note:
+          "multiple identical rounds of identical sets of a single exercise",
+        rounds: [
+          {
+            sortOrder: 0,
+            intervalType: 1,
+            interval: 150,
+            worksets: [
+              {
+                sortOrder: 0,
+                exerciseId: 2,
+                reps: 5,
+                intensity: 155,
+                intensityType: 0,
+                intervalType: 1,
+                interval: 150
+              },
+              {
+                sortOrder: 1,
+                exerciseId: 2,
+                reps: 5,
+                intensity: 155,
+                intensityType: 0,
+                intervalType: 1,
+                interval: 150
+              },
+              {
+                sortOrder: 2,
+                exerciseId: 2,
+                reps: 5,
+                intensity: 155,
+                intensityType: 0,
+                intervalType: 1,
+                interval: 150
+              }
+            ]
+          },
+          {
+            sortOrder: 1,
+            intervalType: 1,
+            interval: 150,
+            worksets: [
+              {
+                sortOrder: 0,
+                exerciseId: 2,
+                reps: 5,
+                intensity: 155,
+                intensityType: 0,
+                intervalType: 1,
+                interval: 150
+              },
+              {
+                sortOrder: 1,
+                exerciseId: 2,
+                reps: 5,
+                intensity: 155,
+                intensityType: 0,
+                intervalType: 1,
+                interval: 150
+              },
+              {
+                sortOrder: 2,
+                exerciseId: 2,
+                reps: 5,
+                intensity: 155,
+                intensityType: 0,
+                intervalType: 1,
+                interval: 150
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};

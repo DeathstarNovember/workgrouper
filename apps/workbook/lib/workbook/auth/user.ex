@@ -1,11 +1,16 @@
 defmodule Workbook.Auth.User do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Workbook.Workouts.{Workout, Result}
+  alias Workbook.Training.Assignment
 
   schema "users" do
     field :username, :string
     field :password, :string, virtual: true
     field :password_hash, :string
+    has_many :workouts, Workout
+    has_many :results, Result
+    has_many :assignments, Assignment
 
     timestamps()
   end

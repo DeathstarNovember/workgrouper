@@ -1,7 +1,16 @@
 defmodule WorkbookWeb.Schema do
   use Absinthe.Schema
 
+  import_types Absinthe.Type.Custom
   import_types WorkbookWeb.Schema.DataTypes
+
+  input_object :assignment_input do
+    field :date, non_null(:datetime)
+    field :note, :string
+    field :user_id, non_null(:id)
+    field :workout_id, non_null(:id)
+    field :result_id, :id
+  end
 
   input_object :user_input do
     field :username, non_null(:string)
@@ -45,6 +54,14 @@ defmodule WorkbookWeb.Schema do
     field :user_id, :id
     field :workgroups, list_of(non_null(:workgroup_input))
   end
+  
+  input_object :result_input do
+    field :name, non_null(:string)
+    field :description, :string
+    fisld :completed_at, :utc_datetime
+    field :user_id, :id
+    field :workgroups, list_of(non_null(:workgroup_input))
+  end
 
   query do
     @desc "Get a list of users"
@@ -65,6 +82,20 @@ defmodule WorkbookWeb.Schema do
     field :workouts, list_of(:workout) do
       resolve fn _parent, _args, _resolution ->
         {:ok, Workbook.Workouts.list_workouts()}
+      end
+    end
+    
+    @desc "Get a list of results"
+    field :results, list_of(:result) do
+      resolve fn _parent, _args, _resolution ->
+        {:ok, Workbook.Workouts.list_results()}
+      end
+    end
+    
+    @desc "Get a list of assignments"
+    field :assignments, list_of(:assignment) do
+      resolve fn _parent, _args, _resolution ->
+        {:ok, Workbook.Training.list_assignments()}
       end
     end
   end
@@ -89,6 +120,13 @@ defmodule WorkbookWeb.Schema do
       arg :workout, non_null(:workout_input)
 
       resolve(&WorkbookWeb.Resolvers.WorkoutsResolver.create_workout/3)
+    end
+    
+    @desc "Create a result"
+    field :create_result, :result do
+      arg :result, non_null(:result_input)
+
+      resolve(&WorkbookWeb.Resolvers.WorkoutsResolver.create_result/3)
     end
     
     @desc "Create a workgroup"

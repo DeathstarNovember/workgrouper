@@ -8,7 +8,7 @@ defmodule Workbook.Workouts do
   import Ecto.Query, warn: false
   alias Workbook.Repo
 
-  alias Workbook.Workouts.{Workout, Exercise, Workgroup, Round, Workset}
+  alias Workbook.Workouts.{Workout, Exercise, Workgroup, Round, Workset, Result}
 
   @doc """
   Returns the list of workouts.
@@ -24,6 +24,9 @@ defmodule Workbook.Workouts do
   end
   def list_exercises do
     Repo.all(Exercise)
+  end
+  def list_results do
+    Repo.all(Result)
   end
 
   @doc """
@@ -61,6 +64,11 @@ defmodule Workbook.Workouts do
   def create_workout(attrs \\ %{}) do
     %Workout{}
     |> Workout.changeset(attrs)
+    |> Repo.insert()
+  end
+  def create_result(attrs \\ %{}) do
+    %Result{}
+    |> Result.changeset(attrs)
     |> Repo.insert()
   end
   def create_exercise(attrs \\ %{}) do
@@ -101,6 +109,11 @@ defmodule Workbook.Workouts do
     |> Workout.changeset(attrs)
     |> Repo.update()
   end
+  def update_result(%Result{} = result, attrs) do
+    result
+    |> Result.changeset(attrs)
+    |> Repo.update()
+  end
   def update_exercise(%Exercise{} = exercise, attrs) do
     exercise
     |> Exercise.changeset(attrs)
@@ -138,6 +151,9 @@ defmodule Workbook.Workouts do
   def delete_workout(%Workout{} = workout) do
     Repo.delete(workout)
   end
+  def delete_result(%Result{} = result) do
+    Repo.delete(result)
+  end
   def delete_exercise(%Exercise{} = exercise) do
     Repo.delete(exercise)
   end
@@ -162,6 +178,9 @@ defmodule Workbook.Workouts do
   """
   def change_workout(%Workout{} = workout) do
     Workout.changeset(workout, %{})
+  end
+  def change_result(%Result{} = result) do
+    Result.changeset(result, %{})
   end
   def change_exercise(%Exercise{} = exercise) do
     Exercise.changeset(exercise, %{})

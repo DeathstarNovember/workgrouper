@@ -21,8 +21,8 @@ defmodule WorkbookWeb.Router do
 
   scope "/api" do
     pipe_through :api
+    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: WorkbookWeb.Schema
     forward "/", Absinthe.Plug,
       schema: WorkbookWeb.Schema
-    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: WorkbookWeb.Schema
   end
 end

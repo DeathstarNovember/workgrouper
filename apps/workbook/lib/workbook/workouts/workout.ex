@@ -2,17 +2,17 @@ defmodule Workbook.Workouts.Workout do
   require Logger
   use Ecto.Schema
   import Ecto.Changeset
-
-  alias Workbook.Repo
   alias Workbook.Auth.User
-  alias Workbook.Workouts.Workgroup
+  alias Workbook.Workouts.{Workgroup, Result}
+  alias Workbook.Training.Assignment
 
   schema "workouts" do
-    # field :completed_at, :utc_datetime
     field :description, :string
     field :name, :string
     belongs_to :user, User
     has_many :workgroups, Workgroup
+    has_many :results, Result
+    has_many :assignments, Assignment
 
     timestamps()
   end
@@ -21,6 +21,6 @@ defmodule Workbook.Workouts.Workout do
   def changeset(workout, attrs) do
     workout
     |> cast(attrs, [:name, :description, :user_id])
-    |> validate_required([:name, :description])
+    |> validate_required([:user_id])
   end
 end

@@ -1,15 +1,6 @@
-defmodule WorkbookWeb.Schema.DataTypes do
+defmodule WorkbookWeb.Schema.WorkoutTypes do
   use Absinthe.Schema.Notation
   use Absinthe.Ecto, repo: Workbook.Repo
-
-  object :assignment do
-    field :id, :id
-    field :note, non_null(:string)
-    field :date, non_null(:datetime)
-    field :user, non_null(:user), resolve: assoc(:user)
-    field :workout, non_null(:workout), resolve: assoc(:workout)
-    field :result, :result, resolve: assoc(:result)
-  end
 
   object :result do
     field :id, :id
@@ -54,32 +45,6 @@ defmodule WorkbookWeb.Schema.DataTypes do
         end)
       )
     end 
-  end 
-
-  object :user do
-    field :id, :id
-    field :username, :string
-    field :workouts, list_of(non_null(:workout)) do
-      resolve(
-        assoc(:workouts, fn workouts_query, _args, _context ->
-          workouts_query
-        end)
-      )
-    end
-    field :assignments, list_of(non_null(:assignment)) do
-      resolve(
-        assoc(:assignments, fn assignments_query, _args, _context ->
-          assignments_query
-        end)
-      )
-    end 
-    field :results, list_of(non_null(:result)) do
-      resolve(
-        assoc(:results, fn results_query, _args, _context ->
-          results_query
-        end)
-      )
-    end
   end
 
   object :exercise do
@@ -125,5 +90,50 @@ defmodule WorkbookWeb.Schema.DataTypes do
       )
     end
   end
+
+  input_object :exercise_input do
+    field :name, non_null(:string)
+    field :intensity_unit, non_null(:integer)
+  end
+
+  input_object :workset_input do
+    field :intensity, non_null(:integer)
+    field :intensity_type, non_null(:integer)
+    field :interval, non_null(:integer)
+    field :interval_type, non_null(:integer)
+    field :reps, non_null(:integer)
+    field :sort_order, non_null(:integer)
+    field :exercise_id, non_null(:id)
+    field :round_id, :id
+  end
+
+  input_object :round_input do
+    field :sort_order, non_null(:integer)
+    field :interval_type,  :integer
+    field :interval, :integer
+    field :workgroup_id, :id
+    field :worksets, list_of(non_null(:workset_input))
+  end
+
+  input_object :workgroup_input do
+    field :sort_order, non_null(:integer)
+    field :note, :string
+    field :workout_id, :id
+    field :rounds, list_of(non_null(:round_input))
+  end
+
+  input_object :workout_input do
+    field :name, non_null(:string)
+    field :description, :string
+    field :user_id, :id
+    field :workgroups, list_of(non_null(:workgroup_input))
+  end
   
+  input_object :result_input do
+    field :name, non_null(:string)
+    field :description, :string
+    fisld :completed_at, :utc_datetime
+    field :user_id, :id
+    field :workgroups, list_of(non_null(:workgroup_input))
+  end
 end

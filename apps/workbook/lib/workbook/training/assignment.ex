@@ -2,6 +2,9 @@ defmodule Workbook.Training.Assignment do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Workbook.Workouts.{Workout, Result}
+  alias Workbook.Auth.User
+
   schema "assignments" do
     field :date, :utc_datetime
     field :note, :string

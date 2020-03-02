@@ -2,75 +2,25 @@ defmodule WorkbookWeb.Schema do
   use Absinthe.Schema
 
   import_types Absinthe.Type.Custom
-  import_types WorkbookWeb.Schema.DataTypes
-
-  input_object :assignment_input do
-    field :date, non_null(:datetime)
-    field :note, :string
-    field :user_id, non_null(:id)
-    field :workout_id, non_null(:id)
-    field :result_id, :id
-  end
-
-  input_object :user_input do
-    field :username, non_null(:string)
-    field :password, non_null(:string)
-  end
-
-  input_object :exercise_input do
-    field :name, non_null(:string)
-    field :intensity_unit, non_null(:integer)
-  end
-
-  input_object :workset_input do
-    field :intensity, non_null(:integer)
-    field :intensity_type, non_null(:integer)
-    field :interval, non_null(:integer)
-    field :interval_type, non_null(:integer)
-    field :reps, non_null(:integer)
-    field :sort_order, non_null(:integer)
-    field :exercise_id, non_null(:id)
-    field :round_id, :id
-  end
-
-  input_object :round_input do
-    field :sort_order, non_null(:integer)
-    field :interval_type,  :integer
-    field :interval, :integer
-    field :workgroup_id, :id
-    field :worksets, list_of(non_null(:workset_input))
-  end
-
-  input_object :workgroup_input do
-    field :sort_order, non_null(:integer)
-    field :note, :string
-    field :workout_id, :id
-    field :rounds, list_of(non_null(:round_input))
-  end
-
-  input_object :workout_input do
-    field :name, non_null(:string)
-    field :description, :string
-    field :user_id, :id
-    field :workgroups, list_of(non_null(:workgroup_input))
-  end
-  
-  input_object :result_input do
-    field :name, non_null(:string)
-    field :description, :string
-    fisld :completed_at, :utc_datetime
-    field :user_id, :id
-    field :workgroups, list_of(non_null(:workgroup_input))
-  end
+  import_types WorkbookWeb.Schema.TrainingTypes
+  import_types WorkbookWeb.Schema.AuthTypes
+  import_types WorkbookWeb.Schema.WorkoutTypes
 
   query do
+    @desc "Get a list of assignments"
+    field :assignments, list_of(:assignment) do
+      resolve fn _parent, _args, _resolution ->
+        {:ok, Workbook.Training.list_assignments()}
+      end
+    end
+
     @desc "Get a list of users"
     field :users, list_of(:user) do
       resolve fn _parent, _args, _resolution ->
         {:ok, Workbook.Auth.list_users()}
       end
     end
-    
+
     @desc "Get a list of exercises"
     field :exercises, list_of(:exercise) do
       resolve fn _parent, _args, _resolution ->
@@ -91,23 +41,23 @@ defmodule WorkbookWeb.Schema do
         {:ok, Workbook.Workouts.list_results()}
       end
     end
-    
-    @desc "Get a list of assignments"
-    field :assignments, list_of(:assignment) do
-      resolve fn _parent, _args, _resolution ->
-        {:ok, Workbook.Training.list_assignments()}
-      end
-    end
   end
 
   mutation do
+    @desc "Create an assignment"
+    field :create_assignment, :assignment do
+      arg :assignment, non_null(:assignment_input)
+
+      resolve(&WorkbookWeb.Resolvers.TrainingResolver.create_assignment/3)
+    end
+
     @desc "Create a user"
     field :create_user, :user do
       arg :user, non_null(:user_input)
 
       resolve(&WorkbookWeb.Resolvers.AuthResolver.create_user/3)
     end
-    
+
     @desc "Create an exercise"
     field :create_exercise, :exercise do
       arg :exercise, non_null(:exercise_input)

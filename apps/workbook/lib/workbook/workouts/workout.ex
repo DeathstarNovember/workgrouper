@@ -4,7 +4,6 @@ defmodule Workbook.Workouts.Workout do
   import Ecto.Changeset
   alias Workbook.Auth.User
   alias Workbook.Workouts.{Workgroup, Result}
-  alias Workbook.Training.Assignment
 
   schema "workouts" do
     field :description, :string
@@ -12,7 +11,6 @@ defmodule Workbook.Workouts.Workout do
     belongs_to :user, User
     has_many :workgroups, Workgroup
     has_many :results, Result
-    has_many :assignments, Assignment
 
     timestamps()
   end

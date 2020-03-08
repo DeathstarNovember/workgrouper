@@ -6,99 +6,102 @@ defmodule Workbook.Training do
   import Ecto.Query, warn: false
   alias Workbook.Repo
 
-  alias Workbook.Training.Assignment
+  alias Workbook.Training.{Program, Schedule, Phase, Cycle, Session}
 
-  @doc """
-  Returns the list of assignments.
-
-  ## Examples
-
-      iex> list_assignments()
-      [%Assignment{}, ...]
-
-  """
-  def list_assignments do
-    Repo.all(Assignment)
+  def list_programs do
+    Repo.all(Program)
   end
 
-  @doc """
-  Gets a single assignment.
+  def get_program!(id), do: Repo.get!(Program, id)
+  def get_schedule!(id), do: Repo.get!(Schedule, id)
+  def get_phase!(id), do: Repo.get!(Phase, id)
+  def get_cycle!(id), do: Repo.get!(Cycle, id)
+  def get_session!(id), do: Repo.get!(Session, id)
 
-  Raises `Ecto.NoResultsError` if the Assignment does not exist.
-
-  ## Examples
-
-      iex> get_assignment!(123)
-      %Assignment{}
-
-      iex> get_assignment!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_assignment!(id), do: Repo.get!(Assignment, id)
-
-  @doc """
-  Creates a assignment.
-
-  ## Examples
-
-      iex> create_assignment(%{field: value})
-      {:ok, %Assignment{}}
-
-      iex> create_assignment(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_assignment(attrs \\ %{}) do
-    %Assignment{}
-    |> Assignment.changeset(attrs)
+  def create_program(attrs \\ %{}) do
+    %Program{}
+    |> Program.changeset(attrs)
+    |> Ecto.Changeset.cast_assoc(:phases)
+    |> Repo.insert()
+  end
+  def create_schedule(attrs \\ %{}) do
+    %Schedule{}
+    |> Schedule.changeset(attrs)
+    |> Repo.insert()
+  end
+  def create_phase(attrs \\ %{}) do
+    %Phase{}
+    |> Phase.changeset(attrs)
+    |> Ecto.Changeset.cast_assoc(:cycles)
+    |> Repo.insert()
+  end
+  def create_cycle(attrs \\ %{}) do
+    %Cycle{}
+    |> Cycle.changeset(attrs)
+    |> Ecto.Changeset.cast_assoc(:sessions)
+    |> Repo.insert()
+  end
+  def create_session(attrs \\ %{}) do
+    %Session{}
+    |> Session.changeset(attrs)
     |> Repo.insert()
   end
 
-  @doc """
-  Updates a assignment.
-
-  ## Examples
-
-      iex> update_assignment(assignment, %{field: new_value})
-      {:ok, %Assignment{}}
-
-      iex> update_assignment(assignment, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_assignment(%Assignment{} = assignment, attrs) do
-    assignment
-    |> Assignment.changeset(attrs)
+  def update_program(id, attrs) do
+    get_program!(id)
+    |> Program.changeset(attrs)
+    |> Repo.update()
+  end
+  def update_schedule(id, attrs) do
+    get_schedule!(id)
+    |> Schedule.changeset(attrs)
+    |> Repo.update()
+  end
+  def update_phase(id, attrs) do
+    get_phase!(id)
+    |> Phase.changeset(attrs)
+    |> Repo.update()
+  end
+  def update_cycle(id, attrs) do
+    get_cycle!(id)
+    |> Cycle.changeset(attrs)
+    |> Repo.update()
+  end
+  def update_session(id, attrs) do
+    get_session!(id)
+    |> Session.changeset(attrs)
     |> Repo.update()
   end
 
-  @doc """
-  Deletes a assignment.
-
-  ## Examples
-
-      iex> delete_assignment(assignment)
-      {:ok, %Assignment{}}
-
-      iex> delete_assignment(assignment)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_assignment(%Assignment{} = assignment) do
-    Repo.delete(assignment)
+  def delete_program(%Program{} = program) do
+    Repo.delete(program)
+  end
+  def delete_schedule(%Schedule{} = schedule) do
+    Repo.delete(schedule)
+  end
+  def delete_phase(%Phase{} = phase) do
+    Repo.delete(phase)
+  end
+  def delete_cycle(%Cycle{} = cycle) do
+    Repo.delete(cycle)
+  end
+  def delete_session(%Session{} = session) do
+    Repo.delete(session)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking assignment changes.
-
-  ## Examples
-
-      iex> change_assignment(assignment)
-      %Ecto.Changeset{source: %Assignment{}}
-
-  """
-  def change_assignment(%Assignment{} = assignment) do
-    Assignment.changeset(assignment, %{})
+  def change_program(%Program{} = program) do
+    Program.changeset(program, %{})
+  end
+  def change_schedule(%Schedule{} = schedule) do
+    Schedule.changeset(schedule, %{})
+  end
+  def change_phase(%Phase{} = phase) do
+    Phase.changeset(phase, %{})
+  end
+  def change_cycle(%Cycle{} = cycle) do
+    Cycle.changeset(cycle, %{})
+  end
+  def change_session(%Session{} = session) do
+    Session.changeset(session, %{})
   end
 end

@@ -12,6 +12,7 @@
 alias Workbook.Repo
 alias Workbook.Auth.User
 alias Workbook.Workouts.{Exercise, Workout, Workgroup, Round, Workset}
+alias Workbook.Training.{Session, Cycle, Phase, Program, Schedule}
 bench_press = Repo.insert!(%Exercise{
   name: "Barbell Bench Press",
   intensity_unit: 1})
@@ -39,218 +40,542 @@ pull_up = Repo.insert!(%Exercise{
 air_squat = Repo.insert!(%Exercise{
   name: "Air Squat",
   intensity_unit: 0})
+workout_1 = Repo.insert!(%Workout{
+  name: "Workout Title",
+  description: "This is the description for this workout",
+  workgroups: [
+    %Workgroup{
+      sort_order: 0,
+      note: "single set of a single exercise",
+      rounds: [
+        %Round{
+          interval_type: 1,
+          interval: 150,
+          sort_order: 0,
+          worksets: [
+            %Workset{
+              sort_order: 0,
+              exercise_id: 1,
+              reps: 9,
+              intensity: 185,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 140
+            }
+          ]
+        }
+      ]
+    },
+    %Workgroup{
+      sort_order: 1,
+      note: "multiple identical sets of a single exercise",
+      rounds: [
+        %Round{
+          interval_type: 1,
+          interval: 150,
+          sort_order: 0,
+          worksets: [
+            %Workset{
+              sort_order: 0,
+              exercise_id: 1,
+              reps: 9,
+              intensity: 185,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 140
+            },
+            %Workset{
+              sort_order: 1,
+              exercise_id: 1,
+              reps: 9,
+              intensity: 185,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 140
+            },
+            %Workset{
+              sort_order: 2,
+              exercise_id: 1,
+              reps: 9,
+              intensity: 185,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 140
+            }
+          ]
+        }
+      ]
+    },
+    %Workgroup{
+      sort_order: 2,
+      note: "multiple and different sets of a single exercise",
+      rounds: [
+        %Round{
+          interval_type: 1,
+          interval: 150,
+          sort_order: 0,
+          worksets: [
+            %Workset{
+              sort_order: 0,
+              exercise_id: 1,
+              reps: 5,
+              intensity: 185,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 1,
+              exercise_id: 1,
+              reps: 5,
+              intensity: 185,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 2,
+              exercise_id: 1,
+              reps: 5,
+              intensity: 195,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 3,
+              exercise_id: 1,
+              reps: 5,
+              intensity: 195,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            }
+          ]
+        }
+      ]
+    },
+    %Workgroup{
+      sort_order: 3,
+      note:
+        "multiple identical rounds of identical sets of a single exercise",
+      rounds: [
+        %Round{
+          sort_order: 0,
+          interval_type: 1,
+          interval: 150,
+          worksets: [
+            %Workset{
+              sort_order: 0,
+              exercise_id: 2,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 1,
+              exercise_id: 2,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 2,
+              exercise_id: 2,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            }
+          ]
+        },
+        %Round{
+          sort_order: 1,
+          interval_type: 1,
+          interval: 150,
+          worksets: [
+            %Workset{
+              sort_order: 0,
+              exercise_id: 2,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 1,
+              exercise_id: 2,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 2,
+              exercise_id: 2,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            }
+          ]
+        }
+      ]
+    }
+  ]
+})
+workout_2 = Repo.insert!(%Workout{
+  name: "Workout 2 Title",
+  description: "This is the description for this other workout",
+  workgroups: [
+    %Workgroup{
+      sort_order: 0,
+      note:
+        "multiple identical rounds of different sets of a single exercise",
+      rounds: [
+        %Round{
+          sort_order: 0,
+          interval_type: 1,
+          interval: 150,
+          worksets: [
+            %Workset{
+              sort_order: 0,
+              exercise_id: 3,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 1,
+              exercise_id: 3,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 2,
+              exercise_id: 3,
+              reps: 5,
+              intensity: 160,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 3,
+              exercise_id: 3,
+              reps: 5,
+              intensity: 165,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            }
+          ]
+        },
+        %Round{
+          sort_order: 1,
+          interval_type: 1,
+          interval: 150,
+          worksets: [
+            %Workset{
+              sort_order: 0,
+              exercise_id: 3,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 1,
+              exercise_id: 3,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 2,
+              exercise_id: 3,
+              reps: 5,
+              intensity: 160,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 3,
+              exercise_id: 3,
+              reps: 5,
+              intensity: 165,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            }
+          ]
+        }
+      ]
+    },
+    %Workgroup{
+      sort_order: 1,
+      note:
+        "multiple identical rounds of identical sets of multiple exercises",
+      rounds: [
+        %Round{
+          sort_order: 0,
+          interval_type: 1,
+          interval: 150,
+          worksets: [
+            %Workset{
+              sort_order: 0,
+              exercise_id: 2,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 1,
+              exercise_id: 2,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 2,
+              exercise_id: 1,
+              reps: 5,
+              intensity: 165,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 3,
+              exercise_id: 3,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            }
+          ]
+        },
+        %Round{
+          sort_order: 1,
+          interval_type: 1,
+          interval: 150,
+          worksets: [
+            %Workset{
+              sort_order: 0,
+              exercise_id: 2,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 1,
+              exercise_id: 2,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 2,
+              exercise_id: 1,
+              reps: 5,
+              intensity: 165,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 3,
+              exercise_id: 3,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            }
+          ]
+        }
+      ]
+    },
+    %Workgroup{
+      sort_order: 2,
+      note: "multiple different rounds",
+      rounds: [
+        %Round{
+          sort_order: 0,
+          interval_type: 1,
+          interval: 150,
+          worksets: [
+            %Workset{
+              sort_order: 0,
+              exercise_id: 2,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 1,
+              exercise_id: 2,
+              reps: 5,
+              intensity: 155,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 2,
+              exercise_id: 1,
+              reps: 5,
+              intensity: 160,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 3,
+              exercise_id: 3,
+              reps: 5,
+              intensity: 135,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            }
+          ]
+        },
+        %Round{
+          sort_order: 1,
+          interval_type: 1,
+          interval: 150,
+          worksets: [
+            %Workset{
+              sort_order: 0,
+              exercise_id: 2,
+              reps: 5,
+              intensity: 160,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 1,
+              exercise_id: 2,
+              reps: 5,
+              intensity: 160,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 2,
+              exercise_id: 1,
+              reps: 5,
+              intensity: 165,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            },
+            %Workset{
+              sort_order: 3,
+              exercise_id: 3,
+              reps: 5,
+              intensity: 125,
+              intensity_type: 0,
+              interval_type: 1,
+              interval: 150
+            }
+          ]
+        }
+      ]
+    }
+  ]
+})
+
+p1_c1_session_1 = Repo.insert!(%Session{
+  sort_order: 0,
+  workout: workout_1
+})
+p1_c1_session_2 = Repo.insert!(%Session{
+  sort_order: 1,
+})
+p1_c1_session_3 = Repo.insert!(%Session{
+  sort_order: 2,
+  workout: workout_2
+})
+p1_cycle_1 = Repo.insert!(%Cycle{
+  sort_order: 0,
+  sessions: [
+    p1_c1_session_1,
+    p1_c1_session_2,
+    p1_c1_session_3,
+  ]
+})
+phase_1 = Repo.insert!(%Phase{
+  sort_order: 0,
+  name: "Phase 1",
+  description: "Initial strength-building",
+  cycles: [
+    p1_cycle_1
+  ]
+})
+deathstar_default_program = Repo.insert!(%Program{
+  name: "default program",
+  description: "Main workout program",
+  phases: [
+    phase_1
+  ]
+})
+{:ok, ds_s1_start_date} = DateTime.from_naive(~N[2020-03-09 16:00:00], "Etc/UTC")
+deathstar_schedule_1 = Repo.insert!(%Schedule{
+  start_date: ds_s1_start_date,
+  program: deathstar_default_program,
+})
 
 Repo.insert!(%User{
   username: "DeathstarNovember", 
   password: "password", 
   workouts: [
-    Repo.insert!(%Workout{
-      name: "Workout Title",
-      description: "This is the description for this workout",
-      workgroups: [
-        %Workgroup{
-          sort_order: 0,
-          note: "single set of a single exercise",
-          rounds: [
-            %Round{
-              interval_type: 1,
-              interval: 150,
-              sort_order: 0,
-              worksets: [
-                %Workset{
-                  sort_order: 0,
-                  exercise_id: 1,
-                  reps: 9,
-                  intensity: 185,
-                  intensity_type: 0,
-                  interval_type: 1,
-                  interval: 140
-                }
-              ]
-            }
-          ]
-        },
-        %Workgroup{
-          sort_order: 1,
-          note: "multiple identical sets of a single exercise",
-          rounds: [
-            %Round{
-              interval_type: 1,
-              interval: 150,
-              sort_order: 0,
-              worksets: [
-                %Workset{
-                  sort_order: 0,
-                  exercise_id: 1,
-                  reps: 9,
-                  intensity: 185,
-                  intensity_type: 0,
-                  interval_type: 1,
-                  interval: 140
-                },
-                %Workset{
-                  sort_order: 1,
-                  exercise_id: 1,
-                  reps: 9,
-                  intensity: 185,
-                  intensity_type: 0,
-                  interval_type: 1,
-                  interval: 140
-                },
-                %Workset{
-                  sort_order: 2,
-                  exercise_id: 1,
-                  reps: 9,
-                  intensity: 185,
-                  intensity_type: 0,
-                  interval_type: 1,
-                  interval: 140
-                }
-              ]
-            }
-          ]
-        },
-        %Workgroup{
-          sort_order: 2,
-          note: "multiple and different sets of a single exercise",
-          rounds: [
-            %Round{
-              interval_type: 1,
-              interval: 150,
-              sort_order: 0,
-              worksets: [
-                %Workset{
-                  sort_order: 0,
-                  exercise_id: 1,
-                  reps: 5,
-                  intensity: 185,
-                  intensity_type: 0,
-                  interval_type: 1,
-                  interval: 150
-                },
-                %Workset{
-                  sort_order: 1,
-                  exercise_id: 1,
-                  reps: 5,
-                  intensity: 185,
-                  intensity_type: 0,
-                  interval_type: 1,
-                  interval: 150
-                },
-                %Workset{
-                  sort_order: 2,
-                  exercise_id: 1,
-                  reps: 5,
-                  intensity: 195,
-                  intensity_type: 0,
-                  interval_type: 1,
-                  interval: 150
-                },
-                %Workset{
-                  sort_order: 3,
-                  exercise_id: 1,
-                  reps: 5,
-                  intensity: 195,
-                  intensity_type: 0,
-                  interval_type: 1,
-                  interval: 150
-                }
-              ]
-            }
-          ]
-        },
-        %Workgroup{
-          sort_order: 3,
-          note:
-            "multiple identical rounds of identical sets of a single exercise",
-          rounds: [
-            %Round{
-              sort_order: 0,
-              interval_type: 1,
-              interval: 150,
-              worksets: [
-                %Workset{
-                  sort_order: 0,
-                  exercise_id: 2,
-                  reps: 5,
-                  intensity: 155,
-                  intensity_type: 0,
-                  interval_type: 1,
-                  interval: 150
-                },
-                %Workset{
-                  sort_order: 1,
-                  exercise_id: 2,
-                  reps: 5,
-                  intensity: 155,
-                  intensity_type: 0,
-                  interval_type: 1,
-                  interval: 150
-                },
-                %Workset{
-                  sort_order: 2,
-                  exercise_id: 2,
-                  reps: 5,
-                  intensity: 155,
-                  intensity_type: 0,
-                  interval_type: 1,
-                  interval: 150
-                }
-              ]
-            },
-            %Round{
-              sort_order: 1,
-              interval_type: 1,
-              interval: 150,
-              worksets: [
-                %Workset{
-                  sort_order: 0,
-                  exercise_id: 2,
-                  reps: 5,
-                  intensity: 155,
-                  intensity_type: 0,
-                  interval_type: 1,
-                  interval: 150
-                },
-                %Workset{
-                  sort_order: 1,
-                  exercise_id: 2,
-                  reps: 5,
-                  intensity: 155,
-                  intensity_type: 0,
-                  interval_type: 1,
-                  interval: 150
-                },
-                %Workset{
-                  sort_order: 2,
-                  exercise_id: 2,
-                  reps: 5,
-                  intensity: 155,
-                  intensity_type: 0,
-                  interval_type: 1,
-                  interval: 150
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }),
+    workout_1,
+    workout_2
   ], 
-  results: []})
+  schedules: [
+    deathstar_schedule_1
+  ],
+  programs: [
+    deathstar_default_program,
+  ],
+})
 Repo.insert!(%User{
   username: "FelixTheDestroyer", 
   password: "password", 
-  workouts: [], 
-  results: []})
+})
 Repo.insert!(%User{
   username: "MattTheProphit", 
   password: "password", 
-  workouts: [], 
-  results: []})
-
-
-
-
-
-
+})

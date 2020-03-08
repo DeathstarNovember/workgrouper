@@ -64,11 +64,13 @@ defmodule Workbook.Workouts do
   def create_workout(attrs \\ %{}) do
     %Workout{}
     |> Workout.changeset(attrs)
+    |> Ecto.Changeset.cast_assoc(:workgroups)
     |> Repo.insert()
   end
   def create_result(attrs \\ %{}) do
     %Result{}
     |> Result.changeset(attrs)
+    |> Ecto.Changeset.cast_assoc(:workgroups)
     |> Repo.insert()
   end
   def create_exercise(attrs \\ %{}) do
@@ -79,11 +81,13 @@ defmodule Workbook.Workouts do
   def create_workgroup(attrs \\ %{} ) do
     %Workgroup{}
     |> Workgroup.changeset(attrs)
+    |> Ecto.Changeset.cast_assoc(:rounds)
     |> Repo.insert()
   end
   def create_round(attrs \\ %{}) do
     %Round{}
     |> Round.changeset(attrs)
+    |> Ecto.Changeset.cast_assoc(:worksets)
     |> Repo.insert()
   end
   def create_workset(attrs \\ %{}) do

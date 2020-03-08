@@ -9,6 +9,7 @@
 # move said applications out of the umbrella.
 use Mix.Config
 
+config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 # Configure Mix tasks and generators
 config :workbook,
   ecto_repos: [Workbook.Repo]

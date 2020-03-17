@@ -8,7 +8,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 
 type WorkoutListProps = {
-  workouts: Workout[];
+  // workouts: Workout[];
 };
 
 const workoutsQuery = gql`
@@ -45,8 +45,8 @@ const workoutsQuery = gql`
   }
 `;
 
-export const WorkoutList: React.FC<WorkoutListProps> = ({ workouts }) => {
-  const { data, ...rest } = useQuery(workoutsQuery);
+export const WorkoutList: React.FC<WorkoutListProps> = () => {
+  const { data, loading, error, ...rest } = useQuery(workoutsQuery);
   const [selectedWorkout, setSelectedWorkout] = useState<Workout | undefined>(
     undefined
   );
@@ -75,6 +75,13 @@ export const WorkoutList: React.FC<WorkoutListProps> = ({ workouts }) => {
   const hideNewWorkoutForm = () => {
     setNewWorkoutFormIsVisible(false);
   };
+
+  if (loading) {
+    return <div className="text-lg">...Loading</div>;
+  }
+  if (error) {
+    return <div className="text-lg">{error}</div>;
+  }
 
   if (newWorkoutFormIsVisible) {
     return <WorkoutForm workout={newWorkout} hideForm={hideNewWorkoutForm} />;

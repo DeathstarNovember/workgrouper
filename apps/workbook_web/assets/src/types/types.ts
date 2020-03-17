@@ -27,7 +27,7 @@ export type Workout = {
 
 export type Workgroup = {
   sortOrder: number;
-  note: string;
+  note?: string;
   rounds: Round[];
 };
 

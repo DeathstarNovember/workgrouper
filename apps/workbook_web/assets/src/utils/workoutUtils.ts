@@ -39,7 +39,11 @@ export const getOrdinalSymbol = (sortOrder: number) => {
 };
 
 export const areTheseThingsEqual = (things: any[]) => {
-  const unorderedThings = things.map(thing => ({ ...thing, sortOrder: 0 }));
+  const unorderedThings = things.map(thing => ({
+    ...thing,
+    sortOrder: 0,
+    id: 0
+  }));
   const thingDiffs = unorderedThings.map((thing, i, arr) =>
     diff(arr[0], thing)
   );

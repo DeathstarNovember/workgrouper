@@ -1,18 +1,181 @@
 import React from "react";
 import * as Yup from "yup";
 import { withFormik, FormikProps, Form } from "formik";
-import { Workout } from "../../types";
+import { NewWorkout, Exercise } from "../../types";
 import { FaTimes } from "react-icons/fa";
-import { SubmitButton, Input, WorkgroupsArray } from ".";
+import { Input, WorkgroupsArray, FormButton } from ".";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
 
 interface WorkoutFormProps {
-  workout: Workout;
+  result?: boolean;
+  workoutId?: number;
+  workout: NewWorkout;
   hideForm: () => void;
 }
+const workgroupFragment = gql`
+  fragment WorkgroupFragment on Workgroup {
+    sortOrder
+    id
+    note
+    rounds {
+      sortOrder
+      id
+      interval
+      intervalType
+      worksets {
+        sortOrder
+        id
+        reps
+        intensity
+        intensityType
+        interval
+        intervalType
+        exercise {
+          name
+          intensityUnit
+        }
+      }
+    }
+  }
+`;
+const workoutFragment = gql`
+  fragment WorkoutFragment on Workout {
+    name
+    description
+    user {
+      id
+    }
+  }
+`;
+const resultFragment = gql`
+  fragment ResultFragment on Result {
+    name
+    description
+    completedAt
+    user {
+      id
+    }
+  }
+`;
 
-const InnerForm = (props: WorkoutFormProps & FormikProps<Workout>) => {
-  const { isSubmitting, hideForm, handleSubmit } = props;
+const createWorkoutMutation = gql`
+  mutation WorkoutCreate($workout: WorkoutInput!) {
+    createWorkout(workout: $workout) {
+      id
+      ...WorkoutFragment
+      workgroups {
+        id
+        ...WorkgroupFragment
+      }
+    }
+  }
+  ${workoutFragment}
+  ${workgroupFragment}
+`;
+const createResultMutation = gql`
+  mutation ResultCreate($result: ResultInput!) {
+    createResult(result: $result) {
+      id
+      ...ResultFragment
+      workgroups {
+        id
+        ...WorkgroupFragment
+      }
+    }
+  }
+  ${resultFragment}
+  ${workgroupFragment}
+`;
+const exercisesQuery = gql`
+  query ListExercises {
+    exercises {
+      id
+      name
+      intensityUnit
+    }
+  }
+`;
+type ExerciseData = {
+  exercises: Exercise[];
+};
 
+const InnerForm = (props: WorkoutFormProps & FormikProps<NewWorkout>) => {
+  const { hideForm, handleSubmit, values, result = false, workoutId } = props;
+  const workoutVariables = {
+    workout: {
+      userId: 1,
+      name: values.name,
+      description: values.description,
+      completedAt: new Date(),
+      workgroups: values.workgroups.map((workgroup, workgroupIndex) => ({
+        sortOrder: workgroupIndex,
+        note: workgroup.note,
+        rounds: workgroup.rounds.map((round, roundIndex) => ({
+          sortOrder: roundIndex,
+          interval: Number(round.interval),
+          intervalType: Number(round.intervalType),
+          worksets: round.worksets.map((workset, worksetIndex) => ({
+            sortOrder: worksetIndex,
+            reps: Number(workset.reps),
+            intensity: Number(workset.intensity),
+            intensityType: Number(workset.intensityType),
+            interval: Number(workset.interval),
+            intervalType: Number(workset.intervalType),
+            exerciseId: workset.exercise.id
+          }))
+        }))
+      }))
+    }
+  };
+  const resultVariables = {
+    result: {
+      userId: 1, //TODO: set this to the result owner's id
+      workoutId,
+      name: values.name,
+      description: values.description,
+      completedAt: new Date(),
+      workgroups: [...workoutVariables.workout.workgroups]
+    }
+  };
+  const [createWorkout] = useMutation(createWorkoutMutation, {
+    variables: workoutVariables
+  });
+  const [createResult] = useMutation(createResultMutation);
+  const {
+    data: exerciseData,
+    loading: exercisesLoading,
+    error: exercisesError
+  } = useQuery<ExerciseData>(exercisesQuery);
+  if (exercisesLoading) {
+    return <div className="text-gray-900 font-bold">...Loading</div>;
+  }
+  if (exercisesError) {
+    return (
+      <div className="text-gray-900 font-bold">
+        {JSON.stringify(exercisesError, null, 2)}
+      </div>
+    );
+  }
+  if (!exerciseData?.exercises) {
+    throw new Error("could not load exercises.");
+  }
+  const handleFormSubmit = async () => {
+    if (result) {
+      console.warn({ resultVariables });
+      const resultResponse = await createResult({
+        variables: resultVariables
+      });
+      console.warn({ resultResponse });
+    } else {
+      console.warn({ workoutVariables });
+      const createWorkoutResponse = await createWorkout({
+        variables: workoutVariables
+      });
+      console.warn({ createWorkoutResponse });
+    }
+  };
+  const exercises = exerciseData.exercises;
   return (
     <Form className="p-3 w-full max-w-lg" onSubmit={handleSubmit}>
       <button
@@ -25,9 +188,9 @@ const InnerForm = (props: WorkoutFormProps & FormikProps<Workout>) => {
         <Input labelText="WorkoutName" fieldName="name" />
       </div>
       <Input labelText="Workout Description" fieldName="description" />
-      <WorkgroupsArray />
-      <SubmitButton
-        isSubmitting={isSubmitting}
+      <WorkgroupsArray exercises={exercises} />
+      <FormButton
+        onClick={handleFormSubmit}
         bgColor="green"
         hoverColor="green"
         text="Save Workout"
@@ -39,7 +202,7 @@ const InnerForm = (props: WorkoutFormProps & FormikProps<Workout>) => {
 
 // The type of props WorkoutForm receives
 
-export const WorkoutForm = withFormik<WorkoutFormProps, Workout>({
+export const WorkoutForm = withFormik<WorkoutFormProps, NewWorkout>({
   mapPropsToValues: ({ workout }) => ({ ...workout }),
   validationSchema: Yup.object().shape({
     name: Yup.string(),
@@ -77,24 +240,5 @@ export const WorkoutForm = withFormik<WorkoutFormProps, Workout>({
       })
     )
   }),
-  handleSubmit: (values, { setFieldValue }) => {
-    values.workgroups.forEach((workgroup, workgroupIndex) => {
-      setFieldValue(`workgroups[${workgroupIndex}].sortOrder`, workgroupIndex);
-      workgroup.rounds.forEach((round, roundIndex) => {
-        setFieldValue(
-          `workgroups[${workgroupIndex}].rounds[${roundIndex}].sortOrder`,
-          roundIndex
-        );
-        round.worksets.forEach((_workset, worksetIndex) => {
-          setFieldValue(
-            `workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].sortOrder`,
-            worksetIndex
-          );
-          // setFieldValue(`workgroups[${workgroupIndex}].rounds[${roundIndex}].worksets[${worksetIndex}].exercise`,)
-        });
-      });
-    });
-    //TODO:
-    console.warn({ values });
-  }
+  handleSubmit: () => null
 })(InnerForm);

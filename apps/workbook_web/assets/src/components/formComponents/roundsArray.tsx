@@ -1,5 +1,5 @@
 import React from "react";
-import { Workout } from "../../types";
+import { Workout, Exercise } from "../../types";
 import { FieldArray, useFormikContext } from "formik";
 import {
   sectionStyle,
@@ -17,10 +17,12 @@ import WorksetsArray from "./worksetsArray";
 type RoundsArrayProps = {
   workgroupIndex: number;
   name: string;
+  exercises: Exercise[];
 };
 export const RoundsArray: React.FC<RoundsArrayProps> = ({
   workgroupIndex,
-  name
+  name,
+  exercises
 }) => {
   const { values }: { values: Workout } = useFormikContext();
   return (
@@ -82,6 +84,7 @@ export const RoundsArray: React.FC<RoundsArrayProps> = ({
                     name={`${roundFieldNamePrefix}.worksets`}
                     workgroupIndex={workgroupIndex}
                     roundIndex={roundIndex}
+                    exercises={exercises}
                   />
                 </div>
               );

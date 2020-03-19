@@ -18,6 +18,7 @@ defmodule Workbook.Workouts.Workgroup do
   def changeset(workgroup, attrs) do
     workgroup
     |> cast(attrs, [:sort_order, :note, :workout_id, :result_id])
-    |> validate_required([:sort_order, :note, :workout_id])
+    |> cast_assoc(:rounds)
+    |> validate_required([:sort_order])
   end
 end

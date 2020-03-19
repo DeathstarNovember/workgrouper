@@ -13,8 +13,8 @@ defmodule Workbook.Workouts.Result do
     field :name, :string
     belongs_to :user, User
     belongs_to :workout, Workout
-    belongs_to :session, Session
     has_many :workgroups, Workgroup
+    has_one :session, Session
 
     timestamps()
   end
@@ -23,6 +23,8 @@ defmodule Workbook.Workouts.Result do
   def changeset(result, attrs) do
     result
     |> cast(attrs, [:name, :description, :completed_at, :user_id, :workout_id])
+    |> cast_assoc(:workgroups)
+    |> cast_assoc(:session)
     |> validate_required([:name, :completed_at, :user_id, :workout_id])
   end
 end

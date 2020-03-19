@@ -4,7 +4,9 @@ import {
   IntensityUnit,
   IntervalType,
   Workset,
-  IntensityType
+  IntensityType,
+  Exercise,
+  NewWorkout
 } from "../../types";
 import {
   FieldArray,
@@ -22,7 +24,7 @@ import {
   SwapUpButton,
   SwapDownButton
 } from ".";
-import { exercisesOptions, exercises, intervalTypeOptions } from "../../data";
+import { exercisesOptions, intervalTypeOptions } from "../../data";
 import { SingleWorksetLabelWithExercise } from "../labelComponents";
 import Collapsible from "react-collapsible";
 import { workoutFormTriggerStyle } from "./formStyles";
@@ -36,6 +38,7 @@ type WorksetFieldsProps = {
   worksetIndex: number;
   worksetsArrayHelpers: FieldArrayRenderProps;
   name: string;
+  exercises: Exercise[];
 };
 
 const WorksetFields: React.FC<WorksetFieldsProps> = ({
@@ -44,9 +47,13 @@ const WorksetFields: React.FC<WorksetFieldsProps> = ({
   roundIndex,
   worksetIndex,
   worksetsArrayHelpers,
-  name
+  name,
+  exercises
 }) => {
-  const { setFieldValue, values }: FormikProps<Workout> = useFormikContext();
+  const {
+    setFieldValue,
+    values
+  }: FormikProps<Workout | NewWorkout> = useFormikContext();
   const toggleIntensityType = (worksetIndex: number) => {
     setFieldValue(
       `${name}[${worksetIndex}].intensityType`,
@@ -55,28 +62,30 @@ const WorksetFields: React.FC<WorksetFieldsProps> = ({
         : IntensityType.absolute
     );
   };
-  const exercise = exercises.find(
-    exercise =>
-      exercise.name ===
-      values.workgroups[workgroupIndex].rounds[roundIndex].worksets[
-        worksetIndex
-      ].exercise.name
-  );
+  const exercise =
+    exercises.find(exercise => exercise.id === workset.exercise.id) ||
+    exercises[0];
+  const exerciseSelectOptions = exercisesOptions(exercises);
   const worksetFieldNamePrefix = `${name}[${worksetIndex}]`;
   useEffect(() => {
     setFieldValue(
       `${worksetFieldNamePrefix}.exercise.intensityUnit`,
-      exercise?.intensityUnit
+      exercise.intensityUnit
     );
+    setFieldValue(`${worksetFieldNamePrefix}.exercise.name`, exercise.name);
   }, [exercise, setFieldValue, worksetFieldNamePrefix]);
   const intensityLabelText =
     workset.intensityType === IntensityType.relative
       ? "%1rm"
-      : exercise?.intensityUnit === IntensityUnit.weight
+      : exercise.intensityUnit === IntensityUnit.weight
       ? "load (lbs)"
-      : exercise?.intensityUnit === IntensityUnit.speed
+      : exercise.intensityUnit === IntensityUnit.speed
       ? "speed (m/s)"
       : "intensity";
+  const intervalRestLabelText =
+    Number(workset.intervalType) === IntervalType.inclusive
+      ? "Interval time"
+      : "Rest time";
   const repsDistanceLabelText =
     exercise?.intensityUnit === IntensityUnit.weight ? "Reps" : "Distance";
   return (
@@ -147,8 +156,8 @@ const WorksetFields: React.FC<WorksetFieldsProps> = ({
           <div className="flex">
             <Select
               labelText="Exercise"
-              options={exercisesOptions}
-              fieldName={`${worksetFieldNamePrefix}.exercise.name`}
+              options={exerciseSelectOptions}
+              fieldName={`${worksetFieldNamePrefix}.exercise.id`}
             />
             <Select
               labelText="Interval type"
@@ -167,7 +176,7 @@ const WorksetFields: React.FC<WorksetFieldsProps> = ({
             />
             {workset.intervalType !== IntervalType.none ? (
               <Input
-                labelText="Interval time"
+                labelText={intervalRestLabelText}
                 fieldName={`${worksetFieldNamePrefix}.interval`}
               />
             ) : null}
@@ -182,13 +191,16 @@ type WorksetsArrayProps = {
   name: string;
   workgroupIndex: number;
   roundIndex: number;
+  exercises: Exercise[];
 };
 const WorksetsArray: React.FC<WorksetsArrayProps> = ({
   name,
   workgroupIndex,
-  roundIndex
+  roundIndex,
+  exercises
 }) => {
   const { values }: FormikProps<Workout> = useFormikContext();
+
   return (
     <FieldArray
       name={name}
@@ -206,6 +218,7 @@ const WorksetsArray: React.FC<WorksetsArrayProps> = ({
                 worksetIndex={worksetIndex}
                 name={name}
                 worksetsArrayHelpers={worksetsArrayHelpers}
+                exercises={exercises}
               />
             ))}
             <AddButton

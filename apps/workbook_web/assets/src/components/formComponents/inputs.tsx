@@ -68,13 +68,15 @@ type SelectProps = {
   fieldClassName?: string;
   labelText: string;
   labelClassName?: string;
+  defaultValue?: string | number;
 };
 export const Select: React.FC<SelectProps> = ({
   options,
   fieldName,
   fieldClassName,
   labelText,
-  labelClassName
+  labelClassName,
+  defaultValue
 }) => (
   <div>
     <Label label={labelText} labelClassName={labelClassName} />
@@ -82,6 +84,7 @@ export const Select: React.FC<SelectProps> = ({
       as="select"
       className={selectStyle + " " + fieldClassName}
       name={fieldName}
+      defaultValue={defaultValue}
     >
       {options.map((option, optionIndex) => (
         <option key={optionIndex} value={option.value}>

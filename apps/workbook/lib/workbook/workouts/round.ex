@@ -18,6 +18,7 @@ defmodule Workbook.Workouts.Round do
   def changeset(round, attrs) do
     round
     |> cast(attrs, [:sort_order, :interval, :interval_type, :workgroup_id])
+    |> cast_assoc(:worksets)
     |> validate_required([:sort_order, :interval, :interval_type])
   end
 end

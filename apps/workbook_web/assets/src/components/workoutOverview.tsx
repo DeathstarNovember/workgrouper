@@ -4,7 +4,7 @@ import {
   camelCaseToTitle,
   toCamelCase
 } from "../utils";
-import { Workout, Workset } from "../types";
+import { Workout, Workset, IntensityUnit } from "../types";
 
 type WorkoutOverviewProps = {
   workout: Workout;
@@ -36,7 +36,6 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
       )
     )
   );
-
   const worksetsByExercise: {
     [key: string]: Workset[];
   } = groupObjectsByProperty(workoutWorksets, "exerciseName");
@@ -89,8 +88,12 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
               className="text-sm"
             >
               {camelCaseToTitle(ev.exerciseName)}: {ev.volume}
-              {worksetsByExercise[ev.exerciseName][0].exercise.intensityUnit}/
-              {worksetsByExercise[ev.exerciseName].length} worksets
+              {IntensityUnit[
+                worksetsByExercise[ev.exerciseName][0].exercise.intensityUnit
+              ].toString() === "weight"
+                ? "lbs"
+                : "m/s"}
+              /{worksetsByExercise[ev.exerciseName].length} worksets
             </div>
           ))}
         </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Workout } from "../../types";
+import { Workout, Exercise } from "../../types";
 import { FieldArray, useFormikContext } from "formik";
 import { ordinals, newWorkgroup } from "../../data";
 import {
@@ -15,9 +15,13 @@ import { RxWorkgroupLabel } from "../labelComponents";
 import Collapsible from "react-collapsible";
 import { workoutFormTriggerStyle } from "./formStyles";
 
-type WorkgroupsArrayProps = {};
+type WorkgroupsArrayProps = {
+  exercises: Exercise[];
+};
 
-export const WorkgroupsArray: React.FC<WorkgroupsArrayProps> = () => {
+export const WorkgroupsArray: React.FC<WorkgroupsArrayProps> = ({
+  exercises
+}) => {
   const { values }: { values: Workout } = useFormikContext();
   return (
     <FieldArray
@@ -71,6 +75,7 @@ export const WorkgroupsArray: React.FC<WorkgroupsArrayProps> = () => {
                   <RoundsArray
                     workgroupIndex={workgroupIndex}
                     name={`${workgroupFieldNamePrefix}.rounds`}
+                    exercises={exercises}
                   />
                 </Collapsible>
               </div>

@@ -85,21 +85,6 @@ export const WorkoutList: React.FC<WorkoutListProps> = () => {
 
   if (newWorkoutFormIsVisible) {
     return <WorkoutForm workout={newWorkout} hideForm={hideNewWorkoutForm} />;
-  } else if (selectedWorkout) {
-    if (workoutFormIsVisible) {
-      return (
-        <WorkoutForm workout={selectedWorkout} hideForm={hideWorkoutForm} />
-      );
-    } else {
-      return (
-        <WorkoutPane
-          workout={selectedWorkout}
-          workoutIndex={selectedWorkoutIndex}
-          clearSelectedWorkout={clearSelectedWorkout}
-          showForm={showWorkoutForm}
-        />
-      );
-    }
   } else {
     return (
       <div className="flex-col w-full max-w-lg">

@@ -25,7 +25,7 @@ defmodule WorkbookWeb.Schema.WorkoutTypes do
 
     @desc "Create a workout"
     field :create_workout, :workout do
-      arg :workout, non_null(:workout_input)
+      arg :workout, non_null(:workout_input) 
 
       resolve(&WorkbookWeb.Resolvers.WorkoutsResolver.create_workout/3)
     end
@@ -151,8 +151,8 @@ defmodule WorkbookWeb.Schema.WorkoutTypes do
     field :name, :string
     field :completed_at, non_null(:datetime)
     field :description, :string
-    field :workout, :workout, resolve: assoc(:workout)
     field :user, non_null(:user), resolve: assoc(:user)
+    field :workout, non_null(:workout), resolve: assoc(:workout)
     field :workgroups, list_of(non_null(:workgroup)) do
       resolve(
         assoc(:workgroups, fn workgroups_query, _args, _context ->
@@ -167,6 +167,7 @@ defmodule WorkbookWeb.Schema.WorkoutTypes do
     field :name, :string
     field :completed_at, :datetime
     field :description, :string
+    field :user, non_null(:user), resolve: assoc(:user)
     field :workgroups, list_of(non_null(:workgroup)) do
       resolve(
         assoc(:workgroups, fn workgroups_query, _args, _context ->
@@ -217,6 +218,8 @@ defmodule WorkbookWeb.Schema.WorkoutTypes do
   object :workgroup do
     field :id, :id
     field :sort_order, :integer
+    field :workout, non_null(:workout), resolve: assoc(:workout)
+    field :result, non_null(:result), resolve: assoc(:result)
     field :note, :string
     field :rounds, list_of(non_null(:round)) do
       resolve(
@@ -255,21 +258,24 @@ defmodule WorkbookWeb.Schema.WorkoutTypes do
     field :sort_order, non_null(:integer)
     field :note, :string
     field :workout_id, :id
+    field :result_id, :id
     field :rounds, list_of(non_null(:round_input))
   end
 
   input_object :workout_input do
     field :name, non_null(:string)
     field :description, :string
-    field :user_id, :id
+    field :user_id, non_null(:id)
+    field :completed_at, :datetime
     field :workgroups, list_of(non_null(:workgroup_input))
   end
   
   input_object :result_input do
     field :name, non_null(:string)
     field :description, :string
-    fisld :completed_at, :utc_datetime
-    field :user_id, :id
+    field :completed_at, :datetime
+    field :user_id, non_null(:id)
+    field :workout_id, non_null(:id)
     field :workgroups, list_of(non_null(:workgroup_input))
   end
 end

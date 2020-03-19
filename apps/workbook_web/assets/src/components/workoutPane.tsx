@@ -1,32 +1,66 @@
 import React, { useState } from "react";
-import { FaCheck, FaEdit, FaArrowLeft } from "react-icons/fa";
+import { FaCheck, FaEdit, FaArrowLeft, FaTimes } from "react-icons/fa";
 import { WorkoutLabel } from "./labelComponents";
 import { WorkoutForm } from "./formComponents";
 import { Workout } from "../types";
 
-type ConfirmEditButtonsProps = {
+type ActionButtonsProps = {
   confirm: () => void;
-  edit: () => void;
+  clearSelectedWorkout: () => void;
+  showForm: () => void;
 };
 
-const ConfirmEditButtons: React.FC<ConfirmEditButtonsProps> = ({
+type CloseButtonProps = {
+  close: () => void;
+};
+
+const CloseButton: React.FC<CloseButtonProps> = ({ close }) => (
+  <button
+    onClick={() => close()}
+    className="bg-red-500 hover:bg-red-700 text-white font-bold px-2 py-1 mr-2 rounded"
+  >
+    close
+  </button>
+);
+
+type CustomResultButtonProps = {
+  showForm: () => void;
+};
+
+const CustomResultButton: React.FC<CustomResultButtonProps> = ({
+  showForm
+}) => (
+  <button
+    onClick={() => showForm()}
+    className="bg-gray-500 hover:bg-gray-700 text-white font-bold px-2 py-1 mr-2 rounded"
+  >
+    custom result
+  </button>
+);
+
+type RxResultButtonProps = {
+  confirm: () => void;
+};
+
+const RxResultButton: React.FC<RxResultButtonProps> = ({ confirm }) => (
+  <button
+    onClick={() => confirm()}
+    className="bg-green-500 hover:bg-green-700 text-white font-bold px-2 py-1 rounded"
+  >
+    Rx result
+  </button>
+);
+
+const ActionButtons: React.FC<ActionButtonsProps> = ({
   confirm,
-  edit
+  clearSelectedWorkout,
+  showForm
 }) => {
   return (
     <div className="flex">
-      <button
-        onClick={() => edit()}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-1 mr-2 rounded"
-      >
-        <FaEdit />
-      </button>
-      <button
-        onClick={() => confirm()}
-        className="bg-green-500 hover:bg-green-700 text-white font-bold px-2 py-1 rounded"
-      >
-        <FaCheck />
-      </button>
+      <CloseButton close={clearSelectedWorkout} />
+      <CustomResultButton showForm={showForm} />
+      <RxResultButton confirm={confirm} />
     </div>
   );
 };
@@ -35,14 +69,12 @@ type WorkoutPaneProps = {
   workout: Workout;
   workoutIndex?: number;
   clearSelectedWorkout: () => void;
-  showForm: () => void;
 };
 
 export const WorkoutPane: React.FC<WorkoutPaneProps> = ({
   workout,
   workoutIndex,
-  clearSelectedWorkout,
-  showForm
+  clearSelectedWorkout
 }) => {
   const { name, description } = workout;
   const [resultIsVisible, setResultIsVisible] = useState(false);
@@ -53,32 +85,17 @@ export const WorkoutPane: React.FC<WorkoutPaneProps> = ({
     setResultIsVisible(false);
   };
 
-  const BackButton = () => {
-    return (
-      <button
-        onClick={() => clearSelectedWorkout()}
-        className="bg-gray-500 hover:bg-gray-700 text-white font-bold px-2 py-1 mr-2 rounded"
-      >
-        <FaArrowLeft />
-      </button>
-    );
-  };
-  const ShowFormButton = () => {
-    return (
-      <button
-        onClick={() => showForm()}
-        className="bg-gray-500 hover:bg-gray-700 text-white font-bold px-2 py-1 rounded"
-      >
-        <FaEdit />
-      </button>
-    );
-  };
   return (
-    <div className="p-3 rounded max-w-lg w-full">
+    <div className="p-6 rounded max-w-lg w-full">
       <div>
         <div className="flex">
-          <BackButton />
-          <ShowFormButton />
+          <ActionButtons
+            confirm={() =>
+              alert("comming soon! Submit your result exactly as prescribed!")
+            }
+            clearSelectedWorkout={clearSelectedWorkout}
+            showForm={showResult}
+          />
         </div>
         <div>
           <div className={`rounded py-1 text-gray-900 text-xl`}>{name}</div>
@@ -88,15 +105,16 @@ export const WorkoutPane: React.FC<WorkoutPaneProps> = ({
       {workoutIndex !== undefined ? (
         resultIsVisible ? (
           <div>
-            <WorkoutForm workout={workout} hideForm={hideResult} />
+            <WorkoutForm
+              result
+              workoutId={workout.id}
+              workout={workout}
+              hideForm={hideResult}
+            />
           </div>
         ) : (
           <div>
             <WorkoutLabel workout={workout} workoutIndex={workoutIndex} />
-            <ConfirmEditButtons
-              confirm={() => alert("Submit your result exactly as prescribed?")}
-              edit={showResult}
-            />
           </div>
         )
       ) : (

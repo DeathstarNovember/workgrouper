@@ -1,12 +1,12 @@
-defmodule WorkbookWeb.Schema do
+defmodule Workbook.Schema do
   use Absinthe.Schema
   use Absinthe.Schema.Notation
   use Absinthe.Ecto, repo: Workbook.Repo
 
   import_types Absinthe.Type.Custom
-  import_types WorkbookWeb.Schema.TrainingTypes
-  import_types WorkbookWeb.Schema.AuthTypes
-  import_types WorkbookWeb.Schema.WorkoutTypes
+  import_types Workbook.Schema.TrainingTypes
+  import_types Workbook.Schema.AuthTypes
+  import_types Workbook.Schema.WorkoutTypes
 
   query do
     import_fields :workout_queries

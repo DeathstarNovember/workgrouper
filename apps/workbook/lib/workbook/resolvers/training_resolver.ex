@@ -1,4 +1,4 @@
-defmodule WorkbookWeb.Resolvers.TrainingResolver do
+defmodule Workbook.Resolvers.TrainingResolver do
   require Logger
   alias Workbook.Training
 

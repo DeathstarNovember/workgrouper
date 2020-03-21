@@ -1,4 +1,4 @@
-defmodule WorkbookWeb.Schema.AuthTypes do
+defmodule Workbook.Schema.AuthTypes do
   use Absinthe.Schema.Notation
   use Absinthe.Ecto, repo: Workbook.Repo
 
@@ -16,7 +16,7 @@ defmodule WorkbookWeb.Schema.AuthTypes do
     field :create_user, :user do
       arg :user, non_null(:user_input)
 
-      resolve(&WorkbookWeb.Resolvers.AuthResolver.create_user/3)
+      resolve(&Workbook.Resolvers.AuthResolver.create_user/3)
     end
   end
   

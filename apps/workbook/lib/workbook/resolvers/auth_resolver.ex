@@ -1,4 +1,4 @@
-defmodule WorkbookWeb.Resolvers.AuthResolver do
+defmodule Workbook.Resolvers.AuthResolver do
   alias Workbook.Auth
 
   def create_user(_parent, args, _resolutions) do

@@ -1,4 +1,4 @@
-defmodule WorkbookWeb.Resolvers.WorkoutsResolver do
+defmodule Workbook.Resolvers.WorkoutsResolver do
   require Logger
   alias Workbook.Workouts
   def create_exercise(_parent, args, _resolutions) do

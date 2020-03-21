@@ -1,4 +1,4 @@
-defmodule WorkbookWeb.Schema.TrainingTypes do
+defmodule Workbook.Schema.TrainingTypes do
   use Absinthe.Schema.Notation
   use Absinthe.Ecto, repo: Workbook.Repo
 
@@ -7,20 +7,20 @@ defmodule WorkbookWeb.Schema.TrainingTypes do
     field :create_schedule, :schedule do
       arg :schedule, non_null(:schedule_input)
 
-      resolve(&WorkbookWeb.Resolvers.TrainingResolver.create_schedule/3)
+      resolve(&Workbook.Resolvers.TrainingResolver.create_schedule/3)
     end
     @desc "Update a schedule"
     field :update_schedule, :schedule do
       arg :id , non_null(:id)
       arg :schedule, non_null(:schedule_input)
 
-      resolve(&WorkbookWeb.Resolvers.TrainingResolver.update_schedule/3)
+      resolve(&Workbook.Resolvers.TrainingResolver.update_schedule/3)
     end
     @desc "Delete a schedule"
     field :delete_schedule, :schedule do
       arg :id, non_null(:id)
 
-      resolve(&WorkbookWeb.Resolvers.TrainingResolver.delete_schedule/3)
+      resolve(&Workbook.Resolvers.TrainingResolver.delete_schedule/3)
     end
   end
 

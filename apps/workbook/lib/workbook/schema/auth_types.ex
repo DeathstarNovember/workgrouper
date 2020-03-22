@@ -9,6 +9,14 @@ defmodule Workbook.Schema.AuthTypes do
         {:ok, Workbook.Auth.list_users()}
       end
     end
+
+    @desc "Log user in"
+    field :login, type: :user_session do
+      arg(:username, non_null(:string))
+      arg(:password, non_null(:string))
+    
+      resolve(&Workbook.Resolvers.AuthResolver.login/3)
+    end
   end
 
   object :auth_mutations do
@@ -18,11 +26,24 @@ defmodule Workbook.Schema.AuthTypes do
 
       resolve(&Workbook.Resolvers.AuthResolver.create_user/3)
     end
+
+    @desc "Log user out"
+    field :sign_out, type: :user do
+      arg(:id, non_null(:id))
+
+      resolve(&Workbook.Resolvers.AuthResolver.logout/2)
+     end
+  end
+
+  object :user_session do
+    field :token, :string
+    field :current_user, :user
   end
   
   object :user do
     field :id, :id
     field :username, :string
+    field :token, :string
     field :workouts, list_of(non_null(:workout)) do
       resolve(
         assoc(:workouts, fn workouts_query, _args, _context ->

@@ -1,6 +1,5 @@
 defmodule Workbook.Workouts do
 
-  require Logger
   @moduledoc """
   The Workouts context.
   """

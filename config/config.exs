@@ -14,6 +14,16 @@ config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 config :workbook,
   ecto_repos: [Workbook.Repo]
 
+config :workbook, Workbook.Guardian,
+  allowed_algos: ["HS512"],
+  verify_module: Guardian.JWT,
+  issuer: "workbook",
+  ttl: {30, :days},
+  allowed_drift: 2000,
+  verify_issuer: true,
+  secret_key: "/GwklykG1Pru0IRIcmd29K86u8kL56wt2/p5/7nwQoXTH3jvLu9WoG85288HdaEs",
+  serializer: Workbook.Guardian
+
 config :workbook_web,
   ecto_repos: [Workbook.Repo],
   generators: [context_app: :workbook]

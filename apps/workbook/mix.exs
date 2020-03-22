@@ -40,6 +40,7 @@ defmodule Workbook.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:jason, "~> 1.0"},
       {:bcrypt_elixir, "~> 2.0"},
+      {:guardian, "~> 2.0"},
       {:tzdata, "~> 1.0.3"},
       {:absinthe, "~> 1.4"},
       {:absinthe_ecto, "~> 0.1.3"},

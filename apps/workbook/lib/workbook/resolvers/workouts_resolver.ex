@@ -1,5 +1,4 @@
 defmodule Workbook.Resolvers.WorkoutsResolver do
-  require Logger
   alias Workbook.Workouts
   def create_exercise(_parent, args, _resolutions) do
     args.exercise
@@ -43,10 +42,10 @@ defmodule Workbook.Resolvers.WorkoutsResolver do
   #       {:error, extract_error_msg(changeset)}
   #   end
   # end
-  def create_workout(_parent, args, _resolutions) do
-    Logger.info("Workout input: #{inspect(args)}")
+  def create_workout(_parent, args, %{context: %{current_user: current_user}}) do
     args.workout
     |> Map.take([:name, :description, :user_id])
+    |> Map.merge(%{user_id: current_user.id})
     |> Workouts.create_workout()
     |> case do
       {:ok, created_workout} ->
@@ -96,6 +95,10 @@ defmodule Workbook.Resolvers.WorkoutsResolver do
     end
   end
 
+  def create_workout(_parent, args, _resolutions) do 
+    {:error, "Not Authorized, please sign in."}
+  end
+
   def update_workout(_parent, args, _resolutions) do
     args.id
     |> Workouts.update_workout(args.workout)
@@ -108,7 +111,6 @@ defmodule Workbook.Resolvers.WorkoutsResolver do
   end
 
   def create_result(_parent, args, _resolutions) do
-    Logger.info("Result input: #{inspect(args)}")
     args.result
     |> Map.take([:name, :description, :completed_at, :workout_id, :user_id])
     |> Workouts.create_result()

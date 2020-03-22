@@ -1,5 +1,4 @@
 defmodule Workbook.Workouts.Workout do
-  require Logger
   use Ecto.Schema
   import Ecto.Changeset
   alias Workbook.Auth.User

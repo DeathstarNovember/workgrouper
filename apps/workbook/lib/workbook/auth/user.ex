@@ -8,6 +8,7 @@ defmodule Workbook.Auth.User do
     field :username, :string
     field :password, :string, virtual: true
     field :password_hash, :string
+    field :token, :string
     has_many :programs, Program
     has_many :schedules, Schedule
     has_many :workouts, Workout
@@ -24,6 +25,13 @@ defmodule Workbook.Auth.User do
     |> unique_constraint(:username)
     |> put_password_hash()
   end
+
+  def store_token_changeset(user, token) do
+    user
+    |> cast(token, [:token])
+    |> validate_required([:token])
+  end
+
   defp put_password_hash(
     %Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset
   ) do

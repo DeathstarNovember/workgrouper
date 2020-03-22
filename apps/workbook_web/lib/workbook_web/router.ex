@@ -9,20 +9,26 @@ defmodule WorkbookWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :context do
+    plug Workbook.Context
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/", WorkbookWeb do
     pipe_through :browser
+    pipe_through :context
 
     get "/", PageController, :index
   end
 
   scope "/api" do
     pipe_through :api
+    pipe_through :context
     forward "/graphiql", Absinthe.Plug.GraphiQL, schema: Workbook.Schema
     forward "/", Absinthe.Plug,
-      schema: Workboo.Schema
+      schema: Workbook .Schema
   end
 end

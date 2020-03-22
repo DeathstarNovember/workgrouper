@@ -10,6 +10,13 @@ defmodule Workbook.Schema.AuthTypes do
       end
     end
 
+    @desc "Get a use by authorization token"
+    field :authorized_user, :user do
+      arg :token, non_null(:string)
+      
+      resolve(&Workbook.Resolvers.AuthResolver.get_authorized_user/3)
+    end
+
     @desc "Log user in"
     field :login, type: :user_session do
       arg(:username, non_null(:string))
@@ -31,13 +38,12 @@ defmodule Workbook.Schema.AuthTypes do
     field :sign_out, type: :user do
       arg(:id, non_null(:id))
 
-      resolve(&Workbook.Resolvers.AuthResolver.logout/2)
+      resolve(&Workbook.Resolvers.AuthResolver.logout/3)
      end
   end
 
   object :user_session do
     field :token, :string
-    field :current_user, :user
   end
   
   object :user do

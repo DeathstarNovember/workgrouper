@@ -14,6 +14,11 @@ defmodule Workbook.Auth do
     |> Repo.update()
   end
 
+  def get_authorized_user(token) do
+    user = Repo.get_by!(User, token: token)
+    {:ok, user}
+  end
+
   def revoke_token(%User{} = user, token) do
     user
     |> User.store_token_changeset(%{token: token})

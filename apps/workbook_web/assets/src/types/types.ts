@@ -36,7 +36,10 @@ export enum IntensityType {
   absolute,
   relative
 }
-
+export type User = {
+  id: number;
+  username: string;
+};
 export type NewExercise = Omit<Exercise, "id">;
 export type Exercise = {
   id: number;

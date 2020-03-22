@@ -36,6 +36,10 @@ export enum IntensityType {
   absolute,
   relative
 }
+export type CurrentUserData = {
+  authorizedUser: User;
+};
+export type TokenData = { login: { token: string } };
 export type User = {
   id: number;
   username: string;

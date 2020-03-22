@@ -67,6 +67,12 @@ export const exercisesOptions = (exercises: Exercise[]) =>
     label: exercise.name
   }));
 
+export const layout = {
+  header: {
+    height: 75
+  }
+};
+
 export const ordinals = [
   "A",
   "B",

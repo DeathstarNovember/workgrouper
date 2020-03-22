@@ -6,8 +6,10 @@ import ApolloClient, { gql } from "apollo-boost";
 import { ApolloProvider, useLazyQuery } from "@apollo/react-hooks";
 import { WorkoutEditorPage, ProgramEditorPage } from "./pages";
 import { Header } from "./components/layoutComponents";
-import { User } from "./types";
+import { TokenData, CurrentUserData } from "./types";
 import { HomePage } from "./pages/homePage";
+import { authQuery, loginQuery } from "./gqlAuth";
+import { layout } from "./data";
 const currentToken = localStorage.getItem("workbook-token");
 const client = new ApolloClient({
   uri: "http://localhost:4000/api",
@@ -19,39 +21,22 @@ const client = new ApolloClient({
     });
   }
 });
+
+//TODO: Convert these links into a router
 const links = ["Home", "Workout Editor", "Program Editor"];
-const layout = {
-  header: {
-    height: 75
-  }
-};
+
 export const LayoutContext = React.createContext(layout);
-type CurrentUserData = {
-  authorizedUser: User;
-};
-type TokenData = { login: { token: string } };
-const authQuery = gql`
-  query GetCurrentUser($token: String!) {
-    authorizedUser(token: $token) {
-      id
-      username
-    }
-  }
-`;
-const loginQuery = gql`
-  query LogIn($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
-      token
-    }
-  }
-`;
+
 const App = () => {
   const [selectedLinkIndex, setSelectedLinkIndex] = useState(0);
+
   const selectedLink = links[selectedLinkIndex];
+
   const [
     getCurrentUser,
     { data: currentUserData, loading: currentUserLoading }
   ] = useLazyQuery<CurrentUserData>(authQuery);
+
   const [logIn] = useLazyQuery<TokenData>(loginQuery, {
     onCompleted: data => {
       localStorage.setItem("workbook-token", data.login.token);
@@ -65,17 +50,20 @@ const App = () => {
       variables: { username: "DeathstarNovember", password: "password" }
     });
   };
+
   if (currentUserLoading) {
     return <div>Loading Current User</div>;
   }
+
   const currentUser = currentUserData?.authorizedUser;
 
   if (!currentUser) {
     if (currentToken) {
       getCurrentUser({ variables: { token: currentToken } });
     }
-    return <button onClick={handleLogin}>Log In</button>;
+    return <button onClick={handleLogin}>Log In</button>; //TODO: Create Login component
   }
+
   return (
     <div className="" style={{ minHeight: "100vh" }}>
       <Header

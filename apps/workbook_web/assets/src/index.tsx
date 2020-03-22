@@ -4,9 +4,10 @@ import "phoenix_html";
 import "./styles.css";
 import ApolloClient, { gql } from "apollo-boost";
 import { ApolloProvider, useLazyQuery } from "@apollo/react-hooks";
-import { WorkoutEditorPage } from "./pages";
+import { WorkoutEditorPage, ProgramEditorPage } from "./pages";
 import { Header } from "./components/layoutComponents";
 import { User } from "./types";
+import { HomePage } from "./pages/homePage";
 const currentToken = localStorage.getItem("workbook-token");
 const client = new ApolloClient({
   uri: "http://localhost:4000/api",
@@ -19,6 +20,12 @@ const client = new ApolloClient({
   }
 });
 const links = ["Home", "Workout Editor", "Program Editor"];
+const layout = {
+  header: {
+    height: 75
+  }
+};
+export const LayoutContext = React.createContext(layout);
 type CurrentUserData = {
   authorizedUser: User;
 };
@@ -45,7 +52,7 @@ const App = () => {
     getCurrentUser,
     { data: currentUserData, loading: currentUserLoading }
   ] = useLazyQuery<CurrentUserData>(authQuery);
-  const [logIn, { called: loginCalled }] = useLazyQuery<TokenData>(loginQuery, {
+  const [logIn] = useLazyQuery<TokenData>(loginQuery, {
     onCompleted: data => {
       localStorage.setItem("workbook-token", data.login.token);
       window.location.reload(true);
@@ -77,12 +84,8 @@ const App = () => {
         selectedLinkIndex={selectedLinkIndex}
         currentUser={currentUser}
       />
-      {selectedLink === "Program Editor" ? (
-        <div className="text-green-800">Program Editor</div>
-      ) : null}
-      {selectedLink === "Home" ? (
-        <div className="text-purple-800">Home</div>
-      ) : null}
+      {selectedLink === "Program Editor" ? <ProgramEditorPage /> : null}
+      {selectedLink === "Home" ? <HomePage /> : null}
       {selectedLink === "Workout Editor" ? <WorkoutEditorPage /> : null}
     </div>
   );

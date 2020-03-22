@@ -10,7 +10,7 @@ type HeaderProps = {
   currentUser?: User;
 };
 const LogoCircle: React.FC<{ label?: string }> = ({ label }) => (
-  <div className="mx-4 rounded-full h-16 w-16 flex items-center justify-center bg-gray-700">
+  <div className="mx-4 rounded-full h-16 w-16 flex items-center justify-center bg-gray-700 cursor-pointer">
     {label ? label : ""}
   </div>
 );
@@ -48,18 +48,15 @@ export const Header: React.FC<HeaderProps> = ({
           selectLink={selectLink}
           selectedLinkIndex={selectedLinkIndex}
         />
-        <div className="text-gray-600" onClick={handleLogOut}>
-          Log Out {currentUser?.username}
-        </div>
       </div>
-      <div className="flex flex-1 justify-end">
-        <div className="flex flex-col justify-center mr-3">
-          <input
-            className="rounded-full py-2 px-4"
-            name="search"
-            placeholder="search"
-          />
-        </div>
+      <div className="flex flex-1 items-center justify-end">
+        <div className="text-gray-600">{currentUser?.username}</div>
+        <button
+          onClick={handleLogOut}
+          className="bg-gray-100 mx-5 p-2 text-gray-600"
+        >
+          Log Out
+        </button>
       </div>
     </div>
   );

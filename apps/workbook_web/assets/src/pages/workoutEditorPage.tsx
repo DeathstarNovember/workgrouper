@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { WorkoutOverview, WorkoutPane } from "../components";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
@@ -6,6 +6,7 @@ import { Workout } from "../types";
 import { newWorkout } from "../data";
 import { FaPlus } from "react-icons/fa";
 import { WorkoutForm } from "../components/formComponents";
+import { LayoutContext } from "..";
 
 const workoutEditorQuery = gql`
   query WorkoutEditor {
@@ -51,6 +52,7 @@ const workoutEditorQuery = gql`
 `;
 
 export const WorkoutEditorPage = () => {
+  const layout = useContext(LayoutContext);
   const { data, loading, error } = useQuery(workoutEditorQuery);
   const [selectedWorkout, setSelectedWorkout] = useState<Workout | undefined>(
     undefined
@@ -80,7 +82,10 @@ export const WorkoutEditorPage = () => {
     return <div className="text-lg">{JSON.stringify(error, null, 2)}</div>;
   }
   return (
-    <div className="flex flex-1" style={{ minHeight: "calc(100vh - 75px)" }}>
+    <div
+      className="flex flex-1"
+      style={{ minHeight: `calc(100vh - ${layout.header.height}px)` }}
+    >
       <div className="max-w-500 bg-gray-500">
         <div className="flex-col w-full max-w-lg">
           <button

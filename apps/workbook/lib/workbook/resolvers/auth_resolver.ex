@@ -13,12 +13,17 @@ defmodule Workbook.Resolvers.AuthResolver do
     end
   end
 
-  def login(_parent, args, _info) do
-    with {:ok, user} <- AuthHelper.login_with_username_password(args.username, args.password),
-      {:ok, jwt, _} <- Workbook.Guardian.encode_and_sign(user),
-      {:ok, _ } <- Auth.store_token(user, jwt) do
-      {:ok, %{token: jwt}}
-    end
+  def login(_parent, args, _resolutions) do
+    AuthHelper.login_with_username_password(args.username, args.password)
+    |> case do
+      {:ok, user} ->
+        with {:ok, jwt, _} <- Workbook.Guardian.encode_and_sign(user),
+          {:ok, _ } <- Auth.store_token(user, jwt) do
+          {:ok, %{token: jwt}}
+        end
+      {:error, error} -> 
+        {:error, error}
+      end
   end
 
   def get_authorized_user(_parent, args, _resolutions) do
@@ -32,7 +37,7 @@ defmodule Workbook.Resolvers.AuthResolver do
     end
   end
 
-  def logout(_parent, _args, %{context: %{current_user: current_user, token: _token}}) do
+  def logout(_parent, args, %{context: %{current_user: current_user, token: _token}}) do
     Workbook.Auth.revoke_token(current_user, nil)
     {:ok, current_user}
   end

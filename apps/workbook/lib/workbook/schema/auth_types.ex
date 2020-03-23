@@ -50,6 +50,7 @@ defmodule Workbook.Schema.AuthTypes do
     field :id, :id
     field :username, :string
     field :token, :string
+    field :password_hash, :string
     field :workouts, list_of(non_null(:workout)) do
       resolve(
         assoc(:workouts, fn workouts_query, _args, _context ->

@@ -13,33 +13,34 @@ interface UserLogin {
 }
 const InnerForm = (props: FormikProps<UserLogin>) => {
   const [logIn] = useLazyQuery<TokenData>(loginQuery, {
+    variables: {
+      username: props.values.username,
+      password: props.values.password
+    },
     onCompleted: data => {
       localStorage.setItem("workbook-token", data.login.token);
-      window.location.reload(false);
+      window.location.reload(true);
     },
-    onError: error =>
-      alert(`Login failed: error ${JSON.stringify(error, null, 2)}`)
+    onError: error => {
+      alert(`Login failed: error ${JSON.stringify(error, null, 2)}`);
+      window.location.reload(true);
+    }
   });
 
   const handleLogin = () => {
-    logIn({
-      variables: {
-        username: props.values.username,
-        password: props.values.password
-      }
-    });
+    logIn();
   };
   return (
     <Form className="flex items-center justify-center">
       <Input
         fieldName="username"
-        labelClassName="text-sm text-gray-600"
         placeholder="username"
+        labelClassName="text-sm text-gray-600"
       />
       <Input
+        password
         fieldName="password"
         placeholder="password"
-        password
         labelClassName="text-sm text-gray-600"
       />
       <div>
@@ -55,6 +56,7 @@ const InnerForm = (props: FormikProps<UserLogin>) => {
 };
 
 export const LogInForm = withFormik<LogInFormProps, UserLogin>({
+  enableReinitialize: true,
   validationSchema: Yup.object().shape({
     username: Yup.string().required("Please type your username"),
     password: Yup.string().required("Please provide your password.")

@@ -556,10 +556,11 @@ deathstar_schedule_1 = Repo.insert!(%Schedule{
   start_date: ds_s1_start_date,
   program: deathstar_default_program,
 })
-
+password_hash = Bcrypt.hash_pwd_salt("password")
 Repo.insert!(%User{
   username: "DeathstarNovember", 
   password: "password", 
+  password_hash: password_hash,
   workouts: [
     workout_1,
     workout_2
@@ -573,9 +574,11 @@ Repo.insert!(%User{
 })
 Repo.insert!(%User{
   username: "FelixTheDestroyer", 
-  password: "password", 
+  password: "password",
+  password_hash: password_hash,
 })
 Repo.insert!(%User{
   username: "MattTheProphit", 
   password: "password", 
+  password_hash: password_hash,
 })

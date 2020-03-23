@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import "phoenix_html";
 import "./styles.css";
-import ApolloClient, { gql } from "apollo-boost";
-import { ApolloProvider, useLazyQuery } from "@apollo/react-hooks";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider, useQuery } from "@apollo/react-hooks";
 import { WorkoutEditorPage, ProgramEditorPage } from "./pages";
 import { Header } from "./components/layoutComponents";
-import { TokenData, CurrentUserData } from "./types";
+import { CurrentUserData } from "./types";
 import { HomePage } from "./pages/homePage";
-import { authQuery, loginQuery } from "./gqlAuth";
+import { authQuery } from "./gqlAuth";
 import { layout } from "./data";
 const currentToken = localStorage.getItem("workbook-token");
+const userLoggedIn = Boolean(currentToken);
 const client = new ApolloClient({
   uri: "http://localhost:4000/api",
   request: operation => {
@@ -22,59 +24,44 @@ const client = new ApolloClient({
   }
 });
 
-//TODO: Convert these links into a router
-const links = ["Home", "Workout Editor", "Program Editor"];
+const authorizedLinks = [
+  { path: "/workoutEditor", name: "Workout Editor" },
+  { path: "/programPlanner", name: "Program Planner" }
+];
+
+const publicLinks = [{ path: "/", name: "Home" }];
+
+const links = currentToken
+  ? [...publicLinks, ...authorizedLinks]
+  : [...publicLinks];
 
 export const LayoutContext = React.createContext(layout);
 
 const App = () => {
-  const [selectedLinkIndex, setSelectedLinkIndex] = useState(0);
-
-  const selectedLink = links[selectedLinkIndex];
-
-  const [
-    getCurrentUser,
-    { data: currentUserData, loading: currentUserLoading }
-  ] = useLazyQuery<CurrentUserData>(authQuery);
-
-  const [logIn] = useLazyQuery<TokenData>(loginQuery, {
-    onCompleted: data => {
-      localStorage.setItem("workbook-token", data.login.token);
-      window.location.reload(true);
-    },
-    onError: () => alert("Login failed")
+  const { data: currentUserData, loading: currentUserLoading } = useQuery<
+    CurrentUserData
+  >(authQuery, {
+    variables: { token: currentToken },
+    onError: () => {
+      localStorage.clear();
+    }
   });
-
-  const handleLogin = async () => {
-    logIn({
-      variables: { username: "DeathstarNovember", password: "password" }
-    });
-  };
 
   if (currentUserLoading) {
     return <div>Loading Current User</div>;
   }
-
   const currentUser = currentUserData?.authorizedUser;
-
-  if (!currentUser) {
-    if (currentToken) {
-      getCurrentUser({ variables: { token: currentToken } });
-    }
-    return <button onClick={handleLogin}>Log In</button>; //TODO: Create Login component
-  }
 
   return (
     <div className="" style={{ minHeight: "100vh" }}>
-      <Header
-        links={links}
-        selectLink={setSelectedLinkIndex}
-        selectedLinkIndex={selectedLinkIndex}
-        currentUser={currentUser}
-      />
-      {selectedLink === "Program Editor" ? <ProgramEditorPage /> : null}
-      {selectedLink === "Home" ? <HomePage /> : null}
-      {selectedLink === "Workout Editor" ? <WorkoutEditorPage /> : null}
+      <Header links={links} currentUser={currentUser} />
+      {userLoggedIn ? (
+        <>
+          <Route path="/programPlanner" component={ProgramEditorPage} />
+          <Route path="/workoutEditor" component={WorkoutEditorPage} />
+        </>
+      ) : null}
+      <Route exact path="/" component={HomePage} />
     </div>
   );
 };
@@ -82,7 +69,9 @@ const App = () => {
 const rootElement = document.getElementById("app");
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <Router basename="/">
+      <App />
+    </Router>
   </ApolloProvider>,
   rootElement
 );

@@ -22,6 +22,8 @@ defmodule WorkbookWeb.Router do
     pipe_through :context
 
     get "/", PageController, :index
+    get "/programPlanner", PageController, :index
+    get "/workoutEditor", PageController, :index
   end
 
   scope "/api" do
@@ -29,6 +31,6 @@ defmodule WorkbookWeb.Router do
     pipe_through :context
     forward "/graphiql", Absinthe.Plug.GraphiQL, schema: Workbook.Schema
     forward "/", Absinthe.Plug,
-      schema: Workbook .Schema
+      schema: Workbook.Schema
   end
 end

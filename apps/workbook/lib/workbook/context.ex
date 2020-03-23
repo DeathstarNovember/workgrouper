@@ -25,13 +25,17 @@ defmodule Workbook.Context do
   end
 
   defp authorize(token) do
-    User
-    |> where(token: ^token)
-    |> Repo.one()
-    |> case do
-      nil -> {:error, "Invalid authorization token"}
-      user -> 
-        {:ok, user}
+    cond do
+      String.length(String.trim token) == 0 -> {:error, "No token provided"}
+      String.length(String.trim token) != 0 -> 
+        User
+        |> where(token: ^token)
+        |> Repo.one()
+        |> case do
+          nil -> {:error, "Invalid authorization token"}
+          user -> 
+            {:ok, user}
+        end
     end
   end
 end

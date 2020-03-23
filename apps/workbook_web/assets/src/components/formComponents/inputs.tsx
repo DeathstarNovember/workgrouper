@@ -27,6 +27,7 @@ type InputProps = {
   placeholder?: string;
   labelClassName?: string;
   fieldClassName?: string;
+  password?: boolean;
 };
 
 export const Input: React.FC<InputProps> = ({
@@ -34,6 +35,7 @@ export const Input: React.FC<InputProps> = ({
   fieldClassName,
   labelText,
   fieldName,
+  password,
   ...props
 }) => (
   <div>
@@ -47,7 +49,7 @@ export const Input: React.FC<InputProps> = ({
         return (
           <div>
             <input
-              type="text"
+              type={password ? "password" : "text"}
               className={meta.touched && meta.error ? errorStyle : style}
               placeholder={props.placeholder}
               {...field}

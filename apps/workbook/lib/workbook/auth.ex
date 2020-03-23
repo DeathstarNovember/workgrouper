@@ -15,7 +15,7 @@ defmodule Workbook.Auth do
   end
 
   def get_authorized_user(token) do
-    user = Repo.get_by!(User, token: token)
+    user = Repo.get_by!(User, token: token) 
     {:ok, user}
   end
 

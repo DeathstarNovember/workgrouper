@@ -29,7 +29,6 @@ defmodule Workbook.Auth.User do
   def store_token_changeset(user, token) do
     user
     |> cast(token, [:token])
-    |> validate_required([:token])
   end
 
   defp put_password_hash(

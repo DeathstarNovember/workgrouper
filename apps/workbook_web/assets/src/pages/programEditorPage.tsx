@@ -10,7 +10,7 @@ export const ProgramEditorPage: React.FC<ProgramEditorPageProps> = ({}) => {
       className="flex flex-1 items-center justify-center"
       style={{ minHeight: `calc(100vh - ${layout.header.height}px)` }}
     >
-      <div className="text-6xl text-gray-900 ">ProgramEditor</div>
+      <div className="text-6xl text-gray-900 ">Program Planner</div>
     </div>
   );
 };

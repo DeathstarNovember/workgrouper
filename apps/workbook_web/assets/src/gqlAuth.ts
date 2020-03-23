@@ -8,6 +8,7 @@ export const authQuery = gql`
     }
   }
 `;
+
 export const loginQuery = gql`
   query LogIn($username: String!, $password: String!) {
     login(username: $username, password: $password) {

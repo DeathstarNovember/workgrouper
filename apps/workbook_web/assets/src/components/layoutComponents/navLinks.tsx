@@ -1,28 +1,28 @@
 import React from "react";
+import { withRouter, RouteComponentProps } from "react-router";
+import { Link } from "react-router-dom";
 
 type NavLinksProps = {
-  links: string[];
-  selectLink: (arg0: number) => void;
-  selectedLinkIndex: number;
+  links: { name: string; path: string }[];
 };
-export const NavLinks: React.FC<NavLinksProps> = ({
+const Links: React.FC<NavLinksProps & RouteComponentProps> = ({
   links,
-  selectLink,
-  selectedLinkIndex
+  location
 }) => {
   return (
     <div className="flex flex-1">
       {links.map((link, linkIndex) => (
-        <div
+        <Link
           key={`navLink${linkIndex}`}
-          onClick={() => selectLink(linkIndex)}
+          to={link.path}
           className={`mr-2 mr-5 cursor-pointer ${
-            linkIndex === selectedLinkIndex ? "text-gray-900" : "text-gray-600"
+            link.path === location.pathname ? "text-gray-900" : "text-gray-600"
           } `}
         >
-          {link}
-        </div>
+          {link.name}
+        </Link>
       ))}
     </div>
   );
 };
+export const NavLinks = withRouter(Links);

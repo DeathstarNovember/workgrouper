@@ -1,19 +1,20 @@
 import React from "react";
 import { Workout, Exercise } from "../../types";
 import { FieldArray, useFormikContext } from "formik";
+import Collapsible from "react-collapsible";
 import { ordinals, newWorkgroup } from "../../data";
+import { workoutFormTriggerStyle } from "./formStyles";
 import {
   RemoveButton,
   Input,
   AddButton,
   sectionStyle,
-  sectionTitleStyle
+  sectionTitleStyle,
+  SwapUpButton,
+  SwapDownButton,
+  RoundsArray
 } from ".";
-import { RoundsArray } from "./roundsArray";
-import { SwapUpButton, SwapDownButton } from "./buttons";
 import { RxWorkgroupLabel } from "../labelComponents";
-import Collapsible from "react-collapsible";
-import { workoutFormTriggerStyle } from "./formStyles";
 
 type WorkgroupsArrayProps = {
   exercises: Exercise[];

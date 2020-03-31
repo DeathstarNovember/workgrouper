@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { useLazyQuery } from "@apollo/react-hooks";
 import { TokenData } from "../../types";
 import { loginQuery } from "../../gqlAuth";
-import { Input } from "./inputs";
+import { Input } from ".";
 
 interface LogInFormProps {}
 interface UserLogin {

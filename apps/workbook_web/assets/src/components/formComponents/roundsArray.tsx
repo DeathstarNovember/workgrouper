@@ -9,10 +9,10 @@ import {
   Input,
   AddButton,
   SwapUpButton,
-  SwapDownButton
+  SwapDownButton,
+  WorksetsArray
 } from ".";
 import { intervalTypeOptions, newWorkset } from "../../data";
-import WorksetsArray from "./worksetsArray";
 
 type RoundsArrayProps = {
   workgroupIndex: number;

@@ -8,7 +8,7 @@ import { ApolloProvider, useQuery } from "@apollo/react-hooks";
 import { WorkoutEditorPage, ProgramEditorPage } from "./pages";
 import { Header } from "./components/layoutComponents";
 import { CurrentUserData } from "./types";
-import { HomePage } from "./pages/homePage";
+import { HomePage } from "./pages/HomePage";
 import { authQuery } from "./gqlAuth";
 import { layout } from "./data";
 const currentToken = localStorage.getItem("workbook-token");

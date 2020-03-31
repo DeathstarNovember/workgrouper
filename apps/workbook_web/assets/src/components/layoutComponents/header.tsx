@@ -1,9 +1,9 @@
 import React from "react";
-import { NavLinks } from "./navLinks";
+import { NavLinks } from ".";
 import { User } from "../../types";
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
-import { LogInForm } from "../formComponents/logInForm";
+import { LogInForm } from "../formComponents/LogInForm";
 
 type HeaderProps = {
   links: { name: string; path: string }[];

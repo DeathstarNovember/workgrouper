@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { FaPercentage, FaHashtag } from "react-icons/fa";
 import {
   Workout,
   IntensityUnit,
@@ -22,14 +23,13 @@ import {
   Input,
   AddButton,
   SwapUpButton,
-  SwapDownButton
+  SwapDownButton,
+  FormButton
 } from ".";
 import { exercisesOptions, intervalTypeOptions } from "../../data";
 import { SingleWorksetLabelWithExercise } from "../labelComponents";
 import Collapsible from "react-collapsible";
 import { workoutFormTriggerStyle } from "./formStyles";
-import { FormButton } from "./buttons";
-import { FaPercentage, FaHashtag } from "react-icons/fa";
 
 type WorksetFieldsProps = {
   workset: Workset;
@@ -193,7 +193,7 @@ type WorksetsArrayProps = {
   roundIndex: number;
   exercises: Exercise[];
 };
-const WorksetsArray: React.FC<WorksetsArrayProps> = ({
+export const WorksetsArray: React.FC<WorksetsArrayProps> = ({
   name,
   workgroupIndex,
   roundIndex,
@@ -236,5 +236,3 @@ const WorksetsArray: React.FC<WorksetsArrayProps> = ({
     />
   );
 };
-
-export default WorksetsArray;

@@ -1,5 +1,5 @@
-export * from "./workoutPane";
+export * from "./WorkoutPane";
 // export * from "./workgroup";
-export * from "./workoutOverview";
-export * from "./workoutDetails";
-export * from "./workoutList";
+export * from "./WorkoutOverview";
+export * from "./WorkoutDetails";
+export * from "./WorkoutList";

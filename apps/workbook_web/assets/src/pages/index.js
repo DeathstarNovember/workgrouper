@@ -1,3 +1,3 @@
-export * from "./workoutEditorPage";
-export * from "./programEditorPage";
-export * from "./homePage";
+export * from "./WorkoutEditorPage";
+export * from "./ProgramEditorPage";
+export * from "./HomePage";

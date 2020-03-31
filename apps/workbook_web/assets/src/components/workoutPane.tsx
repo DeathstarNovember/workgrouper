@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { FaCheck, FaEdit, FaArrowLeft, FaTimes } from "react-icons/fa";
 import { WorkoutLabel } from "./labelComponents";
 import { WorkoutForm } from "./formComponents";
 import { Workout } from "../types";

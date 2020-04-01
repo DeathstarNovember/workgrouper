@@ -2,7 +2,6 @@ import React from "react";
 import { Workout, Exercise } from "../../types";
 import { FieldArray, useFormikContext } from "formik";
 import {
-  sectionStyle,
   sectionTitleStyle,
   RemoveButton,
   Select,
@@ -10,7 +9,8 @@ import {
   AddButton,
   SwapUpButton,
   SwapDownButton,
-  WorksetsArray
+  WorksetsArray,
+  roundSectionStyle
 } from ".";
 import { intervalTypeOptions, newWorkset } from "../../data";
 
@@ -37,13 +37,14 @@ export const RoundsArray: React.FC<RoundsArrayProps> = ({
                 values.workgroups[workgroupIndex].rounds.length;
               return (
                 <div
-                  className={sectionStyle}
+                  className={roundSectionStyle}
                   key={`wg${workgroupIndex}rd${roundIndex}`}
                 >
                   {roundCount > 1 ? (
                     <div>
                       <div className="flex justify-between">
                         <div className={sectionTitleStyle}>
+                          <div>{`Round ${roundIndex + 1}`}</div>
                           <div>
                             {roundIndex !== 0 ? (
                               <SwapUpButton
@@ -59,13 +60,12 @@ export const RoundsArray: React.FC<RoundsArrayProps> = ({
                                 index={roundIndex}
                               />
                             ) : null}
+                            <RemoveButton
+                              remove={roundsArrayHelpers.remove}
+                              index={roundIndex}
+                            />
                           </div>
-                          {`Round ${roundIndex + 1}`}
                         </div>
-                        <RemoveButton
-                          remove={roundsArrayHelpers.remove}
-                          index={roundIndex}
-                        />
                       </div>
                       <div className="flex">
                         <Select

@@ -46,6 +46,7 @@ export const WorkgroupsArray: React.FC<WorkgroupsArrayProps> = ({
                 >
                   <div className="flex justify-between">
                     <div className={sectionTitleStyle}>
+                      <div>{`Workgroup ${ordinals[workgroupIndex]}`}</div>
                       <div>
                         {workgroupIndex !== 0 ? (
                           <SwapUpButton
@@ -59,14 +60,13 @@ export const WorkgroupsArray: React.FC<WorkgroupsArrayProps> = ({
                             index={workgroupIndex}
                           />
                         ) : null}
+                        <RemoveButton
+                          remove={workgroupsArrayHelpers.remove}
+                          index={workgroupIndex}
+                          text=""
+                        />
                       </div>
-                      {`Workgroup ${ordinals[workgroupIndex]}`}
                     </div>
-                    <RemoveButton
-                      remove={workgroupsArrayHelpers.remove}
-                      index={workgroupIndex}
-                      text=""
-                    />
                   </div>
                   <Input
                     labelText="Workgroup notes"

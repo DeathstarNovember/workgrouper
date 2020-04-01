@@ -1,5 +1,11 @@
 import React from "react";
-import { FaPlus, FaTimes, FaArrowUp, FaArrowDown } from "react-icons/fa";
+import {
+  FaPlus,
+  FaTimes,
+  FaArrowUp,
+  FaArrowDown,
+  FaTrash
+} from "react-icons/fa";
 
 type FormButtonProps = {
   onClick?: (arg0: any | undefined) => any | void;
@@ -125,7 +131,7 @@ export const RemoveButton: React.FC<RemoveButtonProps> = ({
   bgColor = "red",
   textColor = "gray",
   index = 0,
-  text = "remove"
+  text
 }) => {
   const customProps = {
     hoverColor,
@@ -135,7 +141,7 @@ export const RemoveButton: React.FC<RemoveButtonProps> = ({
   };
   return (
     <FormButton onClick={() => remove(index)} {...customProps}>
-      <FaTimes />
+      <FaTrash />
     </FormButton>
   );
 };

@@ -16,7 +16,6 @@ import {
   FormikProps
 } from "formik";
 import {
-  sectionStyle,
   sectionTitleStyle,
   RemoveButton,
   Select,
@@ -29,7 +28,7 @@ import {
 import { exercisesOptions, intervalTypeOptions } from "../../data";
 import { SingleWorksetLabelWithExercise } from "../labelComponents";
 import Collapsible from "react-collapsible";
-import { workoutFormTriggerStyle } from "./formStyles";
+import { workoutFormTriggerStyle, worksetSectionStyle } from "./formStyles";
 
 type WorksetFieldsProps = {
   workset: Workset;
@@ -90,59 +89,46 @@ const WorksetFields: React.FC<WorksetFieldsProps> = ({
     exercise?.intensityUnit === IntensityUnit.weight ? "Reps" : "Distance";
   return (
     <div
-      className={sectionStyle}
+      className={worksetSectionStyle}
       key={`wg${workgroupIndex}rd${roundIndex}ws${worksetIndex}`}
     >
-      <Collapsible
-        trigger={
-          <div className={workoutFormTriggerStyle}>
-            <SingleWorksetLabelWithExercise workset={workset} />
-          </div>
-        }
-      >
-        <div className="flex justify-between">
-          <div className={sectionTitleStyle}>
-            <div>
-              {worksetIndex !== 0 ? (
-                <SwapUpButton
-                  swap={worksetsArrayHelpers.swap}
-                  index={worksetIndex}
-                />
-              ) : null}
-              {worksetIndex !==
-              values.workgroups[workgroupIndex].rounds[roundIndex].worksets
-                .length -
-                1 ? (
-                <SwapDownButton
-                  swap={worksetsArrayHelpers.swap}
-                  index={worksetIndex}
-                />
-              ) : null}
-            </div>
-            <div>
-              {`Set ${worksetIndex + 1}`}
-              <FormButton
-                type="button"
-                bgColor={
-                  workset.intensityType === IntensityType.absolute
-                    ? "yellow"
-                    : "purple"
-                }
-                hoverColor={
-                  workset.intensityType === IntensityType.absolute
-                    ? "yellow"
-                    : "purple"
-                }
-                onClick={() => toggleIntensityType(worksetIndex)}
-              >
-                {workset.intensityType === IntensityType.absolute ? (
-                  <FaHashtag />
-                ) : (
-                  <FaPercentage />
-                )}
-              </FormButton>
-            </div>
-          </div>
+      <div className={sectionTitleStyle}>
+        <div>{`Set ${worksetIndex + 1}`}</div>
+        <div>
+          {worksetIndex !== 0 ? (
+            <SwapUpButton
+              swap={worksetsArrayHelpers.swap}
+              index={worksetIndex}
+            />
+          ) : null}
+          {worksetIndex !==
+          values.workgroups[workgroupIndex].rounds[roundIndex].worksets.length -
+            1 ? (
+            <SwapDownButton
+              swap={worksetsArrayHelpers.swap}
+              index={worksetIndex}
+            />
+          ) : null}
+          <FormButton
+            type="button"
+            bgColor={
+              workset.intensityType === IntensityType.absolute
+                ? "yellow"
+                : "purple"
+            }
+            hoverColor={
+              workset.intensityType === IntensityType.absolute
+                ? "yellow"
+                : "purple"
+            }
+            onClick={() => toggleIntensityType(worksetIndex)}
+          >
+            {workset.intensityType === IntensityType.absolute ? (
+              <FaHashtag />
+            ) : (
+              <FaPercentage />
+            )}
+          </FormButton>
           {values.workgroups[workgroupIndex].rounds[roundIndex].worksets
             .length !== 1 ? (
             <RemoveButton
@@ -152,6 +138,15 @@ const WorksetFields: React.FC<WorksetFieldsProps> = ({
             />
           ) : null}
         </div>
+      </div>
+
+      <Collapsible
+        trigger={
+          <div className={workoutFormTriggerStyle}>
+            <SingleWorksetLabelWithExercise workset={workset} />
+          </div>
+        }
+      >
         <div>
           <div className="flex">
             <Select

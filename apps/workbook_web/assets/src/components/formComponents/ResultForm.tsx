@@ -1,15 +1,15 @@
 import React from "react";
 import * as Yup from "yup";
 import { withFormik, FormikProps, Form } from "formik";
-import { NewWorkout, Exercise } from "../../types";
+import { Exercise, Workout } from "../../types";
 import { FaTimes } from "react-icons/fa";
-import { Input, WorkgroupsArray, FormButton } from ".";
+import { WorkgroupsArray, FormButton } from ".";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { createWorkoutMutation, exercisesQuery } from "../../graphql";
+import { createResultMutation, exercisesQuery } from "../../graphql";
 
-interface WorkoutFormProps {
+interface ResultFormProps {
   workoutId?: number;
-  workout: NewWorkout;
+  workout: Workout;
   hideForm: () => void;
 }
 
@@ -17,11 +17,12 @@ type ExerciseData = {
   exercises: Exercise[];
 };
 
-const InnerForm = (props: WorkoutFormProps & FormikProps<NewWorkout>) => {
-  const { hideForm, handleSubmit, values } = props;
-  const workoutVariables = {
+const InnerForm = (props: ResultFormProps & FormikProps<Workout>) => {
+  const { hideForm, handleSubmit, values, workoutId } = props;
+  const resultVariables = {
     workout: {
-      userId: 1,
+      userId: 1, //TODO: set this to the result owner's id
+      workoutId,
       name: values.name,
       description: values.description,
       completedAt: new Date(),
@@ -45,9 +46,7 @@ const InnerForm = (props: WorkoutFormProps & FormikProps<NewWorkout>) => {
       }))
     }
   };
-  const [createWorkout] = useMutation(createWorkoutMutation, {
-    variables: workoutVariables
-  });
+  const [createResult] = useMutation(createResultMutation);
   const {
     data: exerciseData,
     loading: exercisesLoading,
@@ -67,40 +66,49 @@ const InnerForm = (props: WorkoutFormProps & FormikProps<NewWorkout>) => {
     throw new Error("could not load exercises.");
   }
   const handleFormSubmit = async () => {
-    console.warn({ workoutVariables });
-    const createWorkoutResponse = await createWorkout({
-      variables: workoutVariables
+    console.warn({ resultVariables });
+    const resultResponse = await createResult({
+      variables: resultVariables
     });
-    console.warn({ createWorkoutResponse });
+    console.warn({ resultResponse });
   };
   const exercises = exerciseData.exercises;
   return (
     <Form className="p-3 w-full max-w-lg" onSubmit={handleSubmit}>
-      <button
-        onClick={hideForm}
-        className="bg-red-500 hover:bg-red-700 text-white font-bold px-2 py-1 rounded"
-      >
-        <FaTimes />
-      </button>
-      <div>
-        <Input labelText="WorkoutName" fieldName="name" />
+      <div className="flex justify-between">
+        <div className="text-gray-900 font-bold text-lg">New Result</div>
+        <FormButton
+          onClick={hideForm}
+          bgColor="gray"
+          hoverColor="red"
+          text="Cancel"
+          textColor="gray"
+        />
       </div>
-      <Input labelText="Workout Description" fieldName="description" />
       <WorkgroupsArray exercises={exercises} />
-      <FormButton
-        onClick={handleFormSubmit}
-        bgColor="green"
-        hoverColor="green"
-        text="Save Workout"
-        textColor="gray"
-      />
+      <div className="flex justify-between">
+        <FormButton
+          onClick={handleFormSubmit}
+          bgColor="green"
+          hoverColor="green"
+          text="Save Result"
+          textColor="gray"
+        />
+        <FormButton
+          onClick={hideForm}
+          bgColor="gray"
+          hoverColor="red"
+          text="Cancel"
+          textColor="gray"
+        />
+      </div>
     </Form>
   );
 };
 
 // The type of props WorkoutForm receives
 
-export const WorkoutForm = withFormik<WorkoutFormProps, NewWorkout>({
+export const ResultForm = withFormik<ResultFormProps, Workout>({
   mapPropsToValues: ({ workout }) => ({ ...workout }),
   validationSchema: Yup.object().shape({
     name: Yup.string(),

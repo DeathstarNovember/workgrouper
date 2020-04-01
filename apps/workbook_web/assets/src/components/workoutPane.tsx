@@ -1,26 +1,12 @@
 import React, { useState } from "react";
 import { WorkoutLabel } from "./labelComponents";
-import { WorkoutForm } from "./formComponents";
+import { WorkoutForm, ResultForm } from "./formComponents";
 import { Workout } from "../types";
 
 type ActionButtonsProps = {
   confirm: () => void;
-  clearSelectedWorkout: () => void;
   showForm: () => void;
 };
-
-type CloseButtonProps = {
-  close: () => void;
-};
-
-const CloseButton: React.FC<CloseButtonProps> = ({ close }) => (
-  <button
-    onClick={() => close()}
-    className="bg-red-500 hover:bg-red-700 text-white font-bold px-2 py-1 mr-2 rounded"
-  >
-    close
-  </button>
-);
 
 type CustomResultButtonProps = {
   showForm: () => void;
@@ -31,7 +17,7 @@ const CustomResultButton: React.FC<CustomResultButtonProps> = ({
 }) => (
   <button
     onClick={() => showForm()}
-    className="bg-gray-500 hover:bg-gray-700 text-white font-bold px-2 py-1 mr-2 rounded"
+    className="bg-gray-500 hover:bg-gray-700 text-white font-bold px-2 py-1 ml-2 rounded"
   >
     custom result
   </button>
@@ -44,22 +30,17 @@ type RxResultButtonProps = {
 const RxResultButton: React.FC<RxResultButtonProps> = ({ confirm }) => (
   <button
     onClick={() => confirm()}
-    className="bg-green-500 hover:bg-green-700 text-white font-bold px-2 py-1 rounded"
+    className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-1 rounded"
   >
     Rx result
   </button>
 );
 
-const ActionButtons: React.FC<ActionButtonsProps> = ({
-  confirm,
-  clearSelectedWorkout,
-  showForm
-}) => {
+const ActionButtons: React.FC<ActionButtonsProps> = ({ confirm, showForm }) => {
   return (
     <div className="flex">
-      <CloseButton close={clearSelectedWorkout} />
-      <CustomResultButton showForm={showForm} />
       <RxResultButton confirm={confirm} />
+      <CustomResultButton showForm={showForm} />
     </div>
   );
 };
@@ -72,8 +53,7 @@ type WorkoutPaneProps = {
 
 export const WorkoutPane: React.FC<WorkoutPaneProps> = ({
   workout,
-  workoutIndex,
-  clearSelectedWorkout
+  workoutIndex
 }) => {
   const { name, description } = workout;
   const [resultIsVisible, setResultIsVisible] = useState(false);
@@ -87,25 +67,23 @@ export const WorkoutPane: React.FC<WorkoutPaneProps> = ({
   return (
     <div className="p-6 rounded max-w-lg w-full">
       <div>
-        <div className="flex">
+        <div>
+          <div className={`rounded py-1 text-gray-900 text-3xl font-bold`}>
+            {name}
+          </div>
+          <div className="text-gray-700 text-lg">{description}</div>
           <ActionButtons
             confirm={() =>
               alert("comming soon! Submit your result exactly as prescribed!")
             }
-            clearSelectedWorkout={clearSelectedWorkout}
             showForm={showResult}
           />
-        </div>
-        <div>
-          <div className={`rounded py-1 text-gray-900 text-xl`}>{name}</div>
-          <div className="text-sm">{description}</div>
         </div>
       </div>
       {workoutIndex !== undefined ? (
         resultIsVisible ? (
           <div>
-            <WorkoutForm
-              result
+            <ResultForm
               workoutId={workout.id}
               workout={workout}
               hideForm={hideResult}

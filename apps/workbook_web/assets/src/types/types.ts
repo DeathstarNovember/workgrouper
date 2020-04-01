@@ -50,12 +50,24 @@ export type Exercise = {
   name: string;
   intensityUnit: IntensityUnit;
 };
-export type NewWorkout = Omit<Workout, "id">;
+export type NewWorkout = Omit<Workout, "id" | "user"> & { userId?: number };
 
 export type Workout = {
   id: number;
   name?: string;
   description?: string;
+  user: User;
+  workgroups: Workgroup[];
+};
+
+export type NewResult = Omit<Result, "id" | "user"> & { userId?: number };
+
+export type Result = {
+  id: number;
+  name?: string;
+  description?: string;
+  completedAt: Date;
+  user: User;
   workgroups: Workgroup[];
 };
 export type NewWorkgroup = Omit<Workgroup, "id" | "rounds"> & {

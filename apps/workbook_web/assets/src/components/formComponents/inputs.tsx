@@ -81,7 +81,9 @@ export const Select: React.FC<SelectProps> = ({
   defaultValue
 }) => (
   <div>
-    <Label label={labelText} labelClassName={labelClassName} />
+    {labelText ? (
+      <Label label={labelText} labelClassName={labelClassName || "mb-2"} />
+    ) : null}
     <Field
       as="select"
       className={selectStyle + " " + fieldClassName}

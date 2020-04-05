@@ -2,10 +2,11 @@ import React from "react";
 import * as Yup from "yup";
 import { withFormik, FormikProps, Form } from "formik";
 import { NewWorkout, Exercise } from "../../types";
-import { FaTimes } from "react-icons/fa";
-import { Input, WorkgroupsArray, FormButton } from ".";
-import { useQuery, useMutation } from "@apollo/react-hooks";
 import { createWorkoutMutation, exercisesQuery } from "../../graphql";
+import { Input, WorkgroupsArray } from ".";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { ButtonStyles, Button } from "../layoutComponents";
+import { FaTimes } from "react-icons/fa";
 
 interface WorkoutFormProps {
   workoutId?: number;
@@ -76,29 +77,22 @@ const InnerForm = (props: WorkoutFormProps & FormikProps<NewWorkout>) => {
   const exercises = exerciseData.exercises;
   return (
     <Form className="p-3 w-full max-w-lg" onSubmit={handleSubmit}>
-      <button
-        onClick={hideForm}
-        className="bg-red-500 hover:bg-red-700 text-white font-bold px-2 py-1 rounded"
-      >
+      <Button onClick={hideForm} buttonStyle={ButtonStyles.danger}>
         <FaTimes />
-      </button>
+      </Button>
       <div>
         <Input labelText="WorkoutName" fieldName="name" />
       </div>
       <Input labelText="Workout Description" fieldName="description" />
       <WorkgroupsArray exercises={exercises} />
-      <FormButton
+      <Button
         onClick={handleFormSubmit}
-        bgColor="green"
-        hoverColor="green"
+        buttonStyle={ButtonStyles.primary}
         text="Save Workout"
-        textColor="gray"
       />
     </Form>
   );
 };
-
-// The type of props WorkoutForm receives
 
 export const WorkoutForm = withFormik<WorkoutFormProps, NewWorkout>({
   mapPropsToValues: ({ workout }) => ({ ...workout }),

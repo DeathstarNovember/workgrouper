@@ -3,18 +3,18 @@ import { Workout, Exercise } from "../../types";
 import { FieldArray, useFormikContext } from "formik";
 import Collapsible from "react-collapsible";
 import { ordinals, newWorkgroup } from "../../data";
-import { workoutFormTriggerStyle } from "./formStyles";
-import {
-  RemoveButton,
-  Input,
-  AddButton,
-  sectionStyle,
-  sectionTitleStyle,
-  SwapUpButton,
-  SwapDownButton,
-  RoundsArray
-} from ".";
+import { Input, RoundsArray } from ".";
 import { RxWorkgroupLabel } from "../labelComponents";
+import {
+  FormSection,
+  SectionStyles,
+  FlexBox,
+  Box,
+  RemoveButton,
+  AddButton,
+  SwapUpButton,
+  SwapDownButton
+} from "../layoutComponents";
 
 type WorkgroupsArrayProps = {
   exercises: Exercise[];
@@ -28,26 +28,29 @@ export const WorkgroupsArray: React.FC<WorkgroupsArrayProps> = ({
     <FieldArray
       name="workgroups"
       render={workgroupsArrayHelpers => (
-        <div>
+        <Box>
           {values.workgroups.map((workgroup, workgroupIndex) => {
             const workgroupFieldNamePrefix = `workgroups[${workgroupIndex}]`;
             return (
-              <div className={sectionStyle} key={`wg${workgroupIndex}`}>
+              <FormSection
+                sectionStyle={SectionStyles.baseSection}
+                key={`wg${workgroupIndex}`}
+              >
                 <Collapsible
                   trigger={
-                    <div className={workoutFormTriggerStyle}>
+                    <FormSection sectionStyle={SectionStyles.sectionTrigger}>
                       <RxWorkgroupLabel
                         workgroup={workgroup}
                         workoutIndex={0}
                         workgroupIndex={workgroupIndex}
                       />
-                    </div>
+                    </FormSection>
                   }
                 >
-                  <div className="flex justify-between">
-                    <div className={sectionTitleStyle}>
-                      <div>{`Workgroup ${ordinals[workgroupIndex]}`}</div>
-                      <div>
+                  <FlexBox className="justify-between">
+                    <FormSection sectionStyle={SectionStyles.sectionTitle}>
+                      <Box>{`Workgroup ${ordinals[workgroupIndex]}`}</Box>
+                      <Box>
                         {workgroupIndex !== 0 ? (
                           <SwapUpButton
                             swap={workgroupsArrayHelpers.swap}
@@ -65,9 +68,9 @@ export const WorkgroupsArray: React.FC<WorkgroupsArrayProps> = ({
                           index={workgroupIndex}
                           text=""
                         />
-                      </div>
-                    </div>
-                  </div>
+                      </Box>
+                    </FormSection>
+                  </FlexBox>
                   <Input
                     labelText="Workgroup notes"
                     fieldName={`${workgroupFieldNamePrefix}].note`}
@@ -79,7 +82,7 @@ export const WorkgroupsArray: React.FC<WorkgroupsArrayProps> = ({
                     exercises={exercises}
                   />
                 </Collapsible>
-              </div>
+              </FormSection>
             );
           })}
           <AddButton
@@ -91,7 +94,7 @@ export const WorkgroupsArray: React.FC<WorkgroupsArrayProps> = ({
             }
             text="add workgroup"
           />
-        </div>
+        </Box>
       )}
     />
   );

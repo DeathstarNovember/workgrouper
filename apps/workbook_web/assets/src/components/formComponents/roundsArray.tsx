@@ -1,18 +1,18 @@
 import React from "react";
 import { Workout, Exercise } from "../../types";
 import { FieldArray, useFormikContext } from "formik";
+import { Select, Input, WorksetsArray } from ".";
+import { intervalTypeOptions, newWorkset } from "../../data";
 import {
-  sectionTitleStyle,
+  FormSection,
+  SectionStyles,
   RemoveButton,
-  Select,
-  Input,
   AddButton,
   SwapUpButton,
   SwapDownButton,
-  WorksetsArray,
-  roundSectionStyle
-} from ".";
-import { intervalTypeOptions, newWorkset } from "../../data";
+  Box,
+  FlexBox
+} from "../layoutComponents";
 
 type RoundsArrayProps = {
   workgroupIndex: number;
@@ -29,23 +29,23 @@ export const RoundsArray: React.FC<RoundsArrayProps> = ({
     <FieldArray
       name={name}
       render={roundsArrayHelpers => (
-        <div>
+        <Box>
           {values.workgroups[workgroupIndex].rounds.map(
             (_round, roundIndex) => {
               const roundFieldNamePrefix = `${name}[${roundIndex}]`;
               const roundCount =
                 values.workgroups[workgroupIndex].rounds.length;
               return (
-                <div
-                  className={roundSectionStyle}
+                <FormSection
+                  sectionStyle={SectionStyles.roundSection}
                   key={`wg${workgroupIndex}rd${roundIndex}`}
                 >
                   {roundCount > 1 ? (
-                    <div>
-                      <div className="flex justify-between">
-                        <div className={sectionTitleStyle}>
-                          <div>{`Round ${roundIndex + 1}`}</div>
-                          <div>
+                    <Box>
+                      <FlexBox className="justify-between">
+                        <FormSection sectionStyle={SectionStyles.sectionTitle}>
+                          <Box>{`Round ${roundIndex + 1}`}</Box>
+                          <Box>
                             {roundIndex !== 0 ? (
                               <SwapUpButton
                                 swap={roundsArrayHelpers.swap}
@@ -64,10 +64,10 @@ export const RoundsArray: React.FC<RoundsArrayProps> = ({
                               remove={roundsArrayHelpers.remove}
                               index={roundIndex}
                             />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex">
+                          </Box>
+                        </FormSection>
+                      </FlexBox>
+                      <FlexBox>
                         <Select
                           labelText="Interval Type"
                           options={intervalTypeOptions}
@@ -77,8 +77,8 @@ export const RoundsArray: React.FC<RoundsArrayProps> = ({
                           labelText="Interval Time"
                           fieldName={`${roundFieldNamePrefix}.interval`}
                         />
-                      </div>
-                    </div>
+                      </FlexBox>
+                    </Box>
                   ) : null}
                   <WorksetsArray
                     name={`${roundFieldNamePrefix}.worksets`}
@@ -86,7 +86,7 @@ export const RoundsArray: React.FC<RoundsArrayProps> = ({
                     roundIndex={roundIndex}
                     exercises={exercises}
                   />
-                </div>
+                </FormSection>
               );
             }
           )}
@@ -109,7 +109,7 @@ export const RoundsArray: React.FC<RoundsArrayProps> = ({
             }
             text="add round"
           />
-        </div>
+        </Box>
       )}
     />
   );

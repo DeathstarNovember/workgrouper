@@ -9,26 +9,27 @@ import {
   Exercise,
   NewWorkout
 } from "../../types";
+import { exercisesOptions, intervalTypeOptions } from "../../data";
 import {
   FieldArray,
   FieldArrayRenderProps,
   useFormikContext,
   FormikProps
 } from "formik";
-import {
-  sectionTitleStyle,
-  RemoveButton,
-  Select,
-  Input,
-  AddButton,
-  SwapUpButton,
-  SwapDownButton,
-  FormButton
-} from ".";
-import { exercisesOptions, intervalTypeOptions } from "../../data";
-import { SingleWorksetLabelWithExercise } from "../labelComponents";
 import Collapsible from "react-collapsible";
-import { workoutFormTriggerStyle, worksetSectionStyle } from "./formStyles";
+import { Select, Input } from ".";
+import { SingleWorksetLabelWithExercise } from "../labelComponents";
+import {
+  ButtonStyles,
+  RemoveButton,
+  SwapUpButton,
+  Button,
+  SwapDownButton,
+  Box,
+  FlexBox,
+  FormSection,
+  SectionStyles
+} from "../layoutComponents";
 
 type WorksetFieldsProps = {
   workset: Workset;
@@ -88,13 +89,13 @@ const WorksetFields: React.FC<WorksetFieldsProps> = ({
   const repsDistanceLabelText =
     exercise?.intensityUnit === IntensityUnit.weight ? "Reps" : "Distance";
   return (
-    <div
-      className={worksetSectionStyle}
+    <FormSection
+      sectionStyle={SectionStyles.worksetSection}
       key={`wg${workgroupIndex}rd${roundIndex}ws${worksetIndex}`}
     >
-      <div className={sectionTitleStyle}>
-        <div>{`Set ${worksetIndex + 1}`}</div>
-        <div>
+      <FormSection sectionStyle={SectionStyles.sectionTitle}>
+        <Box>{`Set ${worksetIndex + 1}`}</Box>
+        <Box>
           {worksetIndex !== 0 ? (
             <SwapUpButton
               swap={worksetsArrayHelpers.swap}
@@ -109,18 +110,8 @@ const WorksetFields: React.FC<WorksetFieldsProps> = ({
               index={worksetIndex}
             />
           ) : null}
-          <FormButton
-            type="button"
-            bgColor={
-              workset.intensityType === IntensityType.absolute
-                ? "yellow"
-                : "purple"
-            }
-            hoverColor={
-              workset.intensityType === IntensityType.absolute
-                ? "yellow"
-                : "purple"
-            }
+          <Button
+            buttonStyle={ButtonStyles.secondary}
             onClick={() => toggleIntensityType(worksetIndex)}
           >
             {workset.intensityType === IntensityType.absolute ? (
@@ -128,7 +119,7 @@ const WorksetFields: React.FC<WorksetFieldsProps> = ({
             ) : (
               <FaPercentage />
             )}
-          </FormButton>
+          </Button>
           {values.workgroups[workgroupIndex].rounds[roundIndex].worksets
             .length !== 1 ? (
             <RemoveButton
@@ -137,18 +128,17 @@ const WorksetFields: React.FC<WorksetFieldsProps> = ({
               text=""
             />
           ) : null}
-        </div>
-      </div>
-
+        </Box>
+      </FormSection>
       <Collapsible
         trigger={
-          <div className={workoutFormTriggerStyle}>
+          <FormSection sectionStyle={SectionStyles.sectionTrigger}>
             <SingleWorksetLabelWithExercise workset={workset} />
-          </div>
+          </FormSection>
         }
       >
-        <div>
-          <div className="flex">
+        <Box>
+          <FlexBox>
             <Select
               labelText="Exercise"
               options={exerciseSelectOptions}
@@ -159,8 +149,8 @@ const WorksetFields: React.FC<WorksetFieldsProps> = ({
               options={intervalTypeOptions}
               fieldName={`${worksetFieldNamePrefix}.intervalType`}
             />
-          </div>
-          <div className="flex">
+          </FlexBox>
+          <FlexBox>
             <Input
               labelText={repsDistanceLabelText}
               fieldName={`${worksetFieldNamePrefix}.reps`}
@@ -175,10 +165,10 @@ const WorksetFields: React.FC<WorksetFieldsProps> = ({
                 fieldName={`${worksetFieldNamePrefix}.interval`}
               />
             ) : null}
-          </div>
-        </div>
+          </FlexBox>
+        </Box>
       </Collapsible>
-    </div>
+    </FormSection>
   );
 };
 
@@ -203,7 +193,7 @@ export const WorksetsArray: React.FC<WorksetsArrayProps> = ({
         const worksets =
           values.workgroups[workgroupIndex].rounds[roundIndex].worksets;
         return (
-          <div>
+          <Box>
             {worksets.map((workset, worksetIndex) => (
               <WorksetFields
                 key={`${name}workset${worksetIndex}`}
@@ -216,16 +206,17 @@ export const WorksetsArray: React.FC<WorksetsArrayProps> = ({
                 exercises={exercises}
               />
             ))}
-            <AddButton
-              add={() =>
+            <Button
+              onClick={() =>
                 worksetsArrayHelpers.push({
                   ...worksets[worksets.length - 1],
                   sortOrder: worksets.length
                 })
               }
+              buttonStyle={ButtonStyles.secondary}
               text="add a set"
             />
-          </div>
+          </Box>
         );
       }}
     />

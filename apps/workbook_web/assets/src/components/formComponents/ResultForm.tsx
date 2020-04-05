@@ -2,8 +2,8 @@ import React from "react";
 import * as Yup from "yup";
 import { withFormik, FormikProps, Form } from "formik";
 import { Exercise, Workout } from "../../types";
-import { FaTimes } from "react-icons/fa";
-import { WorkgroupsArray, FormButton } from ".";
+import { Button, ButtonStyles } from "../layoutComponents";
+import { WorkgroupsArray } from ".";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { createResultMutation, exercisesQuery } from "../../graphql";
 
@@ -77,29 +77,23 @@ const InnerForm = (props: ResultFormProps & FormikProps<Workout>) => {
     <Form className="p-3 w-full max-w-lg" onSubmit={handleSubmit}>
       <div className="flex justify-between">
         <div className="text-gray-900 font-bold text-lg">New Result</div>
-        <FormButton
+        <Button
           onClick={hideForm}
-          bgColor="gray"
-          hoverColor="red"
+          buttonStyle={ButtonStyles.danger}
           text="Cancel"
-          textColor="gray"
         />
       </div>
       <WorkgroupsArray exercises={exercises} />
       <div className="flex justify-between">
-        <FormButton
+        <Button
           onClick={handleFormSubmit}
-          bgColor="green"
-          hoverColor="green"
+          buttonStyle={ButtonStyles.primary}
           text="Save Result"
-          textColor="gray"
         />
-        <FormButton
+        <Button
           onClick={hideForm}
-          bgColor="gray"
-          hoverColor="red"
+          buttonStyle={ButtonStyles.danger}
           text="Cancel"
-          textColor="gray"
         />
       </div>
     </Form>

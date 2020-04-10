@@ -12,7 +12,7 @@ import {
   SwapDownButton,
   Box,
   FlexBox
-} from "../layoutComponents";
+} from "../../workbook_ui";
 
 type RoundsArrayProps = {
   workgroupIndex: number;

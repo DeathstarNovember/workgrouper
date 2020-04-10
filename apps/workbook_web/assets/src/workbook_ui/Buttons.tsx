@@ -1,6 +1,6 @@
 import React from "react";
 import { FaPlus, FaArrowUp, FaArrowDown, FaTrash } from "react-icons/fa";
-import { Box } from "./Box";
+import { Box } from ".";
 
 const baseButtonStyle =
   "flex font-bold align-center py-1 px-2 m-1 rounded inline-flex items-center text-gray-100";
@@ -11,7 +11,7 @@ export enum ButtonStyles {
   success = "bg-green-300 hover:bg-green-400",
   warning = "bg-yellow-300 hover:bg-yellow-400",
   danger = "bg-red-300 hover:bg-red-400",
-  info = "bg-gray-300 hover:bg-gray-400",
+  info = "bg-gray-300 hover:bg-gray-400"
 }
 
 type ButtonProps = {
@@ -30,7 +30,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   ...props
 }) => {
   const childrenArray = React.Children.toArray(children);
-  const childElements = childrenArray.filter((child) =>
+  const childElements = childrenArray.filter(child =>
     React.isValidElement(child)
   );
   const groupedChildren = childElements.map(
@@ -45,7 +45,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
               : childElementIndex === childElements.length - 1
               ? "rounded-r"
               : ""
-          }`,
+          }`
         });
       } else {
         return childElement;
@@ -66,7 +66,7 @@ export const Button: React.FC<ButtonProps> = ({
   text,
   type = "button",
   onClick,
-  children,
+  children
 }) => {
   const defaultStyle: ButtonStyles = buttonStyle || ButtonStyles.primary;
   const customStyle =
@@ -92,13 +92,13 @@ export const SubmitButton: React.FC<ButtonProps> = ({
   hoverColor,
   bgColor,
   textColor,
-  text,
+  text
 }) => {
   const submitButtonProps = {
     hoverColor,
     bgColor,
     textColor,
-    text,
+    text
   };
 
   return <Button type="submit" {...submitButtonProps} />;
@@ -113,13 +113,13 @@ export const AddButton: React.FC<AddButtonProps> = ({
   hoverColor,
   bgColor,
   textColor,
-  text = "add",
+  text = "add"
 }) => {
   const customProps = {
     hoverColor,
     bgColor,
     textColor,
-    text,
+    text
   };
   return (
     <Button onClick={add} {...customProps}>
@@ -157,13 +157,13 @@ export const SwapUpButton: React.FC<SwapButtonProps> = ({
   bgColor = "gray",
   textColor = "gray",
   index,
-  text = "",
+  text = ""
 }) => {
   const customProps = {
     hoverColor,
     bgColor,
     textColor,
-    text,
+    text
   };
   return (
     <Button onClick={() => swap(index, index - 1)} {...customProps}>
@@ -177,13 +177,13 @@ export const SwapDownButton: React.FC<SwapButtonProps> = ({
   bgColor = "gray",
   textColor = "gray",
   index,
-  text = "",
+  text = ""
 }) => {
   const customProps = {
     hoverColor,
     bgColor,
     textColor,
-    text,
+    text
   };
   return (
     <Button onClick={() => swap(index, index + 1)} {...customProps}>

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { LayoutContext } from "..";
-import { FlexBox } from "../components/layoutComponents";
+import { FlexBox } from "../workbook_ui";
 
 interface HomePageProps {}
 

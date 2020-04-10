@@ -2,7 +2,7 @@ import React from "react";
 import * as Yup from "yup";
 import { withFormik, FormikProps, Form } from "formik";
 import { Exercise, Workout } from "../../types";
-import { Button, ButtonStyles } from "../layoutComponents";
+import { Button, ButtonStyles } from "../../workbook_ui";
 import { WorkgroupsArray } from ".";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { createResultMutation, exercisesQuery } from "../../graphql";

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { WorkoutOverview, WorkoutPane } from ".";
+import { WorkoutOverview } from ".";
 import { FaPlus } from "react-icons/fa";
 import { WorkoutForm } from "./formComponents";
 import { Workout } from "../types";

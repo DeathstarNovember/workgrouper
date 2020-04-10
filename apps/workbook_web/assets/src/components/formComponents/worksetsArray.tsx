@@ -29,7 +29,7 @@ import {
   FlexBox,
   FormSection,
   SectionStyles
-} from "../layoutComponents";
+} from "../../workbook_ui";
 
 type WorksetFieldsProps = {
   workset: Workset;

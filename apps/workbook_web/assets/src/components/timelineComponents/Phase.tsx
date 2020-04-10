@@ -3,7 +3,7 @@ import { Phase } from "../../types";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import { FaWeight } from "react-icons/fa";
 import Collapsible from "react-collapsible";
-import { FlexBox } from "../layoutComponents";
+import { FlexBox } from "../../workbook_ui";
 import { CycleTimelineEntry } from ".";
 import { TimelineBottomBar } from "..";
 import { ColorsContext } from "../ProgramPane";

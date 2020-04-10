@@ -5,13 +5,12 @@ import {
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
 import { Program } from "../types";
-import { ButtonGroup, Box, FlexBox } from "./layoutComponents";
+import { ButtonGroup } from "../workbook_ui";
 import { useMutation } from "@apollo/react-hooks";
 import { deleteProgramMutation } from "../graphql";
-import { FaWeight, FaWeightHanging, FaCalendar, FaStar } from "react-icons/fa";
-import { WorkoutLabel } from "./labelComponents";
-import Collapsible from "react-collapsible";
-import { CycleTimelineEntry, PhaseTimelineEntry } from "./timelineComponents";
+import { FaStar } from "react-icons/fa";
+
+import { PhaseTimelineEntry } from "./timelineComponents";
 
 type TimelineBottomBarProps = {};
 
@@ -26,13 +25,9 @@ export const TimelineBottomBar: React.FC<TimelineBottomBarProps> = ({}) => {
 
 type ProgramLabelProps = {
   program: Program;
-  programIndex: number;
 };
 
-const ProgramLabel: React.FC<ProgramLabelProps> = ({
-  program,
-  programIndex
-}) => {
+const ProgramLabel: React.FC<ProgramLabelProps> = ({ program }) => {
   return <div className="text-2xl font-bold">{program.name}</div>;
 };
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { WorkoutLabel } from "./labelComponents";
 import { WorkoutForm, ResultForm } from "./formComponents";
 import { Workout } from "../types";
-import { ButtonGroup } from "./layoutComponents";
+import { ButtonGroup } from "../workbook_ui";
 import { useMutation } from "@apollo/react-hooks";
 import { deleteWorkoutMutation } from "../graphql";
 
@@ -12,7 +12,7 @@ type CustomResultButtonProps = {
 };
 const CustomResultButton: React.FC<CustomResultButtonProps> = ({
   showForm,
-  className,
+  className
 }) => (
   <button
     onClick={() => showForm()}
@@ -28,7 +28,7 @@ type RxResultButtonProps = {
 };
 const RxResultButton: React.FC<RxResultButtonProps> = ({
   confirm,
-  className,
+  className
 }) => (
   <button
     onClick={() => confirm()}
@@ -44,7 +44,7 @@ type UpdateWorkoutButtonProps = {
 };
 const UpdateWorkoutButton: React.FC<UpdateWorkoutButtonProps> = ({
   updateWorkout,
-  className,
+  className
 }) => (
   <button
     onClick={updateWorkout}
@@ -59,7 +59,7 @@ type DeleteWorkoutButtonProps = {
 };
 const DeleteWorkoutButton: React.FC<DeleteWorkoutButtonProps> = ({
   deleteWorkout,
-  className,
+  className
 }) => (
   <button
     onClick={deleteWorkout}
@@ -78,7 +78,7 @@ type WorkoutPaneProps = {
 export const WorkoutPane: React.FC<WorkoutPaneProps> = ({
   workout,
   workoutIndex,
-  clearSelectedWorkout,
+  clearSelectedWorkout
 }) => {
   const { name, description } = workout;
   const [resultFormIsVisible, setResultFormIsVisible] = useState(false);
@@ -97,7 +97,7 @@ export const WorkoutPane: React.FC<WorkoutPaneProps> = ({
   };
   const [deleteWorkout] = useMutation(deleteWorkoutMutation, {
     variables: { id: workout.id },
-    onCompleted: clearSelectedWorkout,
+    onCompleted: clearSelectedWorkout
   });
 
   return (

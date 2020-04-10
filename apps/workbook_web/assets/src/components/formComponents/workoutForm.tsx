@@ -5,7 +5,7 @@ import { NewWorkout, Exercise } from "../../types";
 import { createWorkoutMutation, exercisesQuery } from "../../graphql";
 import { Input, WorkgroupsArray } from ".";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { ButtonStyles, Button } from "../layoutComponents";
+import { ButtonStyles, Button } from "../../workbook_ui";
 import { FaTimes } from "react-icons/fa";
 
 interface WorkoutFormProps {

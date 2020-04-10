@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, BoxProps } from "./Box";
+import { Box, BoxProps } from ".";
 
 export enum SectionStyles {
   baseSection = "rounded p-2",

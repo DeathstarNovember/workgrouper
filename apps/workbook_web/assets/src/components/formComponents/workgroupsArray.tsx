@@ -14,7 +14,7 @@ import {
   AddButton,
   SwapUpButton,
   SwapDownButton
-} from "../layoutComponents";
+} from "../../workbook_ui";
 
 type WorkgroupsArrayProps = {
   exercises: Exercise[];

@@ -44,7 +44,8 @@ defmodule Workbook.MixProject do
       {:tzdata, "~> 1.0.3"},
       {:absinthe, "~> 1.4"},
       {:absinthe_ecto, "~> 0.1.3"},
-      {:absinthe_plug, "~> 1.4"}
+      {:absinthe_plug, "~> 1.4"},
+      {:map_diff, "~> 1.3"}
     ]
   end
 

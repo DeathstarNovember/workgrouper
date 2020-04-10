@@ -4,7 +4,7 @@ defmodule Workbook.Workouts.Result do
 
   alias Workbook.Auth.User
   alias Workbook.Workouts.{Workout, Workgroup}
-  alias Workbook.Training.Session
+  alias Workbook.Training.TrainingSession
 
   schema "results" do
     field :completed_at, :utc_datetime
@@ -13,7 +13,7 @@ defmodule Workbook.Workouts.Result do
     belongs_to :user, User
     belongs_to :workout, Workout
     has_many :workgroups, Workgroup
-    has_one :session, Session
+    has_one :training_session, TrainingSession
 
     timestamps()
   end
@@ -23,7 +23,7 @@ defmodule Workbook.Workouts.Result do
     result
     |> cast(attrs, [:name, :description, :completed_at, :user_id, :workout_id])
     |> cast_assoc(:workgroups)
-    |> cast_assoc(:session)
+    |> cast_assoc(:training_session)
     |> validate_required([:name, :completed_at, :user_id, :workout_id])
   end
 end

@@ -6,7 +6,7 @@ defmodule Workbook.Training do
   import Ecto.Query, warn: false
   alias Workbook.Repo
 
-  alias Workbook.Training.{Program, Schedule, Phase, Cycle, Session}
+  alias Workbook.Training.{Program, Schedule, Phase, Cycle, TrainingSession}
 
   def list_programs do
     Repo.all(Program)
@@ -16,7 +16,7 @@ defmodule Workbook.Training do
   def get_schedule!(id), do: Repo.get!(Schedule, id)
   def get_phase!(id), do: Repo.get!(Phase, id)
   def get_cycle!(id), do: Repo.get!(Cycle, id)
-  def get_session!(id), do: Repo.get!(Session, id)
+  def get_training_session!(id), do: Repo.get!(TrainingSession, id)
 
   def create_program(attrs \\ %{}) do
     %Program{}
@@ -38,12 +38,12 @@ defmodule Workbook.Training do
   def create_cycle(attrs \\ %{}) do
     %Cycle{}
     |> Cycle.changeset(attrs)
-    |> Ecto.Changeset.cast_assoc(:sessions)
+    |> Ecto.Changeset.cast_assoc(:training_sessions)
     |> Repo.insert()
   end
-  def create_session(attrs \\ %{}) do
-    %Session{}
-    |> Session.changeset(attrs)
+  def create_training_session(attrs \\ %{}) do
+    %TrainingSession{}
+    |> TrainingSession.changeset(attrs)
     |> Repo.insert()
   end
 
@@ -67,9 +67,9 @@ defmodule Workbook.Training do
     |> Cycle.changeset(attrs)
     |> Repo.update()
   end
-  def update_session(id, attrs) do
-    get_session!(id)
-    |> Session.changeset(attrs)
+  def update_training_session(id, attrs) do
+    get_training_session!(id)
+    |> TrainingSession.changeset(attrs)
     |> Repo.update()
   end
 
@@ -85,8 +85,8 @@ defmodule Workbook.Training do
   def delete_cycle(%Cycle{} = cycle) do
     Repo.delete(cycle)
   end
-  def delete_session(%Session{} = session) do
-    Repo.delete(session)
+  def delete_training_session(%TrainingSession{} = training_session) do
+    Repo.delete(training_session)
   end
 
   def change_program(%Program{} = program) do
@@ -101,7 +101,7 @@ defmodule Workbook.Training do
   def change_cycle(%Cycle{} = cycle) do
     Cycle.changeset(cycle, %{})
   end
-  def change_session(%Session{} = session) do
-    Session.changeset(session, %{})
+  def change_training_session(%TrainingSession{} = training_session) do
+    TrainingSession.changeset(training_session, %{})
   end
 end

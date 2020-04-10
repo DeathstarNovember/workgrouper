@@ -2,7 +2,7 @@ import React from "react";
 import {
   SingleRoundSingleModeWorkgroupLabel,
   MultipleRoundsSingleModeWorkgroupLabel,
-  MultipleRoundsMultiModeWorkgroupLabel
+  MultipleRoundsMultiModeWorkgroupLabel,
 } from ".";
 import { areTheseThingsEqual, getOrdinalSymbol } from "../../utils";
 import { Workgroup } from "../../types";
@@ -16,7 +16,7 @@ type RxWorkgroupLabelProps = {
 export const RxWorkgroupLabel: React.FC<RxWorkgroupLabelProps> = ({
   workgroup,
   workoutIndex,
-  workgroupIndex
+  workgroupIndex,
 }) => {
   const { rounds, note } = workgroup;
   const firstRound = rounds[0];
@@ -27,7 +27,12 @@ export const RxWorkgroupLabel: React.FC<RxWorkgroupLabelProps> = ({
     return <div className="text-gray-900 font-bold">Click to configure</div>;
   return (
     <div className="m-1">
-      {note ? <div className="text-sm mt-1">{note}</div> : null}
+      {note ? (
+        <div className="text-sm mt-1">
+          note: {ordinalSymbol}
+          {note}
+        </div>
+      ) : null}
       <div className="flex">
         <div className="mr-1">{ordinalSymbol}</div>
         {roundsCount === 1 ? (

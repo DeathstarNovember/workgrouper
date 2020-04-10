@@ -57,6 +57,7 @@ defmodule Workbook.Schema.TrainingTypes do
 
   object :phase do
     field :id, :id
+    field :sort_order, :integer
     field :name, :string
     field :description, :string
     field :program, non_null(:program), resolve: assoc(:program)
@@ -71,19 +72,20 @@ defmodule Workbook.Schema.TrainingTypes do
   
   object :cycle do
     field :id, :id
+    field :sort_order, :integer
     field :name, :string
     field :description, :string
     field :phase, non_null(:phase), resolve: assoc(:phase)
-    field :sessions, list_of(non_null(:session)) do
+    field :training_sessions, list_of(non_null(:training_session)) do
       resolve(
-        assoc(:sessions, fn sessions_query, _args, _context ->
-          sessions_query
+        assoc(:training_sessions, fn training_sessions_query, _args, _context ->
+          training_sessions_query
         end)
       )
     end
   end
 
-  object :session do
+  object :training_session do
     field :id, :id
     field :name, :string
     field :description, :string
@@ -120,10 +122,10 @@ defmodule Workbook.Schema.TrainingTypes do
     field :description, :string
     field :sort_order, non_null(:integer)
     field :phase_id, :id
-    field :sessions, list_of(non_null(:session_input))
+    field :training_sessions, list_of(non_null(:training_session_input))
   end
 
-  input_object :session_input do
+  input_object :training_session_input do
     field :name, :string
     field :description, :string
     field :sort_order, non_null(:integer)

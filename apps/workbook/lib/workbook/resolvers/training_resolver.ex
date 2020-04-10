@@ -46,12 +46,12 @@ defmodule Workbook.Resolvers.TrainingResolver do
     end
   end
 
-  def create_session(_parent, args, _resolutions) do
-    args.session
-    |> Training.create_session()
+  def create_training_session(_parent, args, _resolutions) do
+    args.training_session
+    |> Training.create_training_session()
     |> case do
-      {:ok, session} -> 
-        {:ok, session}
+      {:ok, training_session} -> 
+        {:ok, training_session}
       {:error, changeset} -> 
         {:error, extract_error_msg(changeset)}
     end
@@ -98,12 +98,12 @@ defmodule Workbook.Resolvers.TrainingResolver do
         {:error, extract_error_msg(changeset)}
     end
   end
-  def update_session(_parent, args, _resolutions) do
+  def update_training_session(_parent, args, _resolutions) do
     (args.id)
-    |> Training.update_session(args.session)
+    |> Training.update_training_session(args.training_session)
     |> case do
-      {:ok, session} -> 
-        {:ok, session}
+      {:ok, training_session} -> 
+        {:ok, training_session}
       {:error, changeset} -> 
         {:error, extract_error_msg(changeset)}
     end

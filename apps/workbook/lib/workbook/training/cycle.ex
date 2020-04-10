@@ -2,13 +2,13 @@ defmodule Workbook.Training.Cycle do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Workbook.Training.{Phase, Session}
+  alias Workbook.Training.{Phase, TrainingSession}
 
   schema "cycles" do
     field :description, :string
     field :name, :string
     field :sort_order, :integer
-    has_many :sessions, Session
+    has_many :training_sessions, TrainingSession
     belongs_to :phase, Phase
 
     timestamps()

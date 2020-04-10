@@ -1,4 +1,6 @@
 defmodule Workbook.Resolvers.WorkoutsResolver do
+  require Logger
+  require MapDiff
   alias Workbook.Workouts
   def create_exercise(_parent, args, _resolutions) do
     args.exercise
@@ -100,8 +102,11 @@ defmodule Workbook.Resolvers.WorkoutsResolver do
   end
 
   def update_workout(_parent, args, _resolutions) do
-    args.id
-    |> Workouts.update_workout(args.workout)
+    workout = Workouts.get_workout!(args.id)
+    updateDiff = MapDiff.diff(args, workout)
+    Logger.info("#{inspect(updateDiff)}")
+
+    Workouts.update_workout(workout, args.workout)
     |> case do
       {:ok, workout} ->
         {:ok, workout}
@@ -247,7 +252,7 @@ defmodule Workbook.Resolvers.WorkoutsResolver do
     end
   end
   def delete_workout(_parent, args, _resolutions) do
-    args.workout
+    Workouts.get_workout!(args.id)
     |> Workouts.delete_workout()
     |> case do
       {:ok, workout} ->

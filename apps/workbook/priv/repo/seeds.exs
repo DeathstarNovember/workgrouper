@@ -12,7 +12,7 @@
 alias Workbook.Repo
 alias Workbook.Auth.User
 alias Workbook.Workouts.{Exercise, Workout, Workgroup, Round, Workset}
-alias Workbook.Training.{Session, Cycle, Phase, Program, Schedule}
+alias Workbook.Training.{TrainingSession, Cycle, Phase, Program, Schedule}
 bench_press = Repo.insert!(%Exercise{
   name: "Barbell Bench Press",
   intensity_unit: 1})
@@ -40,6 +40,43 @@ pull_up = Repo.insert!(%Exercise{
 air_squat = Repo.insert!(%Exercise{
   name: "Air Squat",
   intensity_unit: 0})
+
+p1_c1_training_session_1 = Repo.insert!(%TrainingSession{
+  sort_order: 0,
+})
+p1_c1_training_session_2 = Repo.insert!(%TrainingSession{
+  sort_order: 1,
+})
+p1_c1_training_session_3 = Repo.insert!(%TrainingSession{
+  sort_order: 2,
+})
+p1_c2_training_session_1 = Repo.insert!(%TrainingSession{
+  sort_order: 0,
+})
+p1_c2_training_session_2 = Repo.insert!(%TrainingSession{
+  sort_order: 1,
+})
+p1_c2_training_session_3 = Repo.insert!(%TrainingSession{
+  sort_order: 2,
+})
+p2_c1_training_session_1 = Repo.insert!(%TrainingSession{
+  sort_order: 0,
+})
+p2_c1_training_session_2 = Repo.insert!(%TrainingSession{
+  sort_order: 1,
+})
+p2_c1_training_session_3 = Repo.insert!(%TrainingSession{
+  sort_order: 2,
+})
+p2_c2_training_session_1 = Repo.insert!(%TrainingSession{
+  sort_order: 0,
+})
+p2_c2_training_session_2 = Repo.insert!(%TrainingSession{
+  sort_order: 1,
+})
+p2_c2_training_session_3 = Repo.insert!(%TrainingSession{
+  sort_order: 2,
+})
 workout_1 = Repo.insert!(%Workout{
   name: "Workout Title",
   description: "This is the description for this workout",
@@ -230,6 +267,16 @@ workout_1 = Repo.insert!(%Workout{
         }
       ]
     }
+  ],
+  training_sessions: [
+    p1_c1_training_session_1,
+    p1_c1_training_session_3,
+    p1_c2_training_session_1,
+    p1_c2_training_session_3,
+    p2_c1_training_session_1,
+    p2_c1_training_session_3,
+    p2_c2_training_session_1,
+    p2_c2_training_session_3
   ]
 })
 workout_2 = Repo.insert!(%Workout{
@@ -514,26 +561,50 @@ workout_2 = Repo.insert!(%Workout{
         }
       ]
     }
+  ],
+  training_sessions: [
+    p1_c1_training_session_2,
+    p1_c2_training_session_2,
+    p2_c1_training_session_2,
+    p2_c2_training_session_2,
   ]
 })
 
-p1_c1_session_1 = Repo.insert!(%Session{
-  sort_order: 0,
-  workout: workout_1
-})
-p1_c1_session_2 = Repo.insert!(%Session{
-  sort_order: 1,
-})
-p1_c1_session_3 = Repo.insert!(%Session{
-  sort_order: 2,
-  workout: workout_2
-})
+
 p1_cycle_1 = Repo.insert!(%Cycle{
+  name: "Cycle 1",
   sort_order: 0,
-  sessions: [
-    p1_c1_session_1,
-    p1_c1_session_2,
-    p1_c1_session_3,
+  training_sessions: [
+    p1_c1_training_session_1,
+    p1_c1_training_session_2,
+    p1_c1_training_session_3,
+  ]
+})
+p1_cycle_2 = Repo.insert!(%Cycle{
+  name: "Cycle 2",
+  sort_order: 0,
+  training_sessions: [
+    p1_c2_training_session_1,
+    p1_c2_training_session_2,
+    p1_c2_training_session_3,
+  ]
+})
+p2_cycle_1 = Repo.insert!(%Cycle{
+  name: "Cycle 1",
+  sort_order: 0,
+  training_sessions: [
+    p2_c1_training_session_1,
+    p2_c1_training_session_2,
+    p2_c1_training_session_3,
+  ]
+})
+p2_cycle_2 = Repo.insert!(%Cycle{
+  name: "Cycle 2",
+  sort_order: 0,
+  training_sessions: [
+    p2_c2_training_session_1,
+    p2_c2_training_session_2,
+    p2_c2_training_session_3,
   ]
 })
 phase_1 = Repo.insert!(%Phase{
@@ -541,14 +612,25 @@ phase_1 = Repo.insert!(%Phase{
   name: "Phase 1",
   description: "Initial strength-building",
   cycles: [
-    p1_cycle_1
+    p1_cycle_1,
+    p1_cycle_2
+  ]
+})
+phase_2 = Repo.insert!(%Phase{
+  sort_order: 1,
+  name: "Phase 2",
+  description: "Continued strength-building",
+  cycles: [
+    p2_cycle_1,
+    p2_cycle_2
   ]
 })
 deathstar_default_program = Repo.insert!(%Program{
-  name: "default program",
+  name: "Deathstar Program",
   description: "Main workout program",
   phases: [
-    phase_1
+    phase_1,
+    phase_2
   ]
 })
 {:ok, ds_s1_start_date} = DateTime.from_naive(~N[2020-03-09 16:00:00], "Etc/UTC")

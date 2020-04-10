@@ -6,35 +6,35 @@ export interface SelectOption {
 export enum IntensityUnit {
   none,
   weight,
-  speed
+  speed,
 }
 
 export enum WeightUnits {
   lbs,
-  kg
+  kg,
 }
 
 export enum SpeedUnits {
-  mps
+  mps,
 }
 
 export enum DistanceUnits {
   m,
   ft,
   km,
-  mi
+  mi,
 }
 
 export enum HeightUnits {
   cm,
   in,
   ft,
-  m
+  m,
 }
 
 export enum IntensityType {
   absolute,
-  relative
+  relative,
 }
 export type CurrentUserData = {
   authorizedUser: User;
@@ -84,7 +84,7 @@ export type Workgroup = {
 export enum IntervalType {
   none,
   inclusive,
-  exclusive
+  exclusive,
 }
 export type NewRound = Omit<Round, "id" | "worksets"> & {
   worksets: NewWorkset[];
@@ -108,4 +108,34 @@ export type Workset = {
   intensity: number;
   intervalType: IntervalType;
   interval: number;
+};
+
+export type Program = {
+  id: number;
+  name: string;
+  description: string;
+  user: User;
+  phases: Phase[];
+};
+export type Phase = {
+  id: number;
+  name: string;
+  sortOrder: number;
+  description: string;
+  cycles: Cycle[];
+};
+export type Cycle = {
+  id: number;
+  name: string;
+  sortOrder: number;
+  description: string;
+  trainingSessions: TrainingSession[];
+};
+export type TrainingSession = {
+  id: number;
+  sortOrder: number;
+  name: string;
+  description: string;
+  workout: Workout;
+  result: Result;
 };

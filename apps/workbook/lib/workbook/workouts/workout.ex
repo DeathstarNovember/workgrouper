@@ -3,7 +3,7 @@ defmodule Workbook.Workouts.Workout do
   import Ecto.Changeset
   alias Workbook.Auth.User
   alias Workbook.Workouts.{Workgroup, Result}
-  alias Workbook.Training.Session
+  alias Workbook.Training.TrainingSession
 
   schema "workouts" do
     field :description, :string
@@ -11,7 +11,7 @@ defmodule Workbook.Workouts.Workout do
     belongs_to :user, User
     has_many :workgroups, Workgroup
     has_many :results, Result
-    has_many :sessions, Session
+    has_many :training_sessions, TrainingSession
 
     timestamps()
   end
@@ -22,7 +22,7 @@ defmodule Workbook.Workouts.Workout do
     |> cast(attrs, [:name, :description, :user_id])
     |> cast_assoc(:workgroups)
     |> cast_assoc(:results)
-    |> cast_assoc(:sessions)
+    |> cast_assoc(:training_sessions)
     |> validate_required([:user_id])
   end
 end

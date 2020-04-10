@@ -63,6 +63,31 @@ export const createWorkoutMutation = gql`
   ${workgroupFragment}
 `;
 
+export const updateWorkoutMutation = gql`
+  mutation UpdateWorkout($id: ID, $workout: WorkoutInput!) {
+    workoutUpdate(id: $id, workout: $workout) {
+      id
+      ...WorkoutFragment
+      workgroups {
+        id
+        ...WorkgroupFragment
+      }
+    }
+  }
+  ${workoutFragment}
+  ${workgroupFragment}
+`;
+
+export const deleteWorkoutMutation = gql`
+  mutation WorkoutDelete($id: ID) {
+    deleteWorkout(id: $id) {
+      id
+    }
+  }
+  ${workoutFragment}
+  ${workgroupFragment}
+`;
+
 export const createResultMutation = gql`
   mutation ResultCreate($result: ResultInput!) {
     createResult(result: $result) {

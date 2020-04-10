@@ -38,7 +38,9 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
       if (React.isValidElement(childElement)) {
         return React.cloneElement(childElement, {
           className: `${childElement.props.className} ${
-            childElementIndex === 0
+            childElements.length === 1
+              ? "rounded"
+              : childElementIndex === 0
               ? "rounded-l"
               : childElementIndex === childElements.length - 1
               ? "rounded-r"

@@ -3,11 +3,8 @@ import { WorkoutLabel } from "./labelComponents";
 import { WorkoutForm, ResultForm } from "./formComponents";
 import { Workout } from "../types";
 import { ButtonGroup } from "./layoutComponents";
-
-// type ActionButtonsProps = {
-//   confirm: () => void;
-//   showForm: () => void;
-// };
+import { useMutation } from "@apollo/react-hooks";
+import { deleteWorkoutMutation } from "../graphql";
 
 type CustomResultButtonProps = {
   showForm: () => void;
@@ -19,9 +16,9 @@ const CustomResultButton: React.FC<CustomResultButtonProps> = ({
 }) => (
   <button
     onClick={() => showForm()}
-    className={`${className} bg-gray-500 hover:bg-gray-700 text-white font-bold px-2 py-1`}
+    className={`${className} bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-1`}
   >
-    custom result
+    Custom
   </button>
 );
 
@@ -35,20 +32,42 @@ const RxResultButton: React.FC<RxResultButtonProps> = ({
 }) => (
   <button
     onClick={() => confirm()}
-    className={`${className} bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-1`}
+    className={`${className} bg-green-500 hover:bg-green-700 text-white font-bold px-2 py-1`}
   >
-    Rx result
+    Rx
   </button>
 );
 
-// const ActionButtons: React.FC<ActionButtonsProps> = ({ confirm, showForm }) => {
-//   return (
-//     <div className="flex">
-//       <RxResultButton confirm={confirm} className="rounded-l" />
-//       <CustomResultButton showForm={showForm} className="rounded-r" />
-//     </div>
-//   );
-// };
+type UpdateWorkoutButtonProps = {
+  updateWorkout: () => void;
+  className?: string;
+};
+const UpdateWorkoutButton: React.FC<UpdateWorkoutButtonProps> = ({
+  updateWorkout,
+  className,
+}) => (
+  <button
+    onClick={updateWorkout}
+    className={`${className} bg-purple-500 hover:bg-purple-700 text-white font-bold px-2 py-1`}
+  >
+    Copy
+  </button>
+);
+type DeleteWorkoutButtonProps = {
+  deleteWorkout: () => void;
+  className?: string;
+};
+const DeleteWorkoutButton: React.FC<DeleteWorkoutButtonProps> = ({
+  deleteWorkout,
+  className,
+}) => (
+  <button
+    onClick={deleteWorkout}
+    className={`${className} bg-red-500 hover:bg-red-700 text-white font-bold px-2 py-1`}
+  >
+    Delete
+  </button>
+);
 
 type WorkoutPaneProps = {
   workout: Workout;
@@ -59,15 +78,27 @@ type WorkoutPaneProps = {
 export const WorkoutPane: React.FC<WorkoutPaneProps> = ({
   workout,
   workoutIndex,
+  clearSelectedWorkout,
 }) => {
   const { name, description } = workout;
-  const [resultIsVisible, setResultIsVisible] = useState(false);
-  const showResult = () => {
-    setResultIsVisible(true);
+  const [resultFormIsVisible, setResultFormIsVisible] = useState(false);
+  const [updateFormIsVisible, setUpdateFormIsVisible] = useState(false);
+  const showResultForm = () => {
+    setResultFormIsVisible(true);
   };
-  const hideResult = () => {
-    setResultIsVisible(false);
+  const hideResultForm = () => {
+    setResultFormIsVisible(false);
   };
+  const showUpdateForm = () => {
+    setUpdateFormIsVisible(true);
+  };
+  const hideUpdateForm = () => {
+    setUpdateFormIsVisible(false);
+  };
+  const [deleteWorkout] = useMutation(deleteWorkoutMutation, {
+    variables: { id: workout.id },
+    onCompleted: clearSelectedWorkout,
+  });
 
   return (
     <div className="p-6 rounded max-w-lg w-full">
@@ -79,17 +110,27 @@ export const WorkoutPane: React.FC<WorkoutPaneProps> = ({
           <div className="text-gray-700 text-lg">{description}</div>
           <ButtonGroup>
             <RxResultButton confirm={confirm} />
-            <CustomResultButton showForm={showResult} />
+            <CustomResultButton showForm={showResultForm} />
+            <UpdateWorkoutButton updateWorkout={showUpdateForm} />
+            <DeleteWorkoutButton deleteWorkout={deleteWorkout} />
           </ButtonGroup>
         </div>
       </div>
       {workoutIndex !== undefined ? (
-        resultIsVisible ? (
+        resultFormIsVisible ? (
           <div>
             <ResultForm
               workoutId={workout.id}
               workout={workout}
-              hideForm={hideResult}
+              hideForm={hideResultForm}
+            />
+          </div>
+        ) : updateFormIsVisible ? (
+          <div>
+            <WorkoutForm
+              workoutId={workout.id}
+              workout={workout}
+              hideForm={hideUpdateForm}
             />
           </div>
         ) : (

@@ -18,7 +18,9 @@ export const RxWorkgroupLabel: React.FC<RxWorkgroupLabelProps> = ({
   workoutIndex,
   workgroupIndex,
 }) => {
-  const { rounds, note } = workgroup;
+  const { rounds } = workgroup;
+  const note = "";
+  // const { rounds, note } = workgroup;
   const firstRound = rounds[0];
   const roundsCount = rounds.length;
   const roundsAreEqual = areTheseThingsEqual(rounds);

@@ -11,11 +11,11 @@ export enum ButtonStyles {
   success = "bg-green-300 hover:bg-green-400",
   warning = "bg-yellow-300 hover:bg-yellow-400",
   danger = "bg-red-300 hover:bg-red-400",
-  info = "bg-gray-300 hover:bg-gray-400"
+  info = "bg-gray-300 hover:bg-gray-400",
 }
 
 type ButtonProps = {
-  onClick?: (arg0: any | undefined) => any | void;
+  onClick?: Function;
   hoverColor?: string;
   bgColor?: string;
   textColor?: string;
@@ -30,7 +30,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   ...props
 }) => {
   const childrenArray = React.Children.toArray(children);
-  const childElements = childrenArray.filter(child =>
+  const childElements = childrenArray.filter((child) =>
     React.isValidElement(child)
   );
   const groupedChildren = childElements.map(
@@ -45,7 +45,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
               : childElementIndex === childElements.length - 1
               ? "rounded-r"
               : ""
-          }`
+          }`,
         });
       } else {
         return childElement;
@@ -66,7 +66,7 @@ export const Button: React.FC<ButtonProps> = ({
   text,
   type = "button",
   onClick,
-  children
+  children,
 }) => {
   const defaultStyle: ButtonStyles = buttonStyle || ButtonStyles.primary;
   const customStyle =
@@ -92,13 +92,13 @@ export const SubmitButton: React.FC<ButtonProps> = ({
   hoverColor,
   bgColor,
   textColor,
-  text
+  text,
 }) => {
   const submitButtonProps = {
     hoverColor,
     bgColor,
     textColor,
-    text
+    text,
   };
 
   return <Button type="submit" {...submitButtonProps} />;
@@ -113,13 +113,13 @@ export const AddButton: React.FC<AddButtonProps> = ({
   hoverColor,
   bgColor,
   textColor,
-  text = "add"
+  text = "add",
 }) => {
   const customProps = {
     hoverColor,
     bgColor,
     textColor,
-    text
+    text,
   };
   return (
     <Button onClick={add} {...customProps}>
@@ -129,8 +129,8 @@ export const AddButton: React.FC<AddButtonProps> = ({
 };
 
 type RemoveButtonProps = ButtonProps & {
-  remove: (arg0: number) => void;
-  index: number;
+  remove?: Function;
+  index?: number;
 };
 
 export const RemoveButton: React.FC<RemoveButtonProps> = ({
@@ -140,7 +140,7 @@ export const RemoveButton: React.FC<RemoveButtonProps> = ({
   ...props
 }) => {
   return (
-    <Button onClick={() => remove(index)} {...props}>
+    <Button buttonStyle={buttonStyle} onClick={remove} {...props}>
       <FaTrash />
     </Button>
   );
@@ -157,13 +157,13 @@ export const SwapUpButton: React.FC<SwapButtonProps> = ({
   bgColor = "gray",
   textColor = "gray",
   index,
-  text = ""
+  text = "",
 }) => {
   const customProps = {
     hoverColor,
     bgColor,
     textColor,
-    text
+    text,
   };
   return (
     <Button onClick={() => swap(index, index - 1)} {...customProps}>
@@ -177,13 +177,13 @@ export const SwapDownButton: React.FC<SwapButtonProps> = ({
   bgColor = "gray",
   textColor = "gray",
   index,
-  text = ""
+  text = "",
 }) => {
   const customProps = {
     hoverColor,
     bgColor,
     textColor,
-    text
+    text,
   };
   return (
     <Button onClick={() => swap(index, index + 1)} {...customProps}>

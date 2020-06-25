@@ -4,7 +4,6 @@ import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import Collapsible from "react-collapsible";
 import { WorkoutLabel } from "../labelComponents";
 import { FaCalendar } from "react-icons/fa";
-import { ColorsContext } from "../ProgramPane";
 
 type TrainingSessionTimelineEntryProps = {
   trainingSession: TrainingSession;
@@ -13,21 +12,20 @@ type TrainingSessionTimelineEntryProps = {
 
 export const TrainingSessionTimelineEntry: React.FC<TrainingSessionTimelineEntryProps> = ({
   trainingSession,
-  trainingSessionIndex
+  trainingSessionIndex,
 }) => {
-  const sectionColors = useContext(ColorsContext);
   return (
     <VerticalTimelineElement
       className="vertical-timeline-element"
       contentStyle={{
-        background: sectionColors.trainingSession.contentBackground
+        background: "#550000",
       }}
       contentArrowStyle={{
-        borderRight: `7px solid  ${sectionColors.trainingSession.contentBackground}`
+        borderRight: `7px solid  ${"#550000"}`,
       }}
       iconStyle={{
-        background: sectionColors.trainingSession.contentBackground,
-        color: sectionColors.trainingSession.iconColor
+        background: "#550000",
+        color: "#555500",
       }}
       icon={<FaCalendar />}
     >

@@ -2,34 +2,33 @@ import React, { useContext } from "react";
 import { Cycle } from "../../types";
 import {
   VerticalTimeline,
-  VerticalTimelineElement
+  VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import { FaWeightHanging } from "react-icons/fa";
 import Collapsible from "react-collapsible";
 import { TrainingSessionTimelineEntry } from ".";
-import { ColorsContext, TimelineBottomBar } from "../ProgramPane";
+import { TimelineBottomBar } from "../ProgramPane";
 type CycleTimelineEntryProps = {
   cycle: Cycle;
   cyclePrefix: string;
 };
 export const CycleTimelineEntry: React.FC<CycleTimelineEntryProps> = ({
   cycle,
-  cyclePrefix
+  cyclePrefix,
 }) => {
-  const sectionColors = useContext(ColorsContext);
   return (
     <VerticalTimeline layout="1-column">
       <VerticalTimelineElement
         className="vertical-timeline-element"
         contentStyle={{
-          background: sectionColors.cycle.contentBackground
+          background: "#440077",
         }}
         contentArrowStyle={{
-          borderRight: `7px solid ${sectionColors.cycle.contentBackground}`
+          borderRight: `7px solid #447700`,
         }}
         iconStyle={{
-          background: sectionColors.cycle.contentBackground,
-          color: sectionColors.cycle.iconColor
+          background: "#440077",
+          color: "#447700",
         }}
         icon={<FaWeightHanging />}
       >

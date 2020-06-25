@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Phase } from "../../types";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import { FaWeight } from "react-icons/fa";
@@ -6,7 +6,6 @@ import Collapsible from "react-collapsible";
 import { FlexBox } from "../../workbook_ui";
 import { CycleTimelineEntry } from ".";
 import { TimelineBottomBar } from "..";
-import { ColorsContext } from "../ProgramPane";
 
 type PhaseTimelineEntryProps = {
   phase: Phase;
@@ -15,21 +14,20 @@ type PhaseTimelineEntryProps = {
 
 export const PhaseTimelineEntry: React.FC<PhaseTimelineEntryProps> = ({
   phase,
-  phasePrefix
+  phasePrefix,
 }) => {
-  const sectionColors = useContext(ColorsContext);
   return (
     <VerticalTimelineElement
       contentStyle={{
-        background: sectionColors.phase.contentBackground,
-        boxShadow: "none"
+        background: "#0455cc",
+        boxShadow: "none",
       }}
       contentArrowStyle={{
-        borderRight: `7px solid ${sectionColors.phase.contentBackground}`
+        borderRight: `7px solid ${"#0455cc"}`,
       }}
       iconStyle={{
-        background: sectionColors.phase.contentBackground,
-        color: sectionColors.phase.iconColor
+        background: "#0455cc",
+        color: "#5540d5",
       }}
       icon={<FaWeight />}
     >

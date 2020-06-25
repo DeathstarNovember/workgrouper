@@ -1,17 +1,19 @@
 import React from "react";
 import {
-  groupObjectsByProperty,
   camelCaseToTitle,
-  toCamelCase
+  getWorkoutExerciseVolumes,
+  getWorkoutWorksets,
+  getWorksetsByExercise,
 } from "../utils";
-import { Workout, Workset, IntensityUnit } from "../types";
+import { Workout, IntensityUnit } from "../types";
+import { Box } from "../workbook_ui";
 
 type WorkoutOverviewProps = {
   workout: Workout;
   workoutIndex: number;
-  clearSelectedWorkout: () => void;
-  selectWorkout: (arg0: Workout, arg1: number) => void;
-  isSelected: boolean;
+  clearSelectedWorkout?: (workoutIndex?: number) => void;
+  selectWorkout?: (arg0: Workout, arg1: number) => void;
+  isSelected?: boolean;
 };
 
 export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
@@ -19,71 +21,37 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
   workoutIndex,
   clearSelectedWorkout,
   selectWorkout,
-  isSelected = false
+  isSelected = false,
 }) => {
   const { name, description } = workout;
-  type WorkoutWorkset = Workset & {
-    exerciseName: string;
-  };
-  const workoutWorksets: WorkoutWorkset[] = [];
-  workout.workgroups.forEach(workgroup =>
-    workgroup.rounds.forEach(round =>
-      round.worksets.forEach(workset =>
-        workoutWorksets.push({
-          ...workset,
-          exerciseName: toCamelCase(workset.exercise.name)
-        })
-      )
-    )
-  );
-  const worksetsByExercise: {
-    [key: string]: Workset[];
-  } = groupObjectsByProperty(workoutWorksets, "exerciseName");
-
-  const workoutExerciseNames: string[] = workoutWorksets
-    .map(ww => ww.exerciseName)
-    .filter((v, i, a) => a.indexOf(v) === i);
-
-  const exerciseVolumes: {
-    exerciseName: string;
-    volume: number;
-  }[] = workoutExerciseNames.map(exerciseName => ({
-    exerciseName: exerciseName,
-    volume: worksetsByExercise[exerciseName].reduce(
-      (acc, workset) => acc + (workset.intensity || 0),
-      0
-    )
-  }));
+  const exerciseVolumes = getWorkoutExerciseVolumes(workout);
+  const workoutWorksets = getWorkoutWorksets(workout);
+  const worksetsByExercise = getWorksetsByExercise(workout);
   const handleSelect = () => {
     if (isSelected) {
-      clearSelectedWorkout();
+      clearSelectedWorkout ? clearSelectedWorkout() : null;
     } else {
-      selectWorkout(workout, workoutIndex);
+      selectWorkout ? selectWorkout(workout, workoutIndex) : null;
     }
   };
   return (
-    <div
-      key={`workout${workoutIndex}`}
-      className={`m-3 p-3 bg-${isSelected ? "blue" : "gray"}-400 rounded`}
-    >
-      <div onClick={() => handleSelect()} className="cursor-pointer">
-        <div
-          className={`py-1 text-xl text-gray-900 hover:text-blue-600 underline`}
-        >
+    <Box key={`workout${workoutIndex}`} className={`m-2`}>
+      <Box onClick={() => handleSelect()} className="cursor-pointer">
+        <Box className={`text-xl text-gray-100 hover:text-blue-600 underline`}>
           {name}
-        </div>
-      </div>
+        </Box>
+      </Box>
       {isSelected ? (
-        <div>
-          <div className="text-sm ">
+        <Box>
+          <Box className="text-sm ">
             Total Load-Volume:{" "}
             {exerciseVolumes.reduce((acc, exVol) => acc + exVol.volume, 0)}
             lbs/
             {workoutWorksets.length} worksets
-          </div>
-          <div className="border-solid border-2 border-gray-600" />
+          </Box>
+          <Box className="border-solid border-2 border-gray-600" />
           {exerciseVolumes.map((ev, evIndex) => (
-            <div
+            <Box
               key={`exerciseVols${evIndex}forWorkout${workoutIndex}`}
               className="text-sm"
             >
@@ -94,12 +62,12 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
                 ? "lbs"
                 : "m/s"}
               /{worksetsByExercise[ev.exerciseName].length} worksets
-            </div>
+            </Box>
           ))}
-        </div>
+        </Box>
       ) : (
-        <div className="text-sm">{description}</div>
+        <Box className="text-sm">{description}</Box>
       )}
-    </div>
+    </Box>
   );
 };

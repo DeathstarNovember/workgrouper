@@ -104,10 +104,10 @@ export const ProgramEditorPage = () => {
       className="flex flex-1 bg-gray-600 "
       style={{
         minHeight: `calc(100vh - ${layout.header.height}px)`,
-        background: backgroundGradient
+        background: backgroundGradient,
       }}
     >
-      <div className="max-w-500 bg-gray-500">
+      <div className="bg-gray-500" style={{ width: 500 }}>
         <div className="flex-col w-full max-w-lg">
           <button
             onClick={() => showNewProgramForm()}
@@ -138,7 +138,7 @@ export const ProgramEditorPage = () => {
           )}
         </div>
       </div>
-      <div className="">
+      <div className="w-full">
         {newProgramFormIsVisible ? (
           // <ProgramForm program={newProgram} hideForm={hideNewProgramForm} />
           <div>Program Form</div>

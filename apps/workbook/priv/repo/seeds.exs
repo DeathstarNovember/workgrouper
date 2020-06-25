@@ -50,6 +50,12 @@ p1_c1_training_session_2 = Repo.insert!(%TrainingSession{
 p1_c1_training_session_3 = Repo.insert!(%TrainingSession{
   sort_order: 2,
 })
+p1_c1_training_session_4 = Repo.insert!(%TrainingSession{
+  sort_order: 3,
+})
+p1_c1_training_session_5 = Repo.insert!(%TrainingSession{
+  sort_order: 4,
+})
 p1_c2_training_session_1 = Repo.insert!(%TrainingSession{
   sort_order: 0,
 })
@@ -58,6 +64,12 @@ p1_c2_training_session_2 = Repo.insert!(%TrainingSession{
 })
 p1_c2_training_session_3 = Repo.insert!(%TrainingSession{
   sort_order: 2,
+})
+p1_c2_training_session_4 = Repo.insert!(%TrainingSession{
+  sort_order: 3,
+})
+p1_c2_training_session_5 = Repo.insert!(%TrainingSession{
+  sort_order: 4,
 })
 p2_c1_training_session_1 = Repo.insert!(%TrainingSession{
   sort_order: 0,
@@ -68,6 +80,12 @@ p2_c1_training_session_2 = Repo.insert!(%TrainingSession{
 p2_c1_training_session_3 = Repo.insert!(%TrainingSession{
   sort_order: 2,
 })
+p2_c1_training_session_4 = Repo.insert!(%TrainingSession{
+  sort_order: 3,
+})
+p2_c1_training_session_5 = Repo.insert!(%TrainingSession{
+  sort_order: 4,
+})
 p2_c2_training_session_1 = Repo.insert!(%TrainingSession{
   sort_order: 0,
 })
@@ -76,6 +94,12 @@ p2_c2_training_session_2 = Repo.insert!(%TrainingSession{
 })
 p2_c2_training_session_3 = Repo.insert!(%TrainingSession{
   sort_order: 2,
+})
+p2_c2_training_session_4 = Repo.insert!(%TrainingSession{
+  sort_order: 3,
+})
+p2_c2_training_session_5 = Repo.insert!(%TrainingSession{
+  sort_order: 4,
 })
 workout_1 = Repo.insert!(%Workout{
   name: "Workout Title",
@@ -570,6 +594,22 @@ workout_2 = Repo.insert!(%Workout{
   ]
 })
 
+restWorkout = Repo.insert!(%Workout{
+  name: "Rest Day",
+  description: "",
+  workgroups: [],
+  training_sessions: [
+    p1_c1_training_session_4,
+    p1_c2_training_session_4,
+    p2_c1_training_session_4,
+    p2_c2_training_session_4,
+    p1_c1_training_session_5,
+    p1_c2_training_session_5,
+    p2_c1_training_session_5,
+    p2_c2_training_session_5,
+  ]
+})
+
 
 p1_cycle_1 = Repo.insert!(%Cycle{
   name: "Cycle 1",
@@ -578,6 +618,8 @@ p1_cycle_1 = Repo.insert!(%Cycle{
     p1_c1_training_session_1,
     p1_c1_training_session_2,
     p1_c1_training_session_3,
+    p1_c1_training_session_4,
+    p1_c1_training_session_5,
   ]
 })
 p1_cycle_2 = Repo.insert!(%Cycle{
@@ -587,6 +629,8 @@ p1_cycle_2 = Repo.insert!(%Cycle{
     p1_c2_training_session_1,
     p1_c2_training_session_2,
     p1_c2_training_session_3,
+    p1_c2_training_session_4,
+    p1_c2_training_session_5,
   ]
 })
 p2_cycle_1 = Repo.insert!(%Cycle{
@@ -596,6 +640,8 @@ p2_cycle_1 = Repo.insert!(%Cycle{
     p2_c1_training_session_1,
     p2_c1_training_session_2,
     p2_c1_training_session_3,
+    p2_c1_training_session_4,
+    p2_c1_training_session_5,
   ]
 })
 p2_cycle_2 = Repo.insert!(%Cycle{
@@ -605,6 +651,8 @@ p2_cycle_2 = Repo.insert!(%Cycle{
     p2_c2_training_session_1,
     p2_c2_training_session_2,
     p2_c2_training_session_3,
+    p2_c2_training_session_4,
+    p2_c2_training_session_5,
   ]
 })
 phase_1 = Repo.insert!(%Phase{

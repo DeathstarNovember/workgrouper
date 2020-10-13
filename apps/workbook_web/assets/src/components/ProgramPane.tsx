@@ -5,7 +5,7 @@ import { Program, Phase, Cycle, TrainingSession, Workout } from "../types";
 import { Box, RemoveButton, Button } from "../workbook_ui";
 import { useMutation } from "@apollo/react-hooks";
 import { deleteProgramMutation } from "../graphql";
-
+import { WorkoutLabel } from "./labelComponents";
 import { WorkoutOverview } from "./WorkoutOverview";
 
 type TimelineBottomBarProps = {};
@@ -18,30 +18,6 @@ export const TimelineBottomBar: React.FC<TimelineBottomBarProps> = ({}) => {
     />
   );
 };
-
-type ProgramLabelProps = {
-  program: Program;
-};
-
-const ProgramLabel: React.FC<ProgramLabelProps> = ({ program }) => {
-  return <div className="text-2xl font-bold">{program.name}</div>;
-};
-
-type DeleteProgramButtonProps = {
-  deleteProgram: () => void;
-  className?: string;
-};
-const DeleteProgramButton: React.FC<DeleteProgramButtonProps> = ({
-  deleteProgram,
-  className,
-}) => (
-  <button
-    onClick={deleteProgram}
-    className={`${className} bg-red-500 hover:bg-red-700 text-white font-bold px-2 py-1`}
-  >
-    Delete
-  </button>
-);
 
 type ProgramPaneProps = {
   program: Program;
@@ -104,20 +80,31 @@ const CycleBox: React.FC<CycleBoxProps> = ({
 
 type TrainingSessionBoxProps = ProgramBoxProps & {
   trainingSession: TrainingSession;
+  toggleSelectWorkout: (arg0: Workout, arg1: number) => void;
+  selected: boolean;
 };
 
 const TrainingSessionBox: React.FC<TrainingSessionBoxProps> = ({
   children,
   trainingSession,
   layoutOrientation,
+  toggleSelectWorkout,
+  selected,
   ...props
 }) => {
   return (
-    <Box className={`flex-1 flex-col m-2`}>
-      <Box className="text-lg font-bold color-gray-200">
+    <Box
+      onClick={() =>
+        toggleSelectWorkout(trainingSession.workout, trainingSession.id)
+      }
+      className={`flex-1 flex-col rounded m-2 ${selected ? "bg-white" : ""}`}
+    >
+      {/* <Box className="text-lg font-bold color-gray-200">
         Session {trainingSession.sortOrder + 1}
+      </Box> */}
+      <Box className="bg-gray-800 rounded text-gray-200 p-2 m-2">
+        {children}
       </Box>
-      <Box className="bg-gray-800 rounded text-gray-200 p-2">{children}</Box>
     </Box>
   );
 };
@@ -128,9 +115,6 @@ export const ProgramPane: React.FC<ProgramPaneProps> = ({
   programIndex,
   clearSelectedProgram,
 }) => {
-  const [selectedWorkout, setSelectedWorkout] = useState<Workout | undefined>(
-    undefined
-  );
   const [selectedWorkoutIndexes, setSelectedWorkoutIndexes] = useState<
     number[]
   >([]);
@@ -143,6 +127,13 @@ export const ProgramPane: React.FC<ProgramPaneProps> = ({
     setSelectedWorkoutIndexes(
       selectedWorkoutIndexes.filter((index) => index !== workoutIndex)
     );
+  };
+  const toggleSelectWorkout = (workout: Workout, workoutIndex: number) => {
+    if (selectedWorkoutIndexes.includes(workoutIndex)) {
+      clearSelectedWorkout(workoutIndex);
+    } else {
+      selectWorkout(workout, workoutIndex);
+    }
   };
   const [layoutOrientation, setLayoutOrientation] = useState<LayoutOrientation>(
     "horizontal"
@@ -200,19 +191,15 @@ export const ProgramPane: React.FC<ProgramPaneProps> = ({
                                     key={trainingSessionKey}
                                     trainingSession={trainingSession}
                                     layoutOrientation={layoutOrientation}
+                                    toggleSelectWorkout={toggleSelectWorkout}
+                                    selected={selectedWorkoutIndexes.includes(
+                                      trainingSession.id
+                                    )}
                                   >
+                                    {trainingSession.workout.name}
                                     <WorkoutOverview
                                       workout={trainingSession.workout}
-                                      workoutIndex={trainingSession.workout.id}
-                                      selectWorkout={selectWorkout}
-                                      isSelected={selectedWorkoutIndexes.includes(
-                                        trainingSession.workout.id
-                                      )}
-                                      clearSelectedWorkout={() =>
-                                        clearSelectedWorkout(
-                                          trainingSession.workout.id
-                                        )
-                                      }
+                                      workoutIndex={trainingSessionIndex}
                                     />
                                   </TrainingSessionBox>
                                 );

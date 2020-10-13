@@ -117,6 +117,11 @@ export type Program = {
   user: User;
   phases: Phase[];
 };
+export type NewProgram = Omit<Program, "id" | "phases" | "user"> & {
+  phases: NewPhase[];
+  userId: number;
+};
+
 export type Phase = {
   id: number;
   name: string;
@@ -124,12 +129,16 @@ export type Phase = {
   description: string;
   cycles: Cycle[];
 };
+export type NewPhase = Omit<Phase, "id" | "cycles"> & { cycles: NewCycle[] };
 export type Cycle = {
   id: number;
   name: string;
   sortOrder: number;
   description: string;
   trainingSessions: TrainingSession[];
+};
+export type NewCycle = Omit<Cycle, "id" | "trainingSessions"> & {
+  trainingSessions: NewTrainingSession[];
 };
 export type TrainingSession = {
   id: number;
@@ -139,3 +148,7 @@ export type TrainingSession = {
   workout: Workout;
   result: Result;
 };
+export type NewTrainingSession = Omit<
+  TrainingSession,
+  "id" | "workout" | "result"
+> & { workoutId?: number; resultId?: number };

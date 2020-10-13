@@ -7,6 +7,7 @@ import { newWorkout } from "../data";
 import { FaPlus } from "react-icons/fa";
 import { WorkoutForm } from "../components/formComponents";
 import { LayoutContext } from "..";
+import { Box } from "../workbook_ui";
 
 const workoutEditorQuery = gql`
   query WorkoutEditor {
@@ -96,14 +97,14 @@ export const WorkoutEditorPage = () => {
           </button>
           {data ? (
             data.workouts.map((workout: Workout, workoutIndex: number) => (
-              <WorkoutOverview
-                key={`workoutOverview${workoutIndex}`}
-                workout={workout}
-                workoutIndex={workoutIndex}
-                clearSelectedWorkout={clearSelectedWorkout}
-                selectWorkout={selectWorkout}
-                isSelected={workoutIndex === selectedWorkoutIndex}
-              />
+              <Box
+                onClick={() => selectWorkout(workout, workoutIndex)}
+                className="cursor-pointer m-2"
+              >
+                <Box className={`text-xl text-gray-100 hover:text-blue-600`}>
+                  {workout.name}
+                </Box>
+              </Box>
             ))
           ) : (
             <div className="text-gray-900 font-bold">No Workouts Loaded</div>
@@ -113,7 +114,7 @@ export const WorkoutEditorPage = () => {
       <div className="">
         {newWorkoutFormIsVisible ? (
           <WorkoutForm workout={newWorkout} hideForm={hideNewWorkoutForm} />
-        ) : selectedWorkout ? (
+        ) : selectedWorkout && selectedWorkoutIndex ? (
           <WorkoutPane
             workout={selectedWorkout}
             clearSelectedWorkout={clearSelectedWorkout}

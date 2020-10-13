@@ -11,7 +11,7 @@ import {
   SwapUpButton,
   SwapDownButton,
   Box,
-  FlexBox
+  FlexBox,
 } from "../../workbook_ui";
 
 type RoundsArrayProps = {
@@ -22,13 +22,13 @@ type RoundsArrayProps = {
 export const RoundsArray: React.FC<RoundsArrayProps> = ({
   workgroupIndex,
   name,
-  exercises
+  exercises,
 }) => {
   const { values }: { values: Workout } = useFormikContext();
   return (
     <FieldArray
       name={name}
-      render={roundsArrayHelpers => (
+      render={(roundsArrayHelpers) => (
         <Box>
           {values.workgroups[workgroupIndex].rounds.map(
             (_round, roundIndex) => {
@@ -104,7 +104,7 @@ export const RoundsArray: React.FC<RoundsArrayProps> = ({
                     ? values.workgroups[workgroupIndex].rounds[
                         values.workgroups[workgroupIndex].rounds.length - 1
                       ].worksets
-                    : [{ ...newWorkset }]
+                    : [{ ...newWorkset }],
               })
             }
             text="add round"

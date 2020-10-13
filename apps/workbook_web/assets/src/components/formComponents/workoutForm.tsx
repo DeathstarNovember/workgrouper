@@ -18,6 +18,10 @@ type ExerciseData = {
   exercises: Exercise[];
 };
 
+export const WorkoutFormContext = React.createContext<ExerciseData>({
+  exercises: [],
+});
+
 const InnerForm = (props: WorkoutFormProps & FormikProps<NewWorkout>) => {
   const { hideForm, handleSubmit, values } = props;
   const workoutVariables = {
@@ -40,19 +44,19 @@ const InnerForm = (props: WorkoutFormProps & FormikProps<NewWorkout>) => {
             intensityType: Number(workset.intensityType),
             interval: Number(workset.interval),
             intervalType: Number(workset.intervalType),
-            exerciseId: workset.exercise.id
-          }))
-        }))
-      }))
-    }
+            exerciseId: workset.exercise.id,
+          })),
+        })),
+      })),
+    },
   };
   const [createWorkout] = useMutation(createWorkoutMutation, {
-    variables: workoutVariables
+    variables: workoutVariables,
   });
   const {
     data: exerciseData,
     loading: exercisesLoading,
-    error: exercisesError
+    error: exercisesError,
   } = useQuery<ExerciseData>(exercisesQuery);
   if (exercisesLoading) {
     return <div className="text-gray-900 font-bold">...Loading</div>;
@@ -70,27 +74,29 @@ const InnerForm = (props: WorkoutFormProps & FormikProps<NewWorkout>) => {
   const handleFormSubmit = async () => {
     console.warn({ workoutVariables });
     const createWorkoutResponse = await createWorkout({
-      variables: workoutVariables
+      variables: workoutVariables,
     });
     console.warn({ createWorkoutResponse });
   };
   const exercises = exerciseData.exercises;
   return (
-    <Form className="p-3 w-full max-w-lg" onSubmit={handleSubmit}>
-      <Button onClick={hideForm} buttonStyle={ButtonStyles.danger}>
-        <FaTimes />
-      </Button>
-      <div>
-        <Input labelText="WorkoutName" fieldName="name" />
-      </div>
-      <Input labelText="Workout Description" fieldName="description" />
-      <WorkgroupsArray exercises={exercises} />
-      <Button
-        onClick={handleFormSubmit}
-        buttonStyle={ButtonStyles.primary}
-        text="Save Workout"
-      />
-    </Form>
+    <WorkoutFormContext.Provider value={{ exercises }}>
+      <Form className="p-3 w-full max-w-lg" onSubmit={handleSubmit}>
+        <Button onClick={hideForm} buttonStyle={ButtonStyles.danger}>
+          <FaTimes />
+        </Button>
+        <div>
+          <Input labelText="WorkoutName" fieldName="name" />
+        </div>
+        <Input labelText="Workout Description" fieldName="description" />
+        <WorkgroupsArray />
+        <Button
+          onClick={handleFormSubmit}
+          buttonStyle={ButtonStyles.primary}
+          text="Save Workout"
+        />
+      </Form>
+    </WorkoutFormContext.Provider>
   );
 };
 
@@ -124,13 +130,13 @@ export const WorkoutForm = withFormik<WorkoutFormProps, NewWorkout>({
                 ),
                 interval: Yup.number().required(
                   "The time interval is not specified for this set."
-                )
+                ),
               })
-            )
+            ),
           })
-        )
+        ),
       })
-    )
+    ),
   }),
-  handleSubmit: () => null
+  handleSubmit: () => null,
 })(InnerForm);

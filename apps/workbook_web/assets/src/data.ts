@@ -12,9 +12,12 @@ import {
   Round,
   Workgroup,
   IntensityType,
-  NewWorkout
+  NewWorkout,
+  NewProgram,
+  NewPhase,
+  NewCycle,
+  NewTrainingSession,
 } from "./types";
-import { JSXElementConstructor } from "react";
 
 export const newWorkset: NewWorkset = {
   reps: 1,
@@ -25,21 +28,41 @@ export const newWorkset: NewWorkset = {
   exercise: {
     id: 0,
     name: "",
-    intensityUnit: IntensityUnit.none
-  }
+    intensityUnit: IntensityUnit.none,
+  },
+};
+
+export const newTrainingSession: NewTrainingSession = {
+  sortOrder: 0,
+  name: "",
+  description: "",
+};
+
+export const newCycle: NewCycle = {
+  name: "",
+  sortOrder: 0,
+  description: "",
+  trainingSessions: [{ ...newTrainingSession }],
+};
+
+export const newPhase: NewPhase = {
+  sortOrder: 0,
+  name: "",
+  description: "",
+  cycles: [{ ...newCycle }],
 };
 
 export const newRound: NewRound = {
   sortOrder: 0,
   interval: 0,
   intervalType: IntervalType.none,
-  worksets: [{ ...newWorkset }]
+  worksets: [{ ...newWorkset }],
 };
 
 export const newWorkgroup: NewWorkgroup = {
   sortOrder: 0,
   note: "",
-  rounds: [{ ...newRound }]
+  rounds: [{ ...newRound }],
 };
 
 export const newWorkout: NewWorkout = {
@@ -50,27 +73,34 @@ export const newWorkout: NewWorkout = {
     //   ...newWorkgroup,
     //   rounds: [{ ...newRound, worksets: [{ ...newWorkset }] }]
     // }
-  ]
+  ],
+};
+
+export const newProgram: NewProgram = {
+  userId: 1,
+  name: "",
+  description: "",
+  phases: [],
 };
 export const intervalTypeOptions: SelectOption[] = [
   { value: IntervalType.inclusive, label: "Inclusive" },
   { value: IntervalType.exclusive, label: "Exclusive" },
-  { value: IntervalType.none, label: "No Interval" }
+  { value: IntervalType.none, label: "No Interval" },
 ];
 export const intensityTypeOptions: SelectOption[] = [
   { value: IntensityUnit.weight, label: "Pounds" },
-  { value: IntensityUnit.speed, label: "Meters/Sec" }
+  { value: IntensityUnit.speed, label: "Meters/Sec" },
 ];
 export const exercisesOptions = (exercises: Exercise[]) =>
   <SelectOption[]>exercises.map((exercise, _index) => ({
     value: exercise.id,
-    label: exercise.name
+    label: exercise.name,
   }));
 
 export const layout = {
   header: {
-    height: 75
-  }
+    height: 75,
+  },
 };
 
 export const ordinals = [
@@ -99,7 +129,7 @@ export const ordinals = [
   "W",
   "X",
   "Y",
-  "Z"
+  "Z",
 ];
 export const jsonWorkout = {
   workout: {
@@ -122,11 +152,11 @@ export const jsonWorkout = {
                 intensity: 185,
                 intensityType: 0,
                 intervalType: 1,
-                interval: 140
-              }
-            ]
-          }
-        ]
+                interval: 140,
+              },
+            ],
+          },
+        ],
       },
       {
         sortOrder: 1,
@@ -144,7 +174,7 @@ export const jsonWorkout = {
                 intensity: 185,
                 intensityType: 0,
                 intervalType: 1,
-                interval: 140
+                interval: 140,
               },
               {
                 sortOrder: 1,
@@ -153,7 +183,7 @@ export const jsonWorkout = {
                 intensity: 185,
                 intensityType: 0,
                 intervalType: 1,
-                interval: 140
+                interval: 140,
               },
               {
                 sortOrder: 2,
@@ -162,11 +192,11 @@ export const jsonWorkout = {
                 intensity: 185,
                 intensityType: 0,
                 intervalType: 1,
-                interval: 140
-              }
-            ]
-          }
-        ]
+                interval: 140,
+              },
+            ],
+          },
+        ],
       },
       {
         sortOrder: 2,
@@ -184,7 +214,7 @@ export const jsonWorkout = {
                 intensity: 185,
                 intensityType: 0,
                 intervalType: 1,
-                interval: 150
+                interval: 150,
               },
               {
                 sortOrder: 1,
@@ -193,7 +223,7 @@ export const jsonWorkout = {
                 intensity: 185,
                 intensityType: 0,
                 intervalType: 1,
-                interval: 150
+                interval: 150,
               },
               {
                 sortOrder: 2,
@@ -202,7 +232,7 @@ export const jsonWorkout = {
                 intensity: 195,
                 intensityType: 0,
                 intervalType: 1,
-                interval: 150
+                interval: 150,
               },
               {
                 sortOrder: 3,
@@ -211,11 +241,11 @@ export const jsonWorkout = {
                 intensity: 195,
                 intensityType: 0,
                 intervalType: 1,
-                interval: 150
-              }
-            ]
-          }
-        ]
+                interval: 150,
+              },
+            ],
+          },
+        ],
       },
       {
         sortOrder: 3,
@@ -234,7 +264,7 @@ export const jsonWorkout = {
                 intensity: 155,
                 intensityType: 0,
                 intervalType: 1,
-                interval: 150
+                interval: 150,
               },
               {
                 sortOrder: 1,
@@ -243,7 +273,7 @@ export const jsonWorkout = {
                 intensity: 155,
                 intensityType: 0,
                 intervalType: 1,
-                interval: 150
+                interval: 150,
               },
               {
                 sortOrder: 2,
@@ -252,9 +282,9 @@ export const jsonWorkout = {
                 intensity: 155,
                 intensityType: 0,
                 intervalType: 1,
-                interval: 150
-              }
-            ]
+                interval: 150,
+              },
+            ],
           },
           {
             sortOrder: 1,
@@ -268,7 +298,7 @@ export const jsonWorkout = {
                 intensity: 155,
                 intensityType: 0,
                 intervalType: 1,
-                interval: 150
+                interval: 150,
               },
               {
                 sortOrder: 1,
@@ -277,7 +307,7 @@ export const jsonWorkout = {
                 intensity: 155,
                 intensityType: 0,
                 intervalType: 1,
-                interval: 150
+                interval: 150,
               },
               {
                 sortOrder: 2,
@@ -286,12 +316,12 @@ export const jsonWorkout = {
                 intensity: 155,
                 intensityType: 0,
                 intervalType: 1,
-                interval: 150
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+                interval: 150,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 };

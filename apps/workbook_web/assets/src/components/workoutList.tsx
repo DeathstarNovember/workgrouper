@@ -99,9 +99,6 @@ export const WorkoutList: React.FC<WorkoutListProps> = () => {
             key={`workoutOverview${workoutIndex}`}
             workout={workout}
             workoutIndex={workoutIndex}
-            clearSelectedWorkout={clearSelectedWorkout}
-            selectWorkout={selectWorkout}
-            isSelected={workoutIndex === selectedWorkoutIndex}
           />
         ))}
       </div>

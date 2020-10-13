@@ -5,13 +5,15 @@ import { Workout } from "../../types";
 type WorkoutLabelProps = {
   workout: Workout;
   workoutIndex: number;
+  className?: string;
 };
 
 export const WorkoutLabel: React.FC<WorkoutLabelProps> = ({
   workout,
-  workoutIndex
+  workoutIndex,
+  className,
 }) => (
-  <div>
+  <div className={className}>
     {workout.workgroups.map((workgroup, workgroupIndex) => (
       <RxWorkgroupLabel
         key={"workgroupLabel" + workgroupIndex}

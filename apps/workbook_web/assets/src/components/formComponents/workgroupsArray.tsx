@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Workout, Exercise } from "../../types";
 import { FieldArray, useFormikContext } from "formik";
 import Collapsible from "react-collapsible";
 import { ordinals, newWorkgroup } from "../../data";
 import { Input, RoundsArray } from ".";
 import { RxWorkgroupLabel } from "../labelComponents";
+import { WorkoutFormContext } from "./WorkoutForm";
 import {
   FormSection,
   SectionStyles,
@@ -13,21 +14,18 @@ import {
   RemoveButton,
   AddButton,
   SwapUpButton,
-  SwapDownButton
+  SwapDownButton,
 } from "../../workbook_ui";
 
-type WorkgroupsArrayProps = {
-  exercises: Exercise[];
-};
+type WorkgroupsArrayProps = {};
 
-export const WorkgroupsArray: React.FC<WorkgroupsArrayProps> = ({
-  exercises
-}) => {
+export const WorkgroupsArray: React.FC<WorkgroupsArrayProps> = ({}) => {
   const { values }: { values: Workout } = useFormikContext();
+  const { exercises } = useContext(WorkoutFormContext);
   return (
     <FieldArray
       name="workgroups"
-      render={workgroupsArrayHelpers => (
+      render={(workgroupsArrayHelpers) => (
         <Box>
           {values.workgroups.map((workgroup, workgroupIndex) => {
             const workgroupFieldNamePrefix = `workgroups[${workgroupIndex}]`;
@@ -89,7 +87,7 @@ export const WorkgroupsArray: React.FC<WorkgroupsArrayProps> = ({
             add={() =>
               workgroupsArrayHelpers.push({
                 ...newWorkgroup,
-                sortOrder: values.workgroups.length
+                sortOrder: values.workgroups.length,
               })
             }
             text="add workgroup"

@@ -5,6 +5,8 @@ import { Program } from "../types";
 import { FaPlus } from "react-icons/fa";
 import { LayoutContext } from "..";
 import { ProgramPane } from "../components";
+import { ProgramForm } from "../components/formComponents/ProgramForm";
+import { newProgram } from "../data";
 
 const programEditorQuery = gql`
   query ProgramEditor {
@@ -107,41 +109,34 @@ export const ProgramEditorPage = () => {
         background: backgroundGradient,
       }}
     >
-      <div className="bg-gray-500" style={{ width: 500 }}>
-        <div className="flex-col w-full max-w-lg">
-          <button
-            onClick={() => showNewProgramForm()}
-            className="bg-green-500 hover:bg-green-700 text-white font-bold px-2 py-1 mt-6 mx-3 rounded"
-          >
-            <FaPlus />
-          </button>
-          {data ? (
-            data.programs.map((program: Program, programIndex: number) => (
-              // <ProgramOverview
-              //   key={`programOverview${programIndex}`}
-              //   program={program}
-              //   programIndex={programIndex}
-              //   clearSelectedProgram={clearSelectedProgram}
-              //   selectProgram={selectProgram}
-              //   isSelected={programIndex === selectedProgramIndex}
-              // />
-              <div
-                className="text-2xl font-bold m-2 p-2"
-                key={`programOverview${programIndex}`}
-                onClick={() => selectProgram(program, programIndex)}
-              >
-                {program.name}
-              </div>
-            ))
-          ) : (
-            <div className="text-gray-900 font-bold">No Programs Loaded</div>
-          )}
+      {!selectedProgram ? (
+        <div className="bg-gray-500" style={{ width: 500 }}>
+          <div className="flex-col w-full max-w-lg">
+            <button
+              onClick={() => showNewProgramForm()}
+              className="bg-green-500 hover:bg-green-700 text-white font-bold px-2 py-1 mt-6 mx-3 rounded"
+            >
+              <FaPlus />
+            </button>
+            {data ? (
+              data.programs.map((program: Program, programIndex: number) => (
+                <div
+                  className="text-2xl font-bold m-2 p-2"
+                  key={`programOverview${programIndex}`}
+                  onClick={() => selectProgram(program, programIndex)}
+                >
+                  {program.name}
+                </div>
+              ))
+            ) : (
+              <div className="text-gray-900 font-bold">No Programs Loaded</div>
+            )}
+          </div>
         </div>
-      </div>
+      ) : null}
       <div className="w-full">
         {newProgramFormIsVisible ? (
-          // <ProgramForm program={newProgram} hideForm={hideNewProgramForm} />
-          <div>Program Form</div>
+          <ProgramForm program={newProgram} hideForm={hideNewProgramForm} />
         ) : selectedProgram ? (
           <ProgramPane
             program={selectedProgram}
